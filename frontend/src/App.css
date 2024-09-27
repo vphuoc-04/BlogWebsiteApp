@@ -1,0 +1,108 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.App {
+    font-family: monospace;
+}
+
+/***** ADMIN *****/
+/*** LOGIN ***/
+.AdminLogin {
+    background-color: rgba(245, 245, 245);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+}
+
+.AdminLogin .Introduce {
+    position: absolute;
+    top: 45%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+}
+
+.AdminLogin .Introduce h1 {
+    color: rgb(0, 0, 0, 0.7);
+}
+
+.AdminLogin form {
+    position: absolute;
+    top: 45%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    width: 350px;
+    height: 350px;
+    padding: 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.3);
+}
+
+.AdminLogin form h1 {
+    text-align: center;
+    font-weight: lighter;
+    color: rgb(0, 0, 0, 0.7);
+    margin-top: -15px;
+}
+
+.AdminLogin form input {
+    padding: 10px;
+    width: 94%;
+    align-items: center;
+    outline: none;
+    border: 0.5px solid rgb(0, 0, 0, 0.3);
+    border-radius: 5px;
+    transition: all 0.2s ;
+}
+
+.AdminLogin form input.focused {
+    border: 1px solid rgb(67, 169, 162);
+} 
+
+.AdminLogin form input:-webkit-autofill {
+    background-color: rgba(255, 255, 255) !important; 
+    color: rgb(0, 0, 0) !important; 
+    transition: background-color 5000s ease-in-out 0s; 
+}
+
+.AdminLogin form .InputPassword .ShowOrHidePassword {
+    position: absolute;
+    top: 51.5%;
+    left: 87.5%;
+}
+
+.AdminLogin form .InputPassword .ShowOrHidePassword i {
+    cursor: pointer;
+}
+
+.AdminLogin form .Error {
+    color: rgb(255, 0, 0);
+    position: absolute;
+    top: 57.5%;
+}
+
+.AdminLogin form button {
+    height: 45px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 20px;
+}
+
+.AdminLogin form button:disabled {
+    cursor: not-allowed;
+}
+
+.Active-Admin-Login-Button {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+}
