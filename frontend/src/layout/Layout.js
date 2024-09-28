@@ -1,12 +1,13 @@
-import AdminLogin from '../components/admin/Login'
-
 import { createBrowserRouter } from 'react-router-dom'
+import AdminLogin from '../components/admin/Login'
 import Admin from '../components/admin/Admin'
 import Dashboard from '../components/admin/Dashboard'
+import AdminNavbar from '../components/admin/Navbar'
 
 const AdminLayout = () => {
     return (
         <>
+            <AdminNavbar />
             <Admin />
         </>
     )
