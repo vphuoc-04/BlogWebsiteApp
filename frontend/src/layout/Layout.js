@@ -3,6 +3,7 @@ import AdminLogin from '../components/admin/Login'
 import Admin from '../components/admin/Admin'
 import Dashboard from '../components/admin/Dashboard'
 import AdminNavbar from '../components/admin/Navbar'
+import { AdminAuthMiddleware } from '../middlewares/AuthMiddleware'
 
 const AdminLayout = () => {
     return (
@@ -14,10 +15,10 @@ const AdminLayout = () => {
 }
 
 const Layout = createBrowserRouter([
-    { path: '/admin/login', element: <AdminLogin /> },
+    { path: '/admin/login', element: <AdminAuthMiddleware adminRoute = { true }> <AdminLogin /> </AdminAuthMiddleware> },
     { 
         path: '/admin',
-        element: <AdminLayout />,
+        element: <AdminAuthMiddleware adminRoute = { true }> <AdminLayout /> </AdminAuthMiddleware>,
         children: [
             { path: 'dashboard', element: <Dashboard /> },
         ]
