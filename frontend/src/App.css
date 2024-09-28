@@ -219,3 +219,25 @@ a {
 .AdminNavbar .AdminAvatarNavbar .BoxAccountAvatarNavbar .Logout p {
     font-size: 15px;
 }
+
+/*** SIDEBAR ***/
+.AdminSidebar{
+    border-right: 1px solid rgb(0, 0, 0, 0.2);
+    width: 265px;
+}
+
+/*** ROUTES ***/
+.Admin {
+    display: flex;
+    width: 100%;
+}
+
+.Admin .Routes{
+    border-radius: 30px;
+    width: 100%;
+    max-width: 1000px;
+    padding: 30px 50px;
+    margin: 20px 30px;
+    background-color: rgb(255, 255, 255);
+    height: 77.2vh;
+}
