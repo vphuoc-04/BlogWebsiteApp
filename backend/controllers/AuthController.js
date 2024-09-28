@@ -24,4 +24,8 @@ const LoginAdmin = (req, res) => {
     })
 };
 
-export { LoginAdmin }
+const LogoutAdmin = (req, res) => {
+    res.clearCookie("admin_token", { sameSite : "none", secure: "true" }).status(200).json("Account has been logged out!");
+}
+
+export { LoginAdmin, LogoutAdmin }

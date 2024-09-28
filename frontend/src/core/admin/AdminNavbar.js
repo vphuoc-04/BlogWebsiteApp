@@ -1,4 +1,5 @@
 import Logo from '../../assets/img/vphuoc.png'
+import { Link } from 'react-router-dom'
 
 const AdminNavbar = ({
     admin,
@@ -6,7 +7,8 @@ const AdminNavbar = ({
     HandleClickAvatarNavbar,
     boxHoverNavbar,
     HandleHoverNavbarComponents,
-    HandleLeaveNavbarComponents
+    HandleLeaveNavbarComponents,
+    AdminLogoutContext
 }) => {
     return (
         <div className = "AdminNavbar">
@@ -37,12 +39,12 @@ const AdminNavbar = ({
                                 </div>
                             </div>
                         </div>
-                        <div className = "Logout">
+                        <Link className = "Logout" onClick = { AdminLogoutContext } to = '/admin/login'>
                             <div className = "LogoLogout">
                                 <i class = "fa-solid fa-right-from-bracket"></i>
                             </div>
                             <p>Đăng xuất</p>
-                        </div>
+                        </Link>
                     </div>
                 )}
             </div>

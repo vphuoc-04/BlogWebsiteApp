@@ -6,7 +6,7 @@ import { AdminData } from '../../data/AdminData';
 const Navbar = () => {
     const [boxAccountAvatarNavbar, setBoxAccountAvatarNavbar] = useState(null);
     const [boxHoverNavbar, setBoxHoverNavbar] = useState(null);
-    const { currentAdmin } = useContext(AdminContext);
+    const { currentAdmin, AdminLogoutContext } = useContext(AdminContext);
     const [admin, setAdmin] = AdminData(currentAdmin);
 
     const HandleClickAvatarNavbar = () => { setBoxAccountAvatarNavbar(Show => !Show); setBoxHoverNavbar(null); }
@@ -22,6 +22,7 @@ const Navbar = () => {
             boxHoverNavbar = { boxHoverNavbar }
             HandleHoverNavbarComponents = { HandleHoverNavbarComponents }
             HandleLeaveNavbarComponents = { HandleLeaveNavbarComponents }
+            AdminLogoutContext = { AdminLogoutContext }
         />
     )
 }

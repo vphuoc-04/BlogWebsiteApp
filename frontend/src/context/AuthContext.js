@@ -15,12 +15,17 @@ const AdminContextProvider = ({ children }) => {
         }
     }
 
+    const AdminLogoutContext = async () => {
+        await axios.post("/auth/admin/logout");
+        setCurrentAdmin(null);
+    }
+
     useEffect(() => {
         localStorage.setItem("admin", JSON.stringify(currentAdmin))
     }, [currentAdmin])
 
     return (
-        <AdminContext.Provider value = {{ currentAdmin, setCurrentAdmin, AdminLoginContext }}>
+        <AdminContext.Provider value = {{ currentAdmin, setCurrentAdmin, AdminLoginContext, AdminLogoutContext }}>
             { children }
         </AdminContext.Provider>
     )
