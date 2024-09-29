@@ -23,6 +23,7 @@ const Navbar = () => {
             HandleHoverNavbarComponents = { HandleHoverNavbarComponents }
             HandleLeaveNavbarComponents = { HandleLeaveNavbarComponents }
             AdminLogoutContext = { AdminLogoutContext }
+            setBoxAccountAvatarNavbar = { setBoxAccountAvatarNavbar }
         />
     )
 }

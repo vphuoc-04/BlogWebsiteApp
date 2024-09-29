@@ -8,7 +8,8 @@ const AdminNavbar = ({
     boxHoverNavbar,
     HandleHoverNavbarComponents,
     HandleLeaveNavbarComponents,
-    AdminLogoutContext
+    AdminLogoutContext,
+    setBoxAccountAvatarNavbar
 }) => {
     return (
         <div className = "AdminNavbar">
@@ -31,13 +32,13 @@ const AdminNavbar = ({
                 {boxAccountAvatarNavbar && (
                     <div className = "BoxAccountAvatarNavbar">
                         <div className = "Profile">
-                            <div className = "InfoProfile">
+                            <Link className = "InfoProfile" to = '/admin/profile' onClick = {() => { setBoxAccountAvatarNavbar(false) } }>
                                 <img src = { admin?.avatar } alt = "" />
                                 <div className = "FullName">
                                     <p>{ admin?.firstname }</p>
                                     <p>{ admin?.lastname }</p>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                         <Link className = "Logout" onClick = { AdminLogoutContext } to = '/admin/login'>
                             <div className = "LogoLogout">
