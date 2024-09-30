@@ -1,4 +1,5 @@
 import { FaCamera } from 'react-icons/fa';
+import CropAvatar from 'react-avatar-edit' 
 
 const AdminProfile = ({
     admin,
@@ -13,7 +14,8 @@ const AdminProfile = ({
     HandleSetAvatar,
     HandleCloseAvatarSettingBox,
     editAvatar,
-    avatarFile
+    avatarFile,
+    OnCrop
 }) => {
     return (
         <div className = "AdminProfile">
@@ -64,7 +66,20 @@ const AdminProfile = ({
                     <div className = "CloseBoxEditAvatar" onClick = { HandleCloseAvatarSettingBox }>&times;</div>
                     {editAvatar && (
                         <div className = "EditAvatar">
-                            <img src = { avatarFile } alt = "" />
+                            <div className = "CropWrapper">
+                                <div className = "AvatarOnCrop">
+                                    <CropAvatar 
+                                        width = {500}
+                                        height = {500}
+                                        onCrop = { OnCrop }
+                                        src = { avatarFile }
+                                        border = {50} 
+                                        borderRadius = {100} 
+                                        color = {[255, 255, 255, 0.6]} 
+                                        scale = {1.2} 
+                                    />
+                                </div>
+                            </div>
                             <div className = "Buttons">
                                 <span onClick = { HandleCloseAvatarSettingBox }>Cancel</span>
                                 <button>Save</button>

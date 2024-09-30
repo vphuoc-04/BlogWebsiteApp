@@ -11,6 +11,7 @@ const Profile = () => {
     const [avatarFile, setAvatarFile] = useState(null);
     const [boxEditAvatar, setBoxEditAvatar] = useState(null);
     const [editAvatar, setEditAvatar] = useState(null);
+    const [crop, setCrop] = useState(null);
 
     // Admin avatar
     const HandleAvatarActionSelect = () => { setAvatarAction(Show => !Show); }
@@ -30,6 +31,7 @@ const Profile = () => {
         }
     };
     const HandleCloseAvatarSettingBox = () => { setBoxEditAvatar(false); }
+    const OnCrop = (view) => { setCrop(view); };
 
     return (
         <AdminProfile 
@@ -44,6 +46,7 @@ const Profile = () => {
             HandleCloseAvatarSettingBox = { HandleCloseAvatarSettingBox }
             editAvatar = { editAvatar } 
             avatarFile = { avatarFile }
+            OnCrop = { OnCrop } 
         />
     )
 }
