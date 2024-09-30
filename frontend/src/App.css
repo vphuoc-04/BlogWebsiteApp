@@ -371,3 +371,79 @@ a {
     left: 6%;
     top: 5%;
 }
+
+.AdminProfile .BoxEditAvatar {
+    height: 650px;
+    width: 600px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border-radius: 10px;
+}
+
+.AdminProfile .BoxEditAvatar .CloseBoxEditAvatar {
+    margin-left: 565px;
+    margin-top: 10px;
+    z-index: 3;
+    font-size: xx-large;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.AdminProfile .BoxEditAvatar .CloseBoxEditAvatar:hover {
+    background-color: rgb(246, 246, 246);
+}
+
+.AdminProfile .BoxEditAvatar .EditAvatar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 15px;
+    gap: 20px;
+}
+
+.AdminProfile .BoxEditAvatar .EditAvatar img {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+}
+
+.AdminProfile .BoxEditAvatar .EditAvatar .Buttons {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin: 0px;
+    padding-top: 10px;
+    border-top: 1px solid rgb(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+.AdminProfile .BoxEditAvatar .EditAvatar .Buttons span {
+    margin-top: 10px;
+    color: rgb(67, 169, 162);
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 72%;
+}
+
+.AdminProfile .BoxEditAvatar .EditAvatar .Buttons button {
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}

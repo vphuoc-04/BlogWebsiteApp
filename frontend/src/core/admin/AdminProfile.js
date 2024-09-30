@@ -8,7 +8,12 @@ const AdminProfile = ({
     HandleAvatarActionSelect,
     avatarView,
     HandleAvatarView,
-    HandleCloseAvatarView
+    HandleCloseAvatarView,
+    boxEditAvatar,
+    HandleSetAvatar,
+    HandleCloseAvatarSettingBox,
+    editAvatar,
+    avatarFile
 }) => {
     return (
         <div className = "AdminProfile">
@@ -26,6 +31,16 @@ const AdminProfile = ({
                         <div className = "button" onClick = { HandleAvatarView }>
                             <i className = "fa-regular fa-user"></i>&nbsp;View avatar picture
                         </div>
+                        <div className = "button" onClick = {() => document.getElementById('file').click()}>
+                            <i className = "fa-regular fa-image"></i>&nbsp;Select avatar picture
+                        </div>
+                        <input 
+                            type = "file"
+                            id = "file"
+                            style = {{ display: 'none' }} 
+                            onChange = { HandleSetAvatar }
+
+                        />
                     </div>
                 )}
             </div>
@@ -41,6 +56,21 @@ const AdminProfile = ({
                     <div className = "Avatar">
                         <img src = { admin.avatar } alt = "" />
                     </div>
+                </div>
+            )}
+            {boxEditAvatar && <div className = "overlay"></div>}
+            {boxEditAvatar && (
+                <div className = "BoxEditAvatar">
+                    <div className = "CloseBoxEditAvatar" onClick = { HandleCloseAvatarSettingBox }>&times;</div>
+                    {editAvatar && (
+                        <div className = "EditAvatar">
+                            <img src = { avatarFile } alt = "" />
+                            <div className = "Buttons">
+                                <span onClick = { HandleCloseAvatarSettingBox }>Cancel</span>
+                                <button>Save</button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
