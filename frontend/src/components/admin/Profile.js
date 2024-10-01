@@ -2,9 +2,10 @@ import React, { useContext, useState } from 'react'
 import { AdminContext } from '../../context/AuthContext';
 import { AdminProfile } from '../../core/admin/AdminProfile';
 import { AdminData } from '../../data/AdminData';
+import { UploadAdminAvatar } from '../../services/AdminService';
 
 const Profile = () => {
-    const { currentAdmin } = useContext(AdminContext)
+    const { currentAdmin, setCurrentAdmin } = useContext(AdminContext)
     const [admin, setAdmin] = AdminData(currentAdmin);
     const [avatarAction, setAvatarAction] = useState(null);
     const [avatarView, setAvatarView] = useState(null);
@@ -32,6 +33,12 @@ const Profile = () => {
     };
     const HandleCloseAvatarSettingBox = () => { setBoxEditAvatar(false); }
     const OnCrop = (view) => { setCrop(view); };
+    const HandleUploadAdminAvatar = async () => {
+        if (!crop) return;
+        const blob = await fetch(crop).then(response => response.blob());
+        const file = new File([blob], "AdminAvatar.png", { type: 'image/png' });
+        await UploadAdminAvatar(file, currentAdmin, setCurrentAdmin);
+    }
 
     return (
         <AdminProfile 
@@ -47,6 +54,7 @@ const Profile = () => {
             editAvatar = { editAvatar } 
             avatarFile = { avatarFile }
             OnCrop = { OnCrop } 
+            HandleUploadAdminAvatar = { HandleUploadAdminAvatar }
         />
     )
 }

@@ -15,7 +15,8 @@ const AdminProfile = ({
     HandleCloseAvatarSettingBox,
     editAvatar,
     avatarFile,
-    OnCrop
+    OnCrop,
+    HandleUploadAdminAvatar
 }) => {
     return (
         <div className = "AdminProfile">
@@ -82,7 +83,7 @@ const AdminProfile = ({
                             </div>
                             <div className = "Buttons">
                                 <span onClick = { HandleCloseAvatarSettingBox }>Cancel</span>
-                                <button>Save</button>
+                                <button onClick = { HandleUploadAdminAvatar }>Save</button>
                             </div>
                         </div>
                     )}
