@@ -1,8 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AdminContext } from '../../context/AuthContext';
 import { AdminProfile } from '../../core/admin/AdminProfile';
-import { AdminData } from '../../data/AdminData';
-import { UploadAdminAvatar } from '../../services/AdminService';
+import { AdminData, defaultAvatar } from '../../data/AdminData';
+import { 
+    UploadAdminAvatar,
+    DeleteAdminAvatar 
+} from '../../services/AdminService';
 
 const Profile = () => {
     const { currentAdmin, setCurrentAdmin } = useContext(AdminContext)
@@ -13,11 +16,19 @@ const Profile = () => {
     const [boxEditAvatar, setBoxEditAvatar] = useState(null);
     const [editAvatar, setEditAvatar] = useState(null);
     const [crop, setCrop] = useState(null);
+    const [avatarViewAction, setAvatarViewAction] = useState(null);
+    const [warning, setWarning] = useState(null);
+
+    useEffect(() => {
+        setAdmin(currentAdmin);
+    }, [currentAdmin])
 
     // Admin avatar
     const HandleAvatarActionSelect = () => { setAvatarAction(Show => !Show); }
+
     const HandleAvatarView = () => { setAvatarView(true); setAvatarAction(false); }
-    const HandleCloseAvatarView = () => { setAvatarView(false); }
+    const HandleCloseAvatarView = () => { setAvatarView(false); setAvatarViewAction(null); }
+
     const HandleSetAvatar = (event) => { 
         setAvatarAction(false);
         const file = event.target.files[0];
@@ -39,10 +50,36 @@ const Profile = () => {
         const file = new File([blob], "AdminAvatar.png", { type: 'image/png' });
         await UploadAdminAvatar(file, currentAdmin, setCurrentAdmin);
     }
+    const HandleAvatarViewAction = () => { setAvatarViewAction(Show => !Show); }
+    const HandleDeleteAdminAvatar = () => {
+        setWarning({
+            message: 'Are you sure you want to delete your avatar?',
+            action: async () => {
+                await DeleteAdminAvatar(currentAdmin, setCurrentAdmin);
+                setAdmin(prevAdmin => ({ ...prevAdmin,  avatar: defaultAvatar }))
+                setCurrentAdmin(prevAdmin => ({ ...prevAdmin,  avatar: defaultAvatar }));
+                localStorage.setItem("admin", JSON.stringify({ ...currentAdmin, avatar: defaultAvatar }));
+                setAvatarView(null);
+                setWarning(null);
+                setAvatarViewAction(null);
+            }
+        })
+    }
+
+    // Waring box
+    const HandleWarningConfirm = async () => { if(warning?.action) { await warning.action(); } };
+    const HandleWarningCancel = () => { setWarning(null); };
 
     return (
         <AdminProfile 
             admin = { admin }
+
+            // Waring box
+            warning = { warning }
+            HandleWarningConfirm = { HandleWarningConfirm }
+            HandleWarningCancel = { HandleWarningCancel }
+
+            // Avatar admin
             avatarAction = { avatarAction }
             HandleAvatarActionSelect = { HandleAvatarActionSelect }
             avatarView = { avatarView }
@@ -55,6 +92,9 @@ const Profile = () => {
             avatarFile = { avatarFile }
             OnCrop = { OnCrop } 
             HandleUploadAdminAvatar = { HandleUploadAdminAvatar }
+            avatarViewAction = { avatarViewAction }
+            HandleAvatarViewAction = { HandleAvatarViewAction }
+            HandleDeleteAdminAvatar = { HandleDeleteAdminAvatar }
         />
     )
 }

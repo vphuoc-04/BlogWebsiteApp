@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AdminContext } from '../../context/AuthContext';
 import { AdminNavbar } from '../../core/admin/AdminNavbar';
 import { AdminData } from '../../data/AdminData';
@@ -13,6 +13,10 @@ const Navbar = () => {
 
     const HandleHoverNavbarComponents = (componentName) => { setBoxHoverNavbar(componentName); };
     const HandleLeaveNavbarComponents = () => { setBoxHoverNavbar(null); };
+
+    useEffect(() => {
+        setAdmin(currentAdmin); 
+    }, [currentAdmin]);
 
     return (
         <AdminNavbar 

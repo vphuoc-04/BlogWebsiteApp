@@ -1,4 +1,5 @@
 import axios from "axios";
+import { defaultAvatar } from "../data/AdminData";
 
 const UploadAdminAvatar = async (file, currentAdmin, setCurrentAdmin) => {
     try {
@@ -23,6 +24,23 @@ const UploadAdminAvatar = async (file, currentAdmin, setCurrentAdmin) => {
     }
 }
 
+const DeleteAdminAvatar = async (currentAdmin, setCurrentAdmin) => {
+    try {
+        const response = await axios.put(`/admin/delete/profile/avatar/${currentAdmin?.id}`, {
+            avatar: defaultAvatar
+        });
+        const message = response.data || "Avatar has been deleted";
+        const updated = { ...currentAdmin, avatar: defaultAvatar };
+        localStorage.setItem("admin", JSON.stringify(updated));
+        setCurrentAdmin(prevAdmin => ({ ...prevAdmin, avatar: defaultAvatar }));
+        console.log(message);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 export {
-    UploadAdminAvatar
+    UploadAdminAvatar,
+    DeleteAdminAvatar
 }

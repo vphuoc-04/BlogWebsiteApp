@@ -14,4 +14,6 @@ const AdminData = (currentAdmin) => {
     return [admin, setAdmin];
 }
 
-export { AdminData }
+const defaultAvatar = 'https://imgur.com/AhaZ0qB.jpg';
+
+export { AdminData, defaultAvatar }

@@ -22,18 +22,18 @@ const AdminNavbar = ({
                     onClick = { HandleClickAvatarNavbar }  
                     onMouseEnter = {() => HandleHoverNavbarComponents('avatar') }
                     onMouseLeave = { HandleLeaveNavbarComponents }>
-                    { DisplayAvatar(admin.avatar) }
+                    { DisplayAvatar(admin?.avatar) }
                 </div> 
                 {boxHoverNavbar === 'avatar' && (
                     <div className = "BoxHoverNavbar">
-                        Tài khoản
+                        Account
                     </div>
                 )}
                 {boxAccountAvatarNavbar && (
                     <div className = "BoxAccountAvatarNavbar">
                         <div className = "Profile">
                             <Link className = "InfoProfile" to = '/admin/profile' onClick = {() => { setBoxAccountAvatarNavbar(false) } }>
-                                { DisplayAvatar(admin.avatar) } 
+                                { DisplayAvatar(admin?.avatar) } 
                                 <div className = "FullName">
                                     <p>{ admin?.firstname }</p>
                                     <p>{ admin?.lastname }</p>
@@ -44,7 +44,7 @@ const AdminNavbar = ({
                             <div className = "LogoLogout">
                                 <i class = "fa-solid fa-right-from-bracket"></i>
                             </div>
-                            <p>Đăng xuất</p>
+                            <p>Log out</p>
                         </Link>
                     </div>
                 )}

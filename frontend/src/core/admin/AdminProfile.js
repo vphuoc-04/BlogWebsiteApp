@@ -1,9 +1,15 @@
 import { FaCamera } from 'react-icons/fa';
 import CropAvatar from 'react-avatar-edit' 
 import { DisplayAvatar } from '../../services/AvatarService';
+import { defaultAvatar } from '../../data/AdminData';
 
 const AdminProfile = ({
     admin,
+
+    // Waring box
+    warning,
+    HandleWarningConfirm,
+    HandleWarningCancel,
 
     // Admin avatar
     avatarAction,
@@ -17,7 +23,10 @@ const AdminProfile = ({
     editAvatar,
     avatarFile,
     OnCrop,
-    HandleUploadAdminAvatar
+    HandleUploadAdminAvatar,
+    avatarViewAction,
+    HandleAvatarViewAction,
+    HandleDeleteAdminAvatar
 }) => {
     return (
         <div className = "AdminProfile">
@@ -55,8 +64,15 @@ const AdminProfile = ({
                     <div className = "ActionViewAvatar">
                         <i 
                             className = "fa-solid fa-ellipsis-vertical" 
+                            onClick = { admin.avatar === defaultAvatar ? null : HandleAvatarViewAction }
+                            style = {{ cursor: admin.avatar === defaultAvatar ? 'not-allowed' : 'pointer' }}
                         ></i>
                     </div>
+                    {avatarViewAction && (
+                        <div className = "ActionViewAvatarBox" onClick = { HandleDeleteAdminAvatar }>
+                            <p><i class = "fa-regular fa-trash-can"></i>&nbsp;Delete</p>
+                        </div>
+                    )}
                     <div className = "Avatar">
                         { DisplayAvatar(admin.avatar) }
                     </div>
@@ -88,6 +104,15 @@ const AdminProfile = ({
                             </div>
                         </div>
                     )}
+                </div>
+            )}
+
+            {warning && <div className = "box"></div>}
+            {warning && (
+                <div className = "WarningBox">
+                    <p> { warning.message } </p>
+                    <button onClick = { HandleWarningConfirm }>Yes</button>
+                    <button onClick = { HandleWarningCancel }>Cancel</button>
                 </div>
             )}
         </div>
