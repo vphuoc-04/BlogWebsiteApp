@@ -137,14 +137,14 @@ a {
     margin-left: 85%;
 }
 
-.AdminNavbar .AdminAvatarNavbar img {
+.AdminNavbar .AdminAvatarNavbar .Avatar img {
     width: 40px;
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s;
 }
 
-.AdminNavbar .AdminAvatarNavbar img:hover {
+.AdminNavbar .AdminAvatarNavbar .Avatar img:hover {
     filter: brightness(95%);
 }
 
@@ -187,6 +187,13 @@ a {
     box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.5);
     border-radius: 15px;
     transition: all 0.3s;
+}
+
+.AdminNavbar .AdminAvatarNavbar .BoxAccountAvatarNavbar .Profile .InfoProfile img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .AdminNavbar .AdminAvatarNavbar .BoxAccountAvatarNavbar .Profile .InfoProfile:hover {

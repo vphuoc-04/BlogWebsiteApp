@@ -1,5 +1,6 @@
 import { FaCamera } from 'react-icons/fa';
 import CropAvatar from 'react-avatar-edit' 
+import { DisplayAvatar } from '../../services/AvatarService';
 
 const AdminProfile = ({
     admin,
@@ -23,7 +24,7 @@ const AdminProfile = ({
             <div className = "Avatar">
                 <label className = "AvatarDisplay" onClick = { HandleAvatarActionSelect }>
                     <div className = "AvatarImage">
-                        <img src = { admin.avatar } alt = "" />
+                        { DisplayAvatar(admin.avatar) }
                     </div>
                     <div className = "CameraIcon">
                         <FaCamera />
@@ -57,7 +58,7 @@ const AdminProfile = ({
                         ></i>
                     </div>
                     <div className = "Avatar">
-                        <img src = { admin.avatar } alt = "" />
+                        { DisplayAvatar(admin.avatar) }
                     </div>
                 </div>
             )}

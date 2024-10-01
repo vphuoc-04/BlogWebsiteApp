@@ -1,5 +1,6 @@
 import Logo from '../../assets/img/vphuoc.png'
 import { Link } from 'react-router-dom'
+import { DisplayAvatar } from '../../services/AvatarService'
 
 const AdminNavbar = ({
     admin,
@@ -17,13 +18,12 @@ const AdminNavbar = ({
                 <img src = { Logo } alt = "" />
             </a>
             <div className = "AdminAvatarNavbar">
-                <img 
-                    src = { admin?.avatar } 
+                <div className = "Avatar"
                     onClick = { HandleClickAvatarNavbar }  
                     onMouseEnter = {() => HandleHoverNavbarComponents('avatar') }
-                    onMouseLeave = { HandleLeaveNavbarComponents }
-                    alt = "" 
-                />
+                    onMouseLeave = { HandleLeaveNavbarComponents }>
+                    { DisplayAvatar(admin.avatar) }
+                </div> 
                 {boxHoverNavbar === 'avatar' && (
                     <div className = "BoxHoverNavbar">
                         Tài khoản
@@ -33,7 +33,7 @@ const AdminNavbar = ({
                     <div className = "BoxAccountAvatarNavbar">
                         <div className = "Profile">
                             <Link className = "InfoProfile" to = '/admin/profile' onClick = {() => { setBoxAccountAvatarNavbar(false) } }>
-                                <img src = { admin?.avatar } alt = "" />
+                                { DisplayAvatar(admin.avatar) } 
                                 <div className = "FullName">
                                     <p>{ admin?.firstname }</p>
                                     <p>{ admin?.lastname }</p>
