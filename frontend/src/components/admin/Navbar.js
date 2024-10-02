@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AdminContext } from '../../context/AuthContext';
 import { AdminNavbar } from '../../core/admin/AdminNavbar';
 import { AdminData } from '../../data/AdminData';
+import { UseUpdateCurrentAdmin } from '../../hooks/useAuth';
 
 const Navbar = () => {
     const [boxAccountAvatarNavbar, setBoxAccountAvatarNavbar] = useState(null);
@@ -14,9 +15,7 @@ const Navbar = () => {
     const HandleHoverNavbarComponents = (componentName) => { setBoxHoverNavbar(componentName); };
     const HandleLeaveNavbarComponents = () => { setBoxHoverNavbar(null); };
 
-    useEffect(() => {
-        setAdmin(currentAdmin); 
-    }, [currentAdmin]);
+    UseUpdateCurrentAdmin(setAdmin, currentAdmin);
 
     return (
         <AdminNavbar 

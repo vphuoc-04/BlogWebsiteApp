@@ -22,4 +22,13 @@ const UseAdminPrivateRoute = (adminRoute, navigate, currentAdmin) => {
     return isChecking;
 }
 
-export { UseAdminPrivateRoute }
+const UseUpdateCurrentAdmin = (setAdmin, currentAdmin) => {
+    useEffect(() => {
+        setAdmin(currentAdmin);
+    }, [currentAdmin]);
+}
+
+export { 
+    UseAdminPrivateRoute,
+    UseUpdateCurrentAdmin 
+}

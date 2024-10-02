@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AdminContext } from '../../context/AuthContext';
 import { AdminProfile } from '../../core/admin/AdminProfile';
 import { AdminData, defaultAvatar } from '../../data/AdminData';
+import { UseUpdateCurrentAdmin } from '../../hooks/useAuth';
 import { 
     UploadAdminAvatar,
     DeleteAdminAvatar 
@@ -19,9 +20,7 @@ const Profile = () => {
     const [avatarViewAction, setAvatarViewAction] = useState(null);
     const [warning, setWarning] = useState(null);
 
-    useEffect(() => {
-        setAdmin(currentAdmin);
-    }, [currentAdmin])
+    UseUpdateCurrentAdmin(setAdmin, currentAdmin);
 
     // Admin avatar
     const HandleAvatarActionSelect = () => { setAvatarAction(Show => !Show); }
@@ -42,13 +41,30 @@ const Profile = () => {
             reader.readAsDataURL(file);
         }
     };
-    const HandleCloseAvatarSettingBox = () => { setBoxEditAvatar(false); }
+    const HandleCloseAvatarSettingBox = () => { 
+        setWarning({
+            message:  'Are you sure you want to close edit avatar box?',
+            action: () => {
+                setBoxEditAvatar(false);
+                setWarning(false);
+            }
+        })
+    }
     const OnCrop = (view) => { setCrop(view); };
     const HandleUploadAdminAvatar = async () => {
         if (!crop) return;
         const blob = await fetch(crop).then(response => response.blob());
         const file = new File([blob], "AdminAvatar.png", { type: 'image/png' });
-        await UploadAdminAvatar(file, currentAdmin, setCurrentAdmin);
+        const avatarProfile = await UploadAdminAvatar(file, currentAdmin, setCurrentAdmin);
+
+        if (avatarProfile) {
+            setAdmin(prevAdmin => ({ ...prevAdmin, avatar: avatarProfile }));
+            setCurrentAdmin(prevAdmin => ({ ...prevAdmin, avatar: avatarProfile }));
+            setCrop(null);
+            setAvatarFile(null);
+            setEditAvatar(false);
+        }
+        setBoxEditAvatar(false);
     }
     const HandleAvatarViewAction = () => { setAvatarViewAction(Show => !Show); }
     const HandleDeleteAdminAvatar = () => {
