@@ -26,7 +26,18 @@ const AdminProfile = ({
     HandleUploadAdminAvatar,
     avatarViewAction,
     HandleAvatarViewAction,
-    HandleDeleteAdminAvatar
+    HandleDeleteAdminAvatar,
+
+    // Edit profile
+    editProfile,
+    HandleEditProfileBox,
+    HandleCloseEditProfileBox,
+    newInput,
+    IsDataChange,
+    HandleEditProfileChange,
+    focusedInput,
+    HandleFocus,
+    HandleBlur,
 }) => {
     return (
         <div className = "AdminProfile">
@@ -52,10 +63,28 @@ const AdminProfile = ({
                             id = "file"
                             style = {{ display: 'none' }} 
                             onChange = { HandleSetAvatar }
-
                         />
                     </div>
                 )}
+            </div>
+            <div className = "Bio">
+                <p> { admin.bio } </p>
+            </div>
+            <div className = "AdminInfo">
+                <div className = "FullName">
+                    <p> { admin.firstname } </p>
+                    <p> { admin.lastname } </p>
+                </div>
+                <div className = "Username">
+                    <p> { admin.username } </p>
+                </div>
+                <div className = "Actions">
+                    <div className = "EditProfile" onClick = { HandleEditProfileBox }>
+                        <button>
+                            <i class = "fa-solid fa-user-pen"></i>Edit Profile
+                        </button>
+                    </div>
+                </div>
             </div>
             {avatarView && <div className = "overlay"></div>}
             {avatarView && (
@@ -104,6 +133,60 @@ const AdminProfile = ({
                             </div>
                         </div>
                     )}
+                </div>
+            )}
+            {editProfile && <div className = "overlay"></div> }
+            {editProfile && (
+                <div className = "BoxEditProfile">
+                    <div className = "CloseBoxEditProfile" onClick = { HandleCloseEditProfileBox }>&times;</div>
+                    <div className = "AdminInfoInput">
+                        <p>First name</p>
+                        <input 
+                            name = "firstname"
+                            placeholder = "First name"
+                            onChange = { HandleEditProfileChange }
+                            value = { newInput.firstname }
+                            onFocus = {() => HandleFocus("firstname")}
+                            onBlur = { HandleBlur }
+                            className = { focusedInput === "firstname" ? "focused" : "" }
+                        />
+                        <p>Last name</p>
+                        <input 
+                            name = "lastname"
+                            placeholder = "Last name"
+                            onChange = { HandleEditProfileChange }
+                            value = { newInput.lastname }
+                            onFocus = {() => HandleFocus("lastname")}
+                            onBlur = { HandleBlur }
+                            className = { focusedInput === "lastname" ? "focused" : "" }
+                        />
+                        <p>Username</p>
+                        <input 
+                            name = "username"
+                            placeholder = "Username"
+                            onChange = { HandleEditProfileChange }
+                            value = { newInput.username }
+                            onFocus = {() => HandleFocus("username")}
+                            onBlur = { HandleBlur }
+                            className = { focusedInput === "username" ? "focused" : "" }
+                        />
+                        <p>Bio</p>
+                        <textarea 
+                            name = "bio"
+                            placeholder = "Bio"
+                            onChange = { HandleEditProfileChange }
+                            value = { newInput.bio } 
+                            onFocus = {() => HandleFocus("bio")}
+                            onBlur = { HandleBlur }
+                            className = { `Bio ${ focusedInput === "bio" ? "focused" : "" }` }
+                        />
+                    </div>
+                    <button 
+                        className = { IsDataChange() ? "Active-Save-Profile-Button" : "" }
+                        disabled = { !IsDataChange() }
+                    >
+                        Save
+                    </button>
                 </div>
             )}
 

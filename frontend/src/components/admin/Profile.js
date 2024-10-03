@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { AdminContext } from '../../context/AuthContext';
 import { AdminProfile } from '../../core/admin/AdminProfile';
 import { AdminData, defaultAvatar } from '../../data/AdminData';
@@ -11,6 +11,9 @@ import {
 const Profile = () => {
     const { currentAdmin, setCurrentAdmin } = useContext(AdminContext)
     const [admin, setAdmin] = AdminData(currentAdmin);
+    UseUpdateCurrentAdmin(setAdmin, currentAdmin);
+
+    // Admin avatar
     const [avatarAction, setAvatarAction] = useState(null);
     const [avatarView, setAvatarView] = useState(null);
     const [avatarFile, setAvatarFile] = useState(null);
@@ -20,7 +23,22 @@ const Profile = () => {
     const [avatarViewAction, setAvatarViewAction] = useState(null);
     const [warning, setWarning] = useState(null);
 
-    UseUpdateCurrentAdmin(setAdmin, currentAdmin);
+    // Admin edit profile
+    const [editProfile, setEditProfile] = useState(null);
+    const [newInput, setNewInput] = useState(admin);
+    const [keepData, setKeepData] = useState(admin);
+    const [focusedInput, setFocusedInput] = useState("");
+    const IsDataChange = () => {
+        return (
+            admin.firstname !== newInput.firstname ||
+            admin.lastname !== newInput.lastname ||
+            admin.username !== newInput.username ||
+            admin.bio !== newInput.bio 
+        );
+    };
+    const HandleFocus = (inputName) => { setFocusedInput(inputName); };
+    const HandleBlur = () => { setFocusedInput(""); };
+
 
     // Admin avatar
     const HandleAvatarActionSelect = () => { setAvatarAction(Show => !Show); }
@@ -82,6 +100,23 @@ const Profile = () => {
         })
     }
 
+    // Admin Edit profile
+    const HandleEditProfileBox = () => { setEditProfile(true); }
+    const HandleCloseEditProfileBox = () => { 
+        if (IsDataChange()) {
+            setWarning({
+                message: 'Are you sure you want to close edit profile box?',
+                action: () => { setEditProfile(false); setNewInput(keepData); setWarning(null); }
+            }) 
+        }
+        else {
+            setEditProfile(false); 
+            setNewInput(keepData);
+        }
+    }
+    const HandleEditProfileChange = (event) => { setNewInput( {...newInput, [event.target.name] : event.target.value }) }
+
+
     // Waring box
     const HandleWarningConfirm = async () => { if(warning?.action) { await warning.action(); } };
     const HandleWarningCancel = () => { setWarning(null); };
@@ -111,6 +146,17 @@ const Profile = () => {
             avatarViewAction = { avatarViewAction }
             HandleAvatarViewAction = { HandleAvatarViewAction }
             HandleDeleteAdminAvatar = { HandleDeleteAdminAvatar }
+
+            // Edit profile
+            editProfile = { editProfile }
+            HandleEditProfileBox = { HandleEditProfileBox }
+            HandleCloseEditProfileBox = { HandleCloseEditProfileBox }
+            newInput = { newInput }
+            IsDataChange = { IsDataChange }
+            HandleEditProfileChange = { HandleEditProfileChange }
+            focusedInput = { focusedInput }
+            HandleFocus = { HandleFocus }
+            HandleBlur =  { HandleBlur }
         />
     )
 }

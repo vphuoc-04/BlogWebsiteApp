@@ -307,7 +307,6 @@ a {
     align-items: center;
 }
 
-/* AVATAR */
 .AdminProfile .Avatar {
     width: 150px;
     height: 150px;
@@ -371,6 +370,63 @@ a {
     background-color: rgb(246, 246, 246);
 }
 
+.AdminProfile .Bio {
+    position: absolute;
+    top: 40%;
+    font-size: 14px;
+    width: 800px;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.AdminProfile .AdminInfo{
+    margin-top: -30px;
+    color: rgb(0, 0, 0, 0.7);
+}
+
+.AdminProfile .AdminInfo .FullName {
+    display: flex;
+    gap: 5px;
+}
+
+.AdminProfile .AdminInfo .FullName p {
+    font-size: 30px;
+}
+
+.AdminProfile .AdminInfo .Username p {
+    font-size: 20px;
+    margin-top: -20px;
+    margin-left: 2.5px;
+}
+
+.AdminProfile .AdminInfo .Actions {
+    display: flex;
+    gap: 20px;
+}
+
+.AdminProfile .AdminInfo .Actions .EditProfile button {
+    border-radius: 10px;
+    width: 120px;
+    height: 40px;
+    outline: none;
+    border: none;
+    text-align: start;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding-left: 10px;
+    justify-content: center;
+}
+
+.AdminProfile .AdminInfo .Actions .EditProfile button:hover {
+    background-color: rgb(67, 169, 162);
+    color: rgb(246, 246, 246);
+}
+
+/* AVATAR */
 .AdminProfile .AvatarView {
     height: 500px;
     width: 450px;
@@ -525,3 +581,104 @@ a {
     cursor: pointer;
     margin-top: 10px;
 }
+
+/* EDIT PROFILE */
+.AdminProfile .BoxEditProfile {
+    height: 600px;
+    width: 700px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border-radius: 10px;
+}
+
+.AdminProfile .BoxEditProfile .CloseBoxEditProfile {
+    margin-left: 665px;
+    margin-top: 10px;
+    z-index: 3;
+    font-size: xx-large;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.AdminProfile .BoxEditProfile .CloseBoxEditProfile:hover {
+    background-color: rgb(246, 246, 246);
+}
+
+.AdminProfile .BoxEditProfile .AdminInfoInput {
+    padding: 0 50px 0 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.AdminProfile .BoxEditProfile .AdminInfoInput input {
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    padding: 10px;
+    width: 100%;
+}
+
+.AdminProfile .BoxEditProfile .AdminInfoInput input.focused {
+    border: 1px solid rgb(67, 169, 162);
+} 
+
+.AdminProfile .BoxEditProfile .AdminInfoInput input:-webkit-autofill {
+    background-color: rgba(255, 255, 255) !important; 
+    color: rgb(0, 0, 0) !important; 
+    transition: background-color 5000s ease-in-out 0s; 
+}
+
+.AdminProfile .BoxEditProfile .AdminInfoInput .Bio {
+    height: 170px;
+    margin-top: 80px;
+    width: 610px;
+    outline: none;
+    border-radius: 0px;
+    width: 90%;
+}
+
+.AdminProfile .BoxEditProfile .AdminInfoInput textarea.focused {
+    border: 1px solid rgb(67, 169, 162);
+} 
+
+.AdminProfile .BoxEditProfile .AdminInfoInput .Bio::-webkit-scrollbar {
+    width: 5px;
+}
+
+.AdminProfile .BoxEditProfile .AdminInfoInput .Bio::-webkit-scrollbar-thumb {
+    background: rgb(136, 136, 136);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.AdminProfile .BoxEditProfile button {
+    margin-top: 210px;
+    margin-left: 570px;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+}
+
+.AdminProfile .BoxEditProfile button:disabled {
+    cursor: not-allowed;
+}
+
+.Active-Save-Profile-Button {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+}
+
+
