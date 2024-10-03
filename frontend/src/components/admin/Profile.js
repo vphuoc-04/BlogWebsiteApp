@@ -5,7 +5,8 @@ import { AdminData, defaultAvatar } from '../../data/AdminData';
 import { UseUpdateCurrentAdmin } from '../../hooks/useAuth';
 import { 
     UploadAdminAvatar,
-    DeleteAdminAvatar 
+    DeleteAdminAvatar, 
+    EditAdminProfile
 } from '../../services/AdminService';
 
 const Profile = () => {
@@ -101,7 +102,7 @@ const Profile = () => {
     }
 
     // Admin Edit profile
-    const HandleEditProfileBox = () => { setEditProfile(true); }
+    const HandleEditProfileBox = () => { setEditProfile(true); setKeepData(newInput); }
     const HandleCloseEditProfileBox = () => { 
         if (IsDataChange()) {
             setWarning({
@@ -115,6 +116,12 @@ const Profile = () => {
         }
     }
     const HandleEditProfileChange = (event) => { setNewInput( {...newInput, [event.target.name] : event.target.value }) }
+    const HandleEditAdminProfile = async () => { 
+        EditAdminProfile(newInput, currentAdmin); 
+        setAdmin(prevAdmin => ({ ...prevAdmin, firstname: newInput.firstname, lastname: newInput.lastname, username: newInput.username, bio: newInput.bio }))
+        setCurrentAdmin(prevAdmin => ({ ...prevAdmin, firstname: newInput.firstname, lastname: newInput.lastname, username: newInput.username, bio: newInput.bio }))
+        setEditProfile(false);
+    }
 
 
     // Waring box
@@ -157,6 +164,7 @@ const Profile = () => {
             focusedInput = { focusedInput }
             HandleFocus = { HandleFocus }
             HandleBlur =  { HandleBlur }
+            HandleEditAdminProfile = { HandleEditAdminProfile }
         />
     )
 }

@@ -96,7 +96,27 @@ const DeleteAvatar = async (req, res) => {
     });
 };
 
+const EditProfile = (req, res) => {
+    const token  = req.cookies.admin_token;
+    if (!token) { return res.status(401).json("Not verified!"); }
+    jwt.verify(token, "admin_jwtkey", async (err) => {
+        if (err) { return res.status(403).json("Invalid token!"); }
+
+        const adminId = req.params.id;
+
+        const { firstname, lastname, username, bio } = req.body;
+
+        const query = "UPDATE admin SET `firstname` = ?, `lastname` = ?, `username` = ?, `bio` = ? WHERE `id` = ?";
+
+        database.query(query, [firstname, lastname, username, bio, adminId], (err) => {
+            if (err) { return res.status(500).json("Failed to update profile!"); }
+            return res.json("Profile has been updated!");
+        });
+    });
+};
+
 export { 
     UploadAvatar,
-    DeleteAvatar
+    DeleteAvatar,
+    EditProfile
 }

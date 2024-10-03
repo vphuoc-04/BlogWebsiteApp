@@ -40,7 +40,24 @@ const DeleteAdminAvatar = async (currentAdmin, setCurrentAdmin) => {
     }
 }
 
+const EditAdminProfile = async (newInput, currentAdmin) => {
+    try {
+        const response = await axios.put(`/admin/edit/profile/info/${currentAdmin?.id}`, {
+            firstname: newInput.firstname,
+            lastname: newInput.lastname,
+            username: newInput.username,
+            bio: newInput.bio
+        });
+        const message = response.data || "Profile has been updated";
+        console.log(message);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     UploadAdminAvatar,
-    DeleteAdminAvatar
+    DeleteAdminAvatar,
+    EditAdminProfile
 }

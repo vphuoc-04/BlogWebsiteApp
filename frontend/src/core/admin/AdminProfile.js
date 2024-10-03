@@ -38,6 +38,7 @@ const AdminProfile = ({
     focusedInput,
     HandleFocus,
     HandleBlur,
+    HandleEditAdminProfile
 }) => {
     return (
         <div className = "AdminProfile">
@@ -184,6 +185,7 @@ const AdminProfile = ({
                     <button 
                         className = { IsDataChange() ? "Active-Save-Profile-Button" : "" }
                         disabled = { !IsDataChange() }
+                        onClick = { HandleEditAdminProfile }
                     >
                         Save
                     </button>
