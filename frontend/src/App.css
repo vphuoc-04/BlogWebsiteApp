@@ -405,7 +405,7 @@ a {
     gap: 20px;
 }
 
-.AdminProfile .AdminInfo .Actions .EditProfile button {
+.AdminProfile .AdminInfo .Actions button {
     border-radius: 10px;
     width: 120px;
     height: 40px;
@@ -421,7 +421,7 @@ a {
     justify-content: center;
 }
 
-.AdminProfile .AdminInfo .Actions .EditProfile button:hover {
+.AdminProfile .AdminInfo .Actions button:hover {
     background-color: rgb(67, 169, 162);
     color: rgb(246, 246, 246);
 }
@@ -682,3 +682,34 @@ a {
 }
 
 
+/* EMAIL SETTING */
+.AdminProfile .EmailSettingBox {
+    height: 600px;
+    width: 650px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border-radius: 10px;
+}
+
+.AdminProfile .EmailSettingBox .CloseEmailSettingBox {
+    margin-left: 615px;
+    margin-top: 10px;
+    z-index: 3;
+    font-size: xx-large;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.AdminProfile .EmailSettingBox .CloseEmailSettingBox:hover {
+    background-color: rgb(246, 246, 246);
+}

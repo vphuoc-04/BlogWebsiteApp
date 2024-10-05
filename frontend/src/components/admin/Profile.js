@@ -40,6 +40,9 @@ const Profile = () => {
     const HandleFocus = (inputName) => { setFocusedInput(inputName); };
     const HandleBlur = () => { setFocusedInput(""); };
 
+    // Admin email setting
+    const [emailSetting, setEmailSetting] = useState(null);
+
 
     // Admin avatar
     const HandleAvatarActionSelect = () => { setAvatarAction(Show => !Show); }
@@ -101,6 +104,7 @@ const Profile = () => {
         })
     }
 
+
     // Admin Edit profile
     const HandleEditProfileBox = () => { setEditProfile(true); setKeepData(newInput); }
     const HandleCloseEditProfileBox = () => { 
@@ -124,6 +128,12 @@ const Profile = () => {
     }
 
 
+    // Admin email setting
+    const HandleEmailSettingBox = () => { setEmailSetting(true); }
+    const HandleCloseEmailSettingBox = () => { setEmailSetting(false); }
+
+
+    
     // Waring box
     const HandleWarningConfirm = async () => { if(warning?.action) { await warning.action(); } };
     const HandleWarningCancel = () => { setWarning(null); };
@@ -165,6 +175,11 @@ const Profile = () => {
             HandleFocus = { HandleFocus }
             HandleBlur =  { HandleBlur }
             HandleEditAdminProfile = { HandleEditAdminProfile }
+
+            // Email setting
+            emailSetting = { emailSetting }
+            HandleEmailSettingBox = { HandleEmailSettingBox }
+            HandleCloseEmailSettingBox = { HandleCloseEmailSettingBox }
         />
     )
 }

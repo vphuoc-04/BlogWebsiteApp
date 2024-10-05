@@ -38,7 +38,12 @@ const AdminProfile = ({
     focusedInput,
     HandleFocus,
     HandleBlur,
-    HandleEditAdminProfile
+    HandleEditAdminProfile,
+
+    // Email Setting
+    emailSetting,
+    HandleEmailSettingBox,
+    HandleCloseEmailSettingBox
 }) => {
     return (
         <div className = "AdminProfile">
@@ -83,6 +88,11 @@ const AdminProfile = ({
                     <div className = "EditProfile" onClick = { HandleEditProfileBox }>
                         <button>
                             <i class = "fa-solid fa-user-pen"></i>Edit Profile
+                        </button>
+                    </div>
+                    <div className = "EmailSetting">
+                        <button onClick = { HandleEmailSettingBox }>
+                            <i class = "fa-solid fa-envelope"></i>Email
                         </button>
                     </div>
                 </div>
@@ -191,6 +201,14 @@ const AdminProfile = ({
                     </button>
                 </div>
             )}
+
+            {emailSetting && <div className = "overlay"></div>}
+            {emailSetting && (
+                <div className = "EmailSettingBox">
+                    <div className = "CloseEmailSettingBox" onClick = { HandleCloseEmailSettingBox }>&times;</div>
+                </div>
+            )}
+            
 
             {warning && <div className = "box"></div>}
             {warning && (
