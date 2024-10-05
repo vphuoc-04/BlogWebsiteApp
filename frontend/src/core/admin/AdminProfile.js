@@ -9,6 +9,9 @@ const AdminProfile = ({
     // Error
     error,
 
+    // Success
+    success,
+
     // Successfully notification
     successfully,
 
@@ -67,6 +70,12 @@ const AdminProfile = ({
     setVerifyPassword,
     showPassword,
     setShowPassword,
+    addBackupEmail,
+    HandleAddBackupEmailBox,
+    IsBackupEmailValid,
+    IsBackupEmailChange,
+    HandleCloseBacupEmailBox,
+    HandleAddBackupEmail
 }) => {
     return (
         <div className = "AdminProfile">
@@ -120,6 +129,7 @@ const AdminProfile = ({
                     </div>
                 </div>
             </div>
+
             {avatarView && <div className = "overlay"></div>}
             {avatarView && (
                 <div className = "AvatarView">
@@ -141,6 +151,7 @@ const AdminProfile = ({
                     </div>
                 </div>
             )}
+
             {boxEditAvatar && <div className = "overlay"></div>}
             {boxEditAvatar && (
                 <div className = "BoxEditAvatar">
@@ -169,6 +180,7 @@ const AdminProfile = ({
                     )}
                 </div>
             )}
+            
             {editProfile && <div className = "overlay"></div> }
             {editProfile && (
                 <div className = "BoxEditProfile">
@@ -261,9 +273,42 @@ const AdminProfile = ({
                             )}
                         </div>
                     </div>
+                    <div className = "AddBackupEmail">
+                        <button onClick = { HandleAddBackupEmailBox } disabled = { !!admin.backupemail }>Add backup email</button>
+                    </div>
+                    <div className = "BackupEmailTitle">Backup email</div>
+                    {admin.backupemail && (
+                        <div className = "BackupEmailData" key = {admin.backupemail}> 
+                            <p> { admin.backupemail } </p>
+                        </div>   
+                    )}    
                 </div>
             )}
-            
+
+            {addBackupEmail && <div className = "box"></div>}
+            {addBackupEmail && (
+                <div className = "AddBackupEmailBox">
+                    <p>Enter the backup email address you want to add:</p>
+                    <input 
+                        name = "backupemail"
+                        placeholder = "Backup email"
+                        onChange = { HandleInputChange }
+                        onFocus = {() => HandleFocus("backupemail")}
+                        onBlur = { HandleBlur }
+                        className = { focusedInput === "backupemail" ? "focused" : "" }
+                    />
+                    { success && <div> { success } </div> }
+                    <div className = "Buttons">
+                        <button
+                            className = { newInput.backupemail && IsBackupEmailChange() && IsBackupEmailValid() ? "Active-button-add-backup-email" : "" }
+                            disabled = { !IsBackupEmailValid() || !IsBackupEmailChange() }
+                            onClick = { HandleAddBackupEmail }
+                            >Add
+                        </button>
+                        <button onClick = { HandleCloseBacupEmailBox }>Cancel</button>
+                    </div>
+                </div>
+            )}   
 
             {warning && <div className = "box"></div>}
             {warning && (

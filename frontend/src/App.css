@@ -52,6 +52,7 @@ a {
     border-radius: 5px;
     cursor: pointer;
 }
+
 .WarningBox button:first-of-type {
     background-color: rgb(67, 169, 162);
     color: rgb(255, 255, 255);;
@@ -672,7 +673,7 @@ a {
 .AdminProfile .BoxEditAvatar .EditAvatar .Buttons {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 5px;
     padding-top: 10px;
     border-top: 1px solid rgb(0, 0, 0, 0.3);
     width: 100%;
@@ -690,6 +691,17 @@ a {
     font-weight: bold;
     cursor: pointer;
     margin-left: 72%;
+    width: 60px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.AdminProfile .BoxEditAvatar .EditAvatar .Buttons span:hover {
+    background-color: rgb(246, 246, 246);
 }
 
 .AdminProfile .BoxEditAvatar .EditAvatar .Buttons button {
@@ -806,7 +818,7 @@ a {
 
 /* EMAIL SETTING */
 .AdminProfile .EmailSettingBox {
-    height: 450px;
+    height: 500px;
     width: 550px;
     background-color: rgb(255, 255, 255);
     position: absolute;
@@ -943,5 +955,104 @@ a {
 .Active-button-save-edit-primary-email {
     background-color: rgb(67, 169, 162);
     color: rgb(255, 255, 255);
+}
+
+.AdminProfile .EmailSettingBox .AddBackupEmail {
+    padding: 20px 20px 25px 20px;
+}
+
+.AdminProfile .EmailSettingBox .AddBackupEmail:disabled {
+    cursor: not-allowed;
+}
+
+.AdminProfile .EmailSettingBox .AddBackupEmail button {
+    height: 30px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.AdminProfile .EmailSettingBox .AddBackupEmail button:disabled {
+    cursor: not-allowed;
+}
+
+.AdminProfile .EmailSettingBox .AddBackupEmail button:not(:disabled):hover {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+}
+
+.AdminProfile .EmailSettingBox .BackupEmailTitle {
+    margin-left: 20px;
+}
+
+.AdminProfile .AddBackupEmailBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: rgb(255, 255, 255);
+    z-index: 3;
+    border-radius: 10px;
+}
+
+.AdminProfile .AddBackupEmailBox p {
+    margin: 0 0 10px;
+}
+
+.AdminProfile .AddBackupEmailBox input {
+    padding: 10px;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    outline: none;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    width: 94%;
+}
+
+.AdminProfile .AddBackupEmailBox input.focused {
+    border: 1px solid rgb(67, 169, 162);
+}
+
+.AdminProfile .AddBackupEmailBox input:-webkit-autofill {
+    background-color: rgba(255, 255, 255) !important; 
+    color: rgb(0, 0, 0) !important; 
+    transition: background-color 5000s ease-in-out 0s; 
+}
+
+.AdminProfile .AddBackupEmailBox .Buttons button {
+    margin-right: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.AdminProfile .AddBackupEmailBox .Buttons button:first-of-type:disabled {
+    cursor: not-allowed;
+}
+
+.AdminProfile .AddBackupEmailBox .Buttons button:last-of-type {
+    background-color: rgb(136, 136, 136);
+    color: rgb(255, 255, 255);;
+}
+
+.Active-button-add-backup-email {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+}
+
+.AdminProfile .EmailSettingBox .BackupEmailData{
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.AdminProfile .EmailSettingBox .BackupEmailData p {
+    padding: 10px;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    border-radius: 5px;
+    width: 92%;
 }
 

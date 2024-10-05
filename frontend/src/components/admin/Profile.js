@@ -7,8 +7,10 @@ import {
     UploadAdminAvatar,
     DeleteAdminAvatar, 
     EditAdminProfile,
-    EditPrimaryEmail
+    EditPrimaryEmail,
+    AddBackupEmail
 } from '../../services/AdminService';
+
 import { IsValidEmail } from '../../services/EmailService';
 
 const Profile = () => {
@@ -35,12 +37,16 @@ const Profile = () => {
             admin.username !== newInput.username ||
             admin.bio !== newInput.bio ||
             admin.email !== newInput.email ||
-            admin.editemail !== newInput.editemail
+            admin.editemail !== newInput.editemail ||
+            admin.backupemail !== newInput.backupemail
         );
     };
 
     const IsEmailChange = () => { return IsValidEmail(newInput.editemail) && newInput.editemail !== admin.email; }
 
+    const IsBackupEmailValid = () => { return newInput.backupemail && newInput.backupemail !== newInput.email && IsValidEmail(newInput.backupemail); }
+
+    const IsBackupEmailChange = () => { return newInput.backupemail && newInput.backupemail !== admin.backupemail }
 
 
     // Admin avatar
@@ -68,12 +74,14 @@ const Profile = () => {
     const [verify, setVerify] = useState(null);
     const [verifyPassword, setVerifyPassword] = useState("");
     const [showPassword, setShowPassword] = useState("");
+    const [addBackupEmail, setAddBackupEmail] = useState(null);
 
 
     // Admin avatar
     const HandleAvatarActionSelect = () => { setAvatarAction(Show => !Show); }
 
     const HandleAvatarView = () => { setAvatarView(true); setAvatarAction(false); }
+
     const HandleCloseAvatarView = () => { setAvatarView(false); setAvatarViewAction(null); }
 
     const HandleSetAvatar = (event) => { 
@@ -89,6 +97,7 @@ const Profile = () => {
             reader.readAsDataURL(file);
         }
     };
+
     const HandleCloseAvatarSettingBox = () => { 
         setWarning({
             message:  'Are you sure you want to close edit avatar box?',
@@ -99,6 +108,7 @@ const Profile = () => {
         })
     }
     const OnCrop = (view) => { setCrop(view); };
+
     const HandleUploadAdminAvatar = async () => {
         if (!crop) return;
         const blob = await fetch(crop).then(response => response.blob());
@@ -115,6 +125,7 @@ const Profile = () => {
         setBoxEditAvatar(false);
     }
     const HandleAvatarViewAction = () => { setAvatarViewAction(Show => !Show); }
+
     const HandleDeleteAdminAvatar = () => {
         setWarning({
             message: 'Are you sure you want to delete your avatar?',
@@ -133,6 +144,7 @@ const Profile = () => {
 
     // Admin Edit profile
     const HandleEditProfileBox = () => { setEditProfile(true); setKeepData(newInput); }
+
     const HandleCloseEditProfileBox = () => { 
         if (IsDataChange()) {
             setWarning({
@@ -145,6 +157,7 @@ const Profile = () => {
             setNewInput(keepData);
         }
     }
+
     const HandleEditAdminProfile = async () => { 
         EditAdminProfile(newInput, currentAdmin); 
         setAdmin(prevAdmin => ({ ...prevAdmin, firstname: newInput.firstname, lastname: newInput.lastname, username: newInput.username, bio: newInput.bio }))
@@ -155,9 +168,13 @@ const Profile = () => {
 
     // Admin email setting
     const HandleEmailSettingBox = () => { setEmailSetting(true); }
+
     const HandleCloseEmailSettingBox = () => { setEmailSetting(false); setEditPrimaryEmail(false); setIsClicked (false); }
+
     const HandleEditPrimaryEmail = () => { setEditPrimaryEmail(true); setIsClicked(true); }
+
     const HandleCloseEditPrimaryEmail = () => { setEditPrimaryEmail(false); setIsClicked(false); }
+
     const HandleSaveEditPrimaryEmail = () => {
         setVerify({
             message: 'You need to enter your password to confirm: ',
@@ -185,6 +202,18 @@ const Profile = () => {
                 }
             }
         })
+    }
+
+    const HandleAddBackupEmailBox = () => { setAddBackupEmail(true); setEditPrimaryEmail(false); setIsClicked (false); }
+
+    const HandleCloseBacupEmailBox = () => { setAddBackupEmail(false); }
+
+    const HandleAddBackupEmail = async () => { 
+        await AddBackupEmail(IsBackupEmailValid, newInput, currentAdmin) 
+        setTimeout(() => { setAddBackupEmail(null); }, 1000)
+        setAdmin(prevAdmin => ({ ...prevAdmin, backupemail: newInput.backupemail }));
+        setCurrentAdmin(prevAdmin => ({ ...prevAdmin, backupemail: newInput.backupemail }));
+        localStorage.setItem("admin", JSON.stringify({ ...currentAdmin, backupemail: newInput.backupemail }));
     }
 
 
@@ -266,6 +295,12 @@ const Profile = () => {
             setVerifyPassword = { setVerifyPassword }
             showPassword = { showPassword }
             setShowPassword = { setShowPassword }
+            addBackupEmail = { addBackupEmail }
+            HandleAddBackupEmailBox = { HandleAddBackupEmailBox }
+            IsBackupEmailValid = { IsBackupEmailValid }
+            IsBackupEmailChange = { IsBackupEmailChange }
+            HandleCloseBacupEmailBox = { HandleCloseBacupEmailBox }
+            HandleAddBackupEmail = { HandleAddBackupEmail }
         />
     )
 }

@@ -72,9 +72,26 @@ const EditPrimaryEmail = async (setError, setSuccess, newInput, currentAdmin, pa
     }
 }
 
+const AddBackupEmail = async (IsBackupEmailValid, newInput, currentAdmin) => {
+    if (!IsBackupEmailValid()) { return { success: false }; }
+    try {
+        const response = await axios.put(`/admin/add/profile/backup/email/${currentAdmin?.id}`, {
+            backupemail: newInput.backupemail
+        });        
+        const message = response.data || "Backup email added successfully!";
+        console.log(message);
+        return { success: false };
+    }
+    catch(err) {
+        console.log(err);
+        return { success: false };
+    }
+}
+
 export {
     UploadAdminAvatar,
     DeleteAdminAvatar,
     EditAdminProfile,
-    EditPrimaryEmail
+    EditPrimaryEmail,
+    AddBackupEmail
 }

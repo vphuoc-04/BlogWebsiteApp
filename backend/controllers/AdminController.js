@@ -2,13 +2,13 @@ import { database } from '../database.js';
 import jwt from 'jsonwebtoken'
 import fs from 'fs';
 import path from 'path';
+import bcrypt from 'bcrypt';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-import bcrypt from 'bcrypt';
 
 const UploadAvatar = (req, res) => {
     const token = req.cookies.admin_token;
@@ -150,9 +150,30 @@ const EditPrimaryEmail = (req, res) => {
     });
 }
 
+const AddBackupEmail = (req, res) => {
+    const token  = req.cookies.admin_token;
+    if (!token) { return res.status(401).json("Not verified!") }
+
+    jwt.verify(token, "admin_jwtkey", (err) => {
+        if (err) { return res.status(403).json("Invalid token!") }
+
+        const { backupemail } = req.body;
+        
+        const adminId = req.params.id;
+
+        const query = "UPDATE admin SET `backupemail` = ? WHERE `id` = ?";
+
+        database.query(query, [backupemail, adminId], (err, data) => {
+            if(err) return res.status(500).json("Failed to add backup email!");
+            return res.json("Email backup has been added!")
+        })
+    })
+}
+
 export { 
     UploadAvatar,
     DeleteAvatar,
     EditProfile,
-    EditPrimaryEmail
+    EditPrimaryEmail,
+    AddBackupEmail
 }
