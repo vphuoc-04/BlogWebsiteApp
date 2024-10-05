@@ -6,13 +6,42 @@ import { UseUpdateCurrentAdmin } from '../../hooks/useAuth';
 import { 
     UploadAdminAvatar,
     DeleteAdminAvatar, 
-    EditAdminProfile
+    EditAdminProfile,
+    EditPrimaryEmail
 } from '../../services/AdminService';
+import { IsValidEmail } from '../../services/EmailService';
 
 const Profile = () => {
     const { currentAdmin, setCurrentAdmin } = useContext(AdminContext)
     const [admin, setAdmin] = AdminData(currentAdmin);
     UseUpdateCurrentAdmin(setAdmin, currentAdmin);
+
+    // Error
+    const [error, setError] = useState(null);
+
+    // Success
+    const [success, setSuccess] = useState(null);
+
+    // Successfully 
+    const [successfully, setSuccessfully] = useState(null);
+
+    // Data change
+    const HandleInputChange = (event) => { setNewInput( {...newInput, [event.target.name] : event.target.value }) }
+
+    const IsDataChange = () => {
+        return (
+            admin.firstname !== newInput.firstname ||
+            admin.lastname !== newInput.lastname ||
+            admin.username !== newInput.username ||
+            admin.bio !== newInput.bio ||
+            admin.email !== newInput.email ||
+            admin.editemail !== newInput.editemail
+        );
+    };
+
+    const IsEmailChange = () => { return IsValidEmail(newInput.editemail) && newInput.editemail !== admin.email; }
+
+
 
     // Admin avatar
     const [avatarAction, setAvatarAction] = useState(null);
@@ -29,19 +58,16 @@ const Profile = () => {
     const [newInput, setNewInput] = useState(admin);
     const [keepData, setKeepData] = useState(admin);
     const [focusedInput, setFocusedInput] = useState("");
-    const IsDataChange = () => {
-        return (
-            admin.firstname !== newInput.firstname ||
-            admin.lastname !== newInput.lastname ||
-            admin.username !== newInput.username ||
-            admin.bio !== newInput.bio 
-        );
-    };
     const HandleFocus = (inputName) => { setFocusedInput(inputName); };
     const HandleBlur = () => { setFocusedInput(""); };
 
     // Admin email setting
     const [emailSetting, setEmailSetting] = useState(null);
+    const [editPrimaryEmail, setEditPrimaryEmail] = useState(null);
+    const [isClicked, setIsClicked] = useState(null);
+    const [verify, setVerify] = useState(null);
+    const [verifyPassword, setVerifyPassword] = useState("");
+    const [showPassword, setShowPassword] = useState("");
 
 
     // Admin avatar
@@ -119,7 +145,6 @@ const Profile = () => {
             setNewInput(keepData);
         }
     }
-    const HandleEditProfileChange = (event) => { setNewInput( {...newInput, [event.target.name] : event.target.value }) }
     const HandleEditAdminProfile = async () => { 
         EditAdminProfile(newInput, currentAdmin); 
         setAdmin(prevAdmin => ({ ...prevAdmin, firstname: newInput.firstname, lastname: newInput.lastname, username: newInput.username, bio: newInput.bio }))
@@ -130,22 +155,74 @@ const Profile = () => {
 
     // Admin email setting
     const HandleEmailSettingBox = () => { setEmailSetting(true); }
-    const HandleCloseEmailSettingBox = () => { setEmailSetting(false); }
+    const HandleCloseEmailSettingBox = () => { setEmailSetting(false); setEditPrimaryEmail(false); setIsClicked (false); }
+    const HandleEditPrimaryEmail = () => { setEditPrimaryEmail(true); setIsClicked(true); }
+    const HandleCloseEditPrimaryEmail = () => { setEditPrimaryEmail(false); setIsClicked(false); }
+    const HandleSaveEditPrimaryEmail = () => {
+        setVerify({
+            message: 'You need to enter your password to confirm: ',
+            action: async (password) => {
+                if (password) {
+                    try {
+                        const result = await EditPrimaryEmail(setError, setSuccess, newInput, currentAdmin, password);
+                        if (result.success) {
+                            setSuccessfully({ message: 'Primary email updated successfully!', type: 'success' });
+                            setTimeout(() => { setSuccessfully(false); setVerify(null); setEditPrimaryEmail(null); setIsClicked(null); }, 2000);
+                            setVerifyPassword(''); setSuccess(false); setError(false);
+                            setAdmin(prevAdmin => ({ ...prevAdmin, email: newInput.editemail }));
+                            setCurrentAdmin(prevAdmin => ({ ...prevAdmin, email: newInput.editemail }));
+                            localStorage.setItem("admin", JSON.stringify({ ...currentAdmin, email: newInput.editemail }));
+                        }
+                    }
+                    catch (err) {
+                        setError("Incorrect password!");
+                        setSuccessfully(false);
+                    }
+                }
+                else {
+                    setError("Password is required!");
+                    setSuccessfully(false);
+                }
+            }
+        })
+    }
 
 
-    
     // Waring box
     const HandleWarningConfirm = async () => { if(warning?.action) { await warning.action(); } };
     const HandleWarningCancel = () => { setWarning(null); };
+
+
+    // Verify box 
+    const HandleVerifyConfirm = async () => { if(verify?.action) { await verify.action(verifyPassword); } };
+    const HandleVerifyCancel = () => { setVerify(null); setError(null); setVerifyPassword(null); };
+    
 
     return (
         <AdminProfile 
             admin = { admin }
 
+            // Error
+            error = { error }
+
+            // Success
+            success = { success }
+
+            // Successfully notification
+            successfully = { successfully }
+
             // Waring box
             warning = { warning }
             HandleWarningConfirm = { HandleWarningConfirm }
             HandleWarningCancel = { HandleWarningCancel }
+
+            // Verify box
+            verify = { verify }
+            HandleVerifyConfirm = { HandleVerifyConfirm }
+            HandleVerifyCancel = { HandleVerifyCancel }
+
+            // Data change
+            HandleInputChange = { HandleInputChange }
 
             // Avatar admin
             avatarAction = { avatarAction }
@@ -170,7 +247,6 @@ const Profile = () => {
             HandleCloseEditProfileBox = { HandleCloseEditProfileBox }
             newInput = { newInput }
             IsDataChange = { IsDataChange }
-            HandleEditProfileChange = { HandleEditProfileChange }
             focusedInput = { focusedInput }
             HandleFocus = { HandleFocus }
             HandleBlur =  { HandleBlur }
@@ -180,6 +256,16 @@ const Profile = () => {
             emailSetting = { emailSetting }
             HandleEmailSettingBox = { HandleEmailSettingBox }
             HandleCloseEmailSettingBox = { HandleCloseEmailSettingBox }
+            editPrimaryEmail = { editPrimaryEmail }
+            isClicked = { isClicked }
+            HandleEditPrimaryEmail = { HandleEditPrimaryEmail }
+            HandleCloseEditPrimaryEmail = { HandleCloseEditPrimaryEmail }
+            IsEmailChange = { IsEmailChange }
+            HandleSaveEditPrimaryEmail = { HandleSaveEditPrimaryEmail }
+            verifyPassword = { verifyPassword }
+            setVerifyPassword = { setVerifyPassword }
+            showPassword = { showPassword }
+            setShowPassword = { setShowPassword }
         />
     )
 }

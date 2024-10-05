@@ -28,6 +28,8 @@ a {
     z-index: 3;
 }
 
+
+/* WARNING BOX */
 .WarningBox {
     position: absolute;
     top: 50%;
@@ -58,6 +60,126 @@ a {
 .WarningBox button:last-of-type {
     background-color: rgb(136, 136, 136);
     color: rgb(255, 255, 255);;
+}
+
+/* VERIFY BOX */
+.VerifyBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: rgb(255, 255, 255);
+    z-index: 4;
+    border-radius: 10px;
+}
+
+.VerifyBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: rgb(255, 255, 255);
+    z-index: 4;
+    border-radius: 10px;
+    height: 200px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.VerifyBox p {
+    text-align: center;
+}
+
+.VerifyBox .buttons {
+    display: flex;
+}
+
+.VerifyBox .Buttons button {
+    margin-right: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 25px;
+}
+
+.VerifyBox .Buttons button:first-of-type {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);;
+}
+
+.VerifyBox .Buttons button:last-of-type {
+    background-color: rgb(136, 136, 136);
+    color: rgb(255, 255, 255);;
+}
+
+.VerifyBox .InputVerifyPassowrd {
+    outline: none;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.VerifyBox .InputVerifyPassowrd.focused {
+    border: 1px solid rgb(67, 169, 162);
+}
+
+.VerifyBox .InputVerifyPassowrd.error {
+    border: 1px solid rgb(156, 0, 0);
+}
+
+.VerifyBox .InputVerifyPassowrd input {
+    outline: none;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 85%;
+    margin-left: -35px;
+}
+
+.VerifyBox .InputVerifyPassowrd input:-webkit-autofill {
+    background-color: rgba(255, 255, 255) !important; 
+    color: rgb(0, 0, 0) !important; 
+    transition: background-color 5000s ease-in-out 0s; 
+}
+
+.VerifyBox .InputVerifyPassowrd .ShowPassword {
+    cursor: pointer;
+    position: absolute;
+    left: 390px;
+}
+
+.VerifyBox .Error {
+    font-weight: lighter;
+    color: rgb(255, 0, 0);
+    position: absolute;
+    top: 123px;
+}
+
+/* SUCCESSFULLY */
+.Successfully {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    justify-content: center;
+    margin-left: -20px;
+}
+
+.Successfully i {
+    font-size: xx-large;
+    color: rgb(67, 169, 162);
 }
 
 .App {
@@ -684,8 +806,8 @@ a {
 
 /* EMAIL SETTING */
 .AdminProfile .EmailSettingBox {
-    height: 600px;
-    width: 650px;
+    height: 450px;
+    width: 550px;
     background-color: rgb(255, 255, 255);
     position: absolute;
     top: 50%;
@@ -696,7 +818,7 @@ a {
 }
 
 .AdminProfile .EmailSettingBox .CloseEmailSettingBox {
-    margin-left: 615px;
+    margin-left: 515px;
     margin-top: 10px;
     z-index: 3;
     font-size: xx-large;
@@ -713,3 +835,113 @@ a {
 .AdminProfile .EmailSettingBox .CloseEmailSettingBox:hover {
     background-color: rgb(246, 246, 246);
 }
+
+.AdminProfile .EmailSettingBox .PrimaryEmail {
+    padding: 5px 20px;
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .Input {
+    padding: 10px;
+    outline: none;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    border-radius: 5px;
+    width: 75%;
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .content {
+    display: flex;
+    gap: 10px;
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .content button {
+    cursor: pointer;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    transition: all 0.3s;
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .content .Edit:hover {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .content .Edit.isClicked {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .content .Delete:hover {
+    background-color: rgb(156, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .EditPrimaryEmail .EditPrimaryEmailBox {
+    margin-top: 20px;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    height: 150px;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .EditPrimaryEmail .EditPrimaryEmailBox input {
+    width: 93.5%;
+    transition: all 0.3s;
+    padding: 10px;
+    outline: none;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .EditPrimaryEmail .EditPrimaryEmailBox input.focused {
+    border: 1px solid rgb(67, 169, 162);
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .EditPrimaryEmail .EditPrimaryEmailBox input:-webkit-autofill {
+    background-color: rgba(255, 255, 255) !important; 
+    color: rgb(0, 0, 0) !important; 
+    transition: background-color 5000s ease-in-out 0s; 
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .EditPrimaryEmail .EditPrimaryEmailBox .Buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .EditPrimaryEmail .EditPrimaryEmailBox .Buttons button {
+    cursor: pointer;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    transition: all 0.3s;
+    width: 70px;
+    height: 30px;
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .EditPrimaryEmail .EditPrimaryEmailBox .Buttons button:disabled {
+    cursor: not-allowed;
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .EditPrimaryEmail .EditPrimaryEmailBox .Buttons p {
+    color: rgb(67, 169, 162);
+    font-weight: bold;
+    cursor: pointer;
+    width: 70px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.AdminProfile .EmailSettingBox .PrimaryEmail .EditPrimaryEmail .EditPrimaryEmailBox .Buttons p:hover {
+    background-color: rgb(246, 246, 246);   
+}
+
+.Active-button-save-edit-primary-email {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+}
+

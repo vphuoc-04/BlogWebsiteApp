@@ -6,10 +6,25 @@ import { defaultAvatar } from '../../data/AdminData';
 const AdminProfile = ({
     admin,
 
+    // Error
+    error,
+
+    // Successfully notification
+    successfully,
+
     // Waring box
     warning,
     HandleWarningConfirm,
     HandleWarningCancel,
+
+    // Verify box
+    verify,
+    HandleVerifyConfirm,
+    HandleVerifyCancel,
+
+    // Data change
+    HandleInputChange,
+    IsDataChange,
 
     // Admin avatar
     avatarAction,
@@ -33,8 +48,6 @@ const AdminProfile = ({
     HandleEditProfileBox,
     HandleCloseEditProfileBox,
     newInput,
-    IsDataChange,
-    HandleEditProfileChange,
     focusedInput,
     HandleFocus,
     HandleBlur,
@@ -43,7 +56,17 @@ const AdminProfile = ({
     // Email Setting
     emailSetting,
     HandleEmailSettingBox,
-    HandleCloseEmailSettingBox
+    HandleCloseEmailSettingBox,
+    editPrimaryEmail,
+    isClicked,
+    HandleEditPrimaryEmail,
+    HandleCloseEditPrimaryEmail,
+    IsEmailChange,
+    HandleSaveEditPrimaryEmail,
+    verifyPassword,
+    setVerifyPassword,
+    showPassword,
+    setShowPassword,
 }) => {
     return (
         <div className = "AdminProfile">
@@ -155,7 +178,7 @@ const AdminProfile = ({
                         <input 
                             name = "firstname"
                             placeholder = "First name"
-                            onChange = { HandleEditProfileChange }
+                            onChange = { HandleInputChange }
                             value = { newInput.firstname }
                             onFocus = {() => HandleFocus("firstname")}
                             onBlur = { HandleBlur }
@@ -165,7 +188,7 @@ const AdminProfile = ({
                         <input 
                             name = "lastname"
                             placeholder = "Last name"
-                            onChange = { HandleEditProfileChange }
+                            onChange = { HandleInputChange }
                             value = { newInput.lastname }
                             onFocus = {() => HandleFocus("lastname")}
                             onBlur = { HandleBlur }
@@ -175,7 +198,7 @@ const AdminProfile = ({
                         <input 
                             name = "username"
                             placeholder = "Username"
-                            onChange = { HandleEditProfileChange }
+                            onChange = { HandleInputChange }
                             value = { newInput.username }
                             onFocus = {() => HandleFocus("username")}
                             onBlur = { HandleBlur }
@@ -185,7 +208,7 @@ const AdminProfile = ({
                         <textarea 
                             name = "bio"
                             placeholder = "Bio"
-                            onChange = { HandleEditProfileChange }
+                            onChange = { HandleInputChange }
                             value = { newInput.bio } 
                             onFocus = {() => HandleFocus("bio")}
                             onBlur = { HandleBlur }
@@ -206,6 +229,38 @@ const AdminProfile = ({
             {emailSetting && (
                 <div className = "EmailSettingBox">
                     <div className = "CloseEmailSettingBox" onClick = { HandleCloseEmailSettingBox }>&times;</div>
+                    <div className = "PrimaryEmail">
+                        <p>Primary email</p>
+                        <div className = "content">
+                            <div className = "Input"> {admin.email} </div>
+                            <button className = {`Edit ${ isClicked ? "isClicked" : "" }`} onClick = { HandleEditPrimaryEmail }>Edit</button>
+                            <button className = "Delete">Delete</button>
+                        </div>
+                        <div className = "EditPrimaryEmail">
+                            {editPrimaryEmail && (
+                                <div className = "EditPrimaryEmailBox">
+                                    <p>Edit primary email</p>
+                                    <input 
+                                        name = "editemail"
+                                        placeholder = "Primary email"
+                                        onChange = { HandleInputChange }
+                                        onFocus = {() => HandleFocus("editemail")}
+                                        onBlur = { HandleBlur }
+                                        className = { focusedInput === "editemail" ? "focused" : "" }
+                                    />
+                                    <div className = "Buttons">
+                                        <button 
+                                            className = { IsEmailChange() ? "Active-button-save-edit-primary-email" : "" }
+                                            disabled = { !IsEmailChange() }
+                                            onClick = { HandleSaveEditPrimaryEmail }
+                                            >Save
+                                        </button>
+                                        <p onClick = { HandleCloseEditPrimaryEmail }>Cancel</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             )}
             
@@ -216,6 +271,41 @@ const AdminProfile = ({
                     <p> { warning.message } </p>
                     <button onClick = { HandleWarningConfirm }>Yes</button>
                     <button onClick = { HandleWarningCancel }>Cancel</button>
+                </div>
+            )}
+
+            {verify && <div className = "box"></div>}
+            {verify && (
+                <div className = "VerifyBox">
+                    <p> { verify.message } </p>
+                    <div    
+                        onFocus = {() => HandleFocus("password")} 
+                        onBlur = { HandleBlur } 
+                        className = {`InputVerifyPassowrd ${error ? "error" : focusedInput === "password" ? "focused" : ""}`}
+                    >
+                        <input
+                            name = "password"
+                            type = { showPassword === true ? "text" : "password" }
+                            placeholder = "Password"
+                            value = { verifyPassword } 
+                            onChange = {(e) => setVerifyPassword(e.target.value)}
+                        />
+                        <i 
+                            className = { `ShowPassword ${showPassword === true ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}` } 
+                            onClick = {() => setShowPassword(!showPassword) }
+                        />
+                    </div>
+                    { error && <h4 className = "Error"> { error } </h4> }
+                    <div className = "Buttons">
+                        <button onClick = { HandleVerifyConfirm }>Confirm</button>
+                        <button onClick = { HandleVerifyCancel }>Cancel</button>
+                    </div>
+                    {successfully && (
+                        <div className = "Successfully">
+                            <i class = "fa-regular fa-circle-check"></i>
+                            <p> { successfully.message } </p>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

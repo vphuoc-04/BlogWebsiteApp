@@ -56,8 +56,25 @@ const EditAdminProfile = async (newInput, currentAdmin) => {
     }
 }
 
+const EditPrimaryEmail = async (setError, setSuccess, newInput, currentAdmin, password) => {
+    try {
+        const response = await axios.put(`/admin/edit/profile/primary/email/${currentAdmin?.id}`, {
+            email: newInput.editemail,
+            password: password
+        })
+        const message = response.data;
+        setSuccess(message);
+        return { success: true };
+    }
+    catch (err) {
+        setError(err?.response.data);
+        return { success: false };
+    }
+}
+
 export {
     UploadAdminAvatar,
     DeleteAdminAvatar,
-    EditAdminProfile
+    EditAdminProfile,
+    EditPrimaryEmail
 }

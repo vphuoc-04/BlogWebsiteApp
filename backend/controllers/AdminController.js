@@ -8,6 +8,7 @@ import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+import bcrypt from 'bcrypt';
 
 const UploadAvatar = (req, res) => {
     const token = req.cookies.admin_token;
@@ -115,8 +116,43 @@ const EditProfile = (req, res) => {
     });
 };
 
+const EditPrimaryEmail = (req, res) => {
+    const token  = req.cookies.admin_token;
+    if (!token) { return res.status(401).json("Not verified!"); }
+    jwt.verify(token, "admin_jwtkey", (err) => {
+        if(err) { return res.status(403).json("Invalid token!") }
+
+        const { email, password } = req.body;
+        
+        const adminId = req.params.id;
+
+        const query = "SELECT password FROM admin WHERE id = ?";
+
+        database.query(query, [adminId], async (err, data) => {
+            if(err) { return res.status(500).json("Server error!"); }
+
+            if(data.length === 0) { return res.status(404).json("Admin not found!"); }
+
+            const checkPassword = data[0].password;
+
+            const getHashPassword = await bcrypt.compare(password, checkPassword);
+
+            if(!getHashPassword) { return res.status(401).json("Incorrect password!"); }
+
+            const updateEmail = "UPDATE admin SET email = ? WHERE id = ?";
+
+            database.query(updateEmail, [email, adminId], (err, data) => {
+                if(err) { return res.status(500).json("Failed to update email!"); }
+
+                return res.json("Email has been updated!");
+            });
+        });
+    });
+}
+
 export { 
     UploadAvatar,
     DeleteAvatar,
-    EditProfile
+    EditProfile,
+    EditPrimaryEmail
 }
