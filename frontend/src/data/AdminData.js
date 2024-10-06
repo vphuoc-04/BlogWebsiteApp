@@ -8,7 +8,9 @@ const AdminData = (currentAdmin) => {
         username: currentAdmin?.username,
         bio: currentAdmin?.bio,
         email: currentAdmin?.email,
-        backupemail: currentAdmin?.backupemail
+        backupemail: currentAdmin?.backupemail,
+        newpassword: '',
+        renewpassword: ''
     })
 
     return [admin, setAdmin];

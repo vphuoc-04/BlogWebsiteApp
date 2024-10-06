@@ -51,6 +51,14 @@ const Profile = () => {
 
     const IsBackupEmailChange = () => { return newInput.backupemail && newInput.backupemail !== admin.backupemail }
 
+    const IsPasswordChange = () => { 
+        return(
+            newInput.password !== "" && 
+            newInput.newpassword !== "" && 
+            newInput.renewpassword !== "" 
+        ) 
+    }
+
 
     // Admin avatar
     const [avatarAction, setAvatarAction] = useState(null);
@@ -79,6 +87,9 @@ const Profile = () => {
     const [showPassword, setShowPassword] = useState("");
     const [addBackupEmail, setAddBackupEmail] = useState(null);
     const [backupEmailAction, setBackupEmailAction] = useState(null);
+
+    //
+    const [passwordSetting, setPasswordSetting] = useState(null);
     
 
 
@@ -297,6 +308,12 @@ const Profile = () => {
     }
 
 
+    // Admin password setting
+    const HandlePasswordSettingBox = () => { setPasswordSetting(true); }
+    const HandleClosePassowrdSettingBox = () => { setPasswordSetting(null); }
+
+
+
     // Waring box
     const HandleWarningConfirm = async () => { if(warning?.action) { await warning.action(); } };
     const HandleWarningCancel = () => { setWarning(null); };
@@ -386,6 +403,12 @@ const Profile = () => {
             HandleDeleteBackupEmail = { HandleDeleteBackupEmail }
             HandleSetPrimaryBackupEmail = { HandleSetPrimaryBackupEmail }
             HandleDeletePrimaryEmail = { HandleDeletePrimaryEmail }
+
+            // Password setting
+            passwordSetting = { passwordSetting }
+            HandlePasswordSettingBox = { HandlePasswordSettingBox } 
+            HandleClosePassowrdSettingBox = { HandleClosePassowrdSettingBox }
+            IsPasswordChange = { IsPasswordChange }
         />
     )
 }

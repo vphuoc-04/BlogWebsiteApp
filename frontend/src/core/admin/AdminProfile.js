@@ -80,7 +80,13 @@ const AdminProfile = ({
     HandleBackupEmailActionBox,
     HandleDeleteBackupEmail,
     HandleSetPrimaryBackupEmail,
-    HandleDeletePrimaryEmail
+    HandleDeletePrimaryEmail,
+
+    // Password setting
+    passwordSetting,
+    HandlePasswordSettingBox,
+    HandleClosePassowrdSettingBox,
+    IsPasswordChange
 }) => {
     return (
         <div className = "AdminProfile">
@@ -130,6 +136,11 @@ const AdminProfile = ({
                     <div className = "EmailSetting">
                         <button onClick = { HandleEmailSettingBox }>
                             <i class = "fa-solid fa-envelope"></i>Email
+                        </button>
+                    </div>
+                    <div className = "PasswordSetting">
+                        <button onClick = { HandlePasswordSettingBox }>
+                            <i class = "fa-solid fa-lock"></i>Password
                         </button>
                     </div>
                 </div>
@@ -319,7 +330,42 @@ const AdminProfile = ({
                         <button onClick = { HandleCloseBacupEmailBox }>Cancel</button>
                     </div>
                 </div>
-            )}   
+            )} 
+
+            {passwordSetting && <div className = "overlay"></div>}
+            {passwordSetting && (
+                <div className = "PasswordSettingBox">
+                    <div className = "ClosePasswordSettingBox" onClick = { HandleClosePassowrdSettingBox }>&times;</div>
+                    <div className = "PasswordSettingInput">
+                        <p>Password</p>
+                        <input 
+                            name = "password"
+                            type = "password"
+                            placeholder = "Password"
+                            onChange = { HandleInputChange }
+                        />
+                        <p>New Password</p>
+                        <input 
+                            name = "newpassword"
+                            type = "password"
+                            placeholder = "New passowrd"  
+                            onChange = { HandleInputChange }
+                        />
+                        <p>Re-enter New Password</p>
+                        <input 
+                            name = "renewpassword"
+                            type = "password"
+                            placeholder = "Re-enter new password"
+                            onChange = { HandleInputChange }
+                        />
+                    </div>
+                    <button 
+                        className = { IsPasswordChange() ? "Active-button-password-setting" : "" }
+                        disabled = { !IsPasswordChange() }
+                        >Save
+                    </button>
+                </div>
+            )}  
 
             {warning && <div className = "box"></div>}
             {warning && (
