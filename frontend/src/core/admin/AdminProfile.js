@@ -78,7 +78,8 @@ const AdminProfile = ({
     HandleAddBackupEmail,
     backupEmailAction,
     HandleBackupEmailActionBox,
-    HandleDeleteBackupEmail
+    HandleDeleteBackupEmail,
+    HandleSetPrimaryBackupEmail
 }) => {
     return (
         <div className = "AdminProfile">
@@ -287,7 +288,7 @@ const AdminProfile = ({
                     )}    
                     {backupEmailAction && (
                         <div className = "BackupEmailActionBox">
-                            <span>Set primary</span>
+                            <span onClick = { HandleSetPrimaryBackupEmail }>Set primary</span>
                             <span onClick = { HandleDeleteBackupEmail }>Delete</span>
                         </div>
                     )}

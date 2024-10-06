@@ -9,7 +9,8 @@ import {
     EditAdminProfile,
     EditPrimaryEmail,
     AddBackupEmail,
-    DeleteBackupEmail
+    DeleteBackupEmail,
+    SetPrimaryBackupEmail
 } from '../../services/AdminService';
 
 import { IsValidEmail } from '../../services/EmailService';
@@ -235,6 +236,35 @@ const Profile = () => {
         })
     }
 
+    const HandleSetPrimaryBackupEmail = () => {
+        setVerify({
+            message: 'Are you sure you want to set this email as primary?',
+            action: async (password) => {
+                if (password) {
+                    try {
+                        const result = await SetPrimaryBackupEmail(setSuccess, setError, currentAdmin, password);
+                        if (result.success) {
+                            setSuccessfully({ message: 'Backup email has been set to primary email!', type: 'success' })
+                            setTimeout(() => { setSuccessfully(false); setVerify(null); setBackupEmailAction(null); }, 2000);
+                            setVerifyPassword(''); setSuccess(false); setError(false);
+                            setAdmin(prevAdmin => ({ ...prevAdmin, email: newInput.backupemail, backupemail: newInput.email }));
+                            setCurrentAdmin(prevAdmin => ({ ...prevAdmin, email: newInput.backupemail, backupemail: newInput.email }));
+                            localStorage.setItem("admin", JSON.stringify({ ...currentAdmin, email: newInput.backupemail, backupemail: newInput.email }));
+                        }
+                    }
+                    catch (err) {
+                        setError("Incorrect password!");
+                        setSuccessfully(false);
+                    }
+                }
+                else {
+                    setError("Password is required!");
+                    setSuccessfully(false);
+                }
+            }
+        })
+    }
+
 
     // Waring box
     const HandleWarningConfirm = async () => { if(warning?.action) { await warning.action(); } };
@@ -323,6 +353,7 @@ const Profile = () => {
             backupEmailAction = { backupEmailAction }
             HandleBackupEmailActionBox = { HandleBackupEmailActionBox }
             HandleDeleteBackupEmail = { HandleDeleteBackupEmail }
+            HandleSetPrimaryBackupEmail = { HandleSetPrimaryBackupEmail }
         />
     )
 }

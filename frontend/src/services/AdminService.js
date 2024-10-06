@@ -93,13 +93,34 @@ const DeleteBackupEmail = async (setSuccess, setError, currentAdmin) => {
         setError("No backup email to set as primary!");
         return;
     }
-    try{
+    try {
         const response = await axios.put(`/admin/delete/backup/email/${currentAdmin?.id}`);
         const message = response.data || "Backup email deleted successfully!";
         setSuccess(message);
     }
-    catch(err){
+    catch(err) {
         setError(err.response?.data);
+    }
+}
+
+const SetPrimaryBackupEmail = async (setSuccess, setError, currentAdmin, password) => {
+    if(!currentAdmin?.backupemail){
+        setError("No backup email to set as primary!");
+        return { success: false };
+    }
+    try{
+        const response = await axios.put(`/admin/setprimary/profile/backup/email/${currentAdmin?.id}`, {
+            email: currentAdmin.backupemail,
+            backupemail: currentAdmin.email,
+            password: password
+        });
+        const message = response.data?.message || "Backup email has been set as primary!";
+        setSuccess(message);
+        return { success: true };
+    } 
+    catch (err) {
+        setError(err.response?.data || "An error occurred.");
+        return { success: false };
     }
 }
 
@@ -109,5 +130,6 @@ export {
     EditAdminProfile,
     EditPrimaryEmail,
     AddBackupEmail,
-    DeleteBackupEmail
+    DeleteBackupEmail,
+    SetPrimaryBackupEmail
 }

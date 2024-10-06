@@ -172,10 +172,10 @@ const AddBackupEmail = (req, res) => {
 
 const DeleteBackupEmail = (req, res) => {
     const token  = req.cookies.admin_token;
-    if(!token) { return res.status(401).json("Not verified!") }
+    if (!token) { return res.status(401).json("Not verified!") }
 
     jwt.verify(token, "admin_jwtkey", (err) => {
-        if(err) { return res.status(403).json("Invalid token!"); }
+        if (err) { return res.status(403).json("Invalid token!"); }
 
         const adminId = req.params.id;
 
@@ -186,7 +186,7 @@ const DeleteBackupEmail = (req, res) => {
 
             const { backupemail } = data[0];
 
-            if(!backupemail) { return res.status(400).json("No backup email to delete!"); }
+            if (!backupemail) { return res.status(400).json("No backup email to delete!"); }
 
             const query = "UPDATE admin SET backupemail = NULL WHERE id = ?";
 
@@ -198,11 +198,48 @@ const DeleteBackupEmail = (req, res) => {
     });
 }
 
+const SetPrimaryBackupEmail = (req, res) => {
+    const token  = req.cookies.admin_token;
+    if (!token) { return res.status(401).json("Not verified!") }
+
+    jwt.verify(token, "admin_jwtkey", (err) => {
+        if(err) { return res.status(403).json("Invalid token!"); }
+
+        const { password } = req.body;
+
+        const adminId = req.params.id;
+
+        const query = "SELECT email, backupemail, password FROM admin WHERE `id` = ?";
+
+        database.query(query, [adminId], async (err, data) => {
+            if(err) { return res.status(500).json("Server error!"); }
+
+            if(data.length === 0) { return res.status(404).json("Admin not found!"); }
+
+            const { email, backupemail, password: checkPassword } = data[0];
+
+            const getHashPassword = await bcrypt.compare(password, checkPassword);
+
+            if (!getHashPassword) { return res.status(401).json("Incorrect password!"); }
+
+            if(!backupemail) { return res.status(400).json("No backup email to set as primary!"); }
+
+            const updateQuery = "UPDATE admin SET email = ?, backupemail = ? WHERE id = ?";
+
+            database.query(updateQuery, [backupemail, email, adminId], (err) => {
+                if(err) { return res.status(500).json("Failed to set primary email!"); }
+                return res.json("Backup email has been set as primary!");
+            });
+        });
+    });
+}
+
 export { 
     UploadAvatar,
     DeleteAvatar,
     EditProfile,
     EditPrimaryEmail,
     AddBackupEmail,
-    DeleteBackupEmail
+    DeleteBackupEmail,
+    SetPrimaryBackupEmail
 }
