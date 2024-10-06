@@ -75,7 +75,10 @@ const AdminProfile = ({
     IsBackupEmailValid,
     IsBackupEmailChange,
     HandleCloseBacupEmailBox,
-    HandleAddBackupEmail
+    HandleAddBackupEmail,
+    backupEmailAction,
+    HandleBackupEmailActionBox,
+    HandleDeleteBackupEmail
 }) => {
     return (
         <div className = "AdminProfile">
@@ -279,9 +282,15 @@ const AdminProfile = ({
                     <div className = "BackupEmailTitle">Backup email</div>
                     {admin.backupemail && (
                         <div className = "BackupEmailData" key = {admin.backupemail}> 
-                            <p> { admin.backupemail } </p>
+                            <p> { admin.backupemail } <i class = "fa-solid fa-chevron-down" onClick = { HandleBackupEmailActionBox }></i></p>
                         </div>   
                     )}    
+                    {backupEmailAction && (
+                        <div className = "BackupEmailActionBox">
+                            <span>Set primary</span>
+                            <span onClick = { HandleDeleteBackupEmail }>Delete</span>
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -300,8 +309,8 @@ const AdminProfile = ({
                     { success && <div> { success } </div> }
                     <div className = "Buttons">
                         <button
-                            className = { newInput.backupemail && IsBackupEmailChange() && IsBackupEmailValid() ? "Active-button-add-backup-email" : "" }
-                            disabled = { !IsBackupEmailValid() || !IsBackupEmailChange() }
+                            className = { newInput?.backupemail && IsBackupEmailChange() && IsBackupEmailValid() ? "Active-button-add-backup-email" : "" }
+                            disabled = { !IsBackupEmailValid() || !IsBackupEmailChange() || !newInput.backupemail }
                             onClick = { HandleAddBackupEmail }
                             >Add
                         </button>

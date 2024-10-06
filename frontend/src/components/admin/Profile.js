@@ -8,7 +8,8 @@ import {
     DeleteAdminAvatar, 
     EditAdminProfile,
     EditPrimaryEmail,
-    AddBackupEmail
+    AddBackupEmail,
+    DeleteBackupEmail
 } from '../../services/AdminService';
 
 import { IsValidEmail } from '../../services/EmailService';
@@ -75,6 +76,7 @@ const Profile = () => {
     const [verifyPassword, setVerifyPassword] = useState("");
     const [showPassword, setShowPassword] = useState("");
     const [addBackupEmail, setAddBackupEmail] = useState(null);
+    const [backupEmailAction, setBackupEmailAction] = useState(null);
 
 
     // Admin avatar
@@ -167,11 +169,11 @@ const Profile = () => {
 
 
     // Admin email setting
-    const HandleEmailSettingBox = () => { setEmailSetting(true); }
+    const HandleEmailSettingBox = () => { setEmailSetting(true); setBackupEmailAction(null); }
 
     const HandleCloseEmailSettingBox = () => { setEmailSetting(false); setEditPrimaryEmail(false); setIsClicked (false); }
 
-    const HandleEditPrimaryEmail = () => { setEditPrimaryEmail(true); setIsClicked(true); }
+    const HandleEditPrimaryEmail = () => { setEditPrimaryEmail(true); setIsClicked(true); setBackupEmailAction(null); }
 
     const HandleCloseEditPrimaryEmail = () => { setEditPrimaryEmail(false); setIsClicked(false); }
 
@@ -206,7 +208,7 @@ const Profile = () => {
 
     const HandleAddBackupEmailBox = () => { setAddBackupEmail(true); setEditPrimaryEmail(false); setIsClicked (false); }
 
-    const HandleCloseBacupEmailBox = () => { setAddBackupEmail(false); }
+    const HandleCloseBacupEmailBox = () => { setAddBackupEmail(false); newInput.backupemail = null }
 
     const HandleAddBackupEmail = async () => { 
         await AddBackupEmail(IsBackupEmailValid, newInput, currentAdmin) 
@@ -214,6 +216,23 @@ const Profile = () => {
         setAdmin(prevAdmin => ({ ...prevAdmin, backupemail: newInput.backupemail }));
         setCurrentAdmin(prevAdmin => ({ ...prevAdmin, backupemail: newInput.backupemail }));
         localStorage.setItem("admin", JSON.stringify({ ...currentAdmin, backupemail: newInput.backupemail }));
+        newInput.backupemail = null;
+    }
+
+    const HandleBackupEmailActionBox = () => { setBackupEmailAction(Show => !Show); setEditPrimaryEmail(false); setIsClicked(false); }
+
+    const HandleDeleteBackupEmail = () => { 
+        setWarning({
+            message: 'Are you sure you want to delete this email?',
+            action: async () => {
+                await DeleteBackupEmail(setSuccess, setError, currentAdmin);
+                setBackupEmailAction(false);
+                setAdmin(prevAdmin => ({ ...prevAdmin, backupemail: null }));
+                setCurrentAdmin(prevAdmin => ({ ...prevAdmin, backupemail: null }));
+                localStorage.setItem("admin", JSON.stringify({ ...currentAdmin, backupemail: null }));
+                setWarning(false);
+            }
+        })
     }
 
 
@@ -301,6 +320,9 @@ const Profile = () => {
             IsBackupEmailChange = { IsBackupEmailChange }
             HandleCloseBacupEmailBox = { HandleCloseBacupEmailBox }
             HandleAddBackupEmail = { HandleAddBackupEmail }
+            backupEmailAction = { backupEmailAction }
+            HandleBackupEmailActionBox = { HandleBackupEmailActionBox }
+            HandleDeleteBackupEmail = { HandleDeleteBackupEmail }
         />
     )
 }

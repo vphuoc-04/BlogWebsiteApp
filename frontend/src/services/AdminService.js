@@ -88,10 +88,26 @@ const AddBackupEmail = async (IsBackupEmailValid, newInput, currentAdmin) => {
     }
 }
 
+const DeleteBackupEmail = async (setSuccess, setError, currentAdmin) => {
+    if (!currentAdmin?.backupemail) {
+        setError("No backup email to set as primary!");
+        return;
+    }
+    try{
+        const response = await axios.put(`/admin/delete/backup/email/${currentAdmin?.id}`);
+        const message = response.data || "Backup email deleted successfully!";
+        setSuccess(message);
+    }
+    catch(err){
+        setError(err.response?.data);
+    }
+}
+
 export {
     UploadAdminAvatar,
     DeleteAdminAvatar,
     EditAdminProfile,
     EditPrimaryEmail,
-    AddBackupEmail
+    AddBackupEmail,
+    DeleteBackupEmail
 }

@@ -490,7 +490,7 @@ a {
 }
 
 .AdminProfile .Avatar .AvatarActions .button:hover {
-    background-color: rgb(246, 246, 246);
+    background-color: rgb(230, 230, 230);
 }
 
 .AdminProfile .Bio {
@@ -546,7 +546,7 @@ a {
 
 .AdminProfile .AdminInfo .Actions button:hover {
     background-color: rgb(67, 169, 162);
-    color: rgb(246, 246, 246);
+    color: rgb(230, 230, 230);
 }
 
 /* AVATAR */
@@ -591,7 +591,7 @@ a {
 }
 
 .AdminProfile .AvatarView .CloseViewAvatar:hover {
-    background-color: rgb(246, 246, 246);
+    background-color: rgb(230, 230, 230);
 }
 
 .AdminProfile .AvatarView .ActionViewAvatar {
@@ -616,7 +616,7 @@ a {
 }
 
 .AdminProfile .AvatarView .ActionViewAvatarBox:hover {
-    background-color: rgb(246, 246, 246);
+    background-color: rgb(230, 230, 230);
 }
 
 .AdminProfile .AvatarView .ActionViewAvatarBox p {
@@ -652,7 +652,7 @@ a {
 }
 
 .AdminProfile .BoxEditAvatar .CloseBoxEditAvatar:hover {
-    background-color: rgb(246, 246, 246);
+    background-color: rgb(230, 230, 230);
 }
 
 .AdminProfile .BoxEditAvatar .EditAvatar {
@@ -701,7 +701,7 @@ a {
 }
 
 .AdminProfile .BoxEditAvatar .EditAvatar .Buttons span:hover {
-    background-color: rgb(246, 246, 246);
+    background-color: rgb(230, 230, 230);
 }
 
 .AdminProfile .BoxEditAvatar .EditAvatar .Buttons button {
@@ -745,7 +745,7 @@ a {
 }
 
 .AdminProfile .BoxEditProfile .CloseBoxEditProfile:hover {
-    background-color: rgb(246, 246, 246);
+    background-color: rgb(230, 230, 230);
 }
 
 .AdminProfile .BoxEditProfile .AdminInfoInput {
@@ -845,7 +845,7 @@ a {
 }
 
 .AdminProfile .EmailSettingBox .CloseEmailSettingBox:hover {
-    background-color: rgb(246, 246, 246);
+    background-color: rgb(230, 230, 230);
 }
 
 .AdminProfile .EmailSettingBox .PrimaryEmail {
@@ -949,7 +949,7 @@ a {
 }
 
 .AdminProfile .EmailSettingBox .PrimaryEmail .EditPrimaryEmail .EditPrimaryEmailBox .Buttons p:hover {
-    background-color: rgb(246, 246, 246);   
+    background-color: rgb(230, 230, 230);
 }
 
 .Active-button-save-edit-primary-email {
@@ -1050,9 +1050,53 @@ a {
 }
 
 .AdminProfile .EmailSettingBox .BackupEmailData p {
-    padding: 10px;
+    padding: 5px 10px;
     border: 1px solid rgb(0, 0, 0, 0.5);
     border-radius: 5px;
     width: 92%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
+.AdminProfile .EmailSettingBox .BackupEmailData p i {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.AdminProfile .EmailSettingBox .BackupEmailData p i:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.AdminProfile .EmailSettingBox .BackupEmailActionBox {
+    width: 130px;
+    height: 70px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 2px rgb(0, 0, 0);
+    margin-left: 380px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    overflow: hidden;
+}
+
+.AdminProfile .EmailSettingBox .BackupEmailActionBox span {
+    width: 200px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    margin-left: -20px;
+    cursor: pointer;
+}
+
+.AdminProfile .EmailSettingBox .BackupEmailActionBox span:hover {
+    background-color: rgb(246, 246, 246);
+}

@@ -170,10 +170,39 @@ const AddBackupEmail = (req, res) => {
     })
 }
 
+const DeleteBackupEmail = (req, res) => {
+    const token  = req.cookies.admin_token;
+    if(!token) { return res.status(401).json("Not verified!") }
+
+    jwt.verify(token, "admin_jwtkey", (err) => {
+        if(err) { return res.status(403).json("Invalid token!"); }
+
+        const adminId = req.params.id;
+
+        const q = "SELECT backupemail FROM admin WHERE `id` = ?";
+
+        database.query(q, [adminId], (err, data) => {
+            if (err) return res.status(500).json("Server error!");
+
+            const { backupemail } = data[0];
+
+            if(!backupemail) { return res.status(400).json("No backup email to delete!"); }
+
+            const query = "UPDATE admin SET backupemail = NULL WHERE id = ?";
+
+            database.query(query, [adminId], (err) => {
+                if (err) return res.status(500).json("Failed to delete backup email!");
+                return res.json("Backup email deleted successfully!");
+            });
+        });
+    });
+}
+
 export { 
     UploadAvatar,
     DeleteAvatar,
     EditProfile,
     EditPrimaryEmail,
-    AddBackupEmail
+    AddBackupEmail,
+    DeleteBackupEmail
 }
