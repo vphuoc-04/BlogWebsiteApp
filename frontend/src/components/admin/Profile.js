@@ -10,7 +10,8 @@ import {
     EditPrimaryEmail,
     AddBackupEmail,
     DeleteBackupEmail,
-    SetPrimaryBackupEmail
+    SetPrimaryBackupEmail,
+    DeletePrimaryEmail
 } from '../../services/AdminService';
 
 import { IsValidEmail } from '../../services/EmailService';
@@ -44,7 +45,7 @@ const Profile = () => {
         );
     };
 
-    const IsEmailChange = () => { return IsValidEmail(newInput.editemail) && newInput.editemail !== admin.email; }
+    const IsEmailChange = () => { return IsValidEmail(newInput.editemail) && newInput.editemail !== admin.email && newInput.editemail !== admin.backupemail; }
 
     const IsBackupEmailValid = () => { return newInput.backupemail && newInput.backupemail !== newInput.email && IsValidEmail(newInput.backupemail); }
 
@@ -78,6 +79,7 @@ const Profile = () => {
     const [showPassword, setShowPassword] = useState("");
     const [addBackupEmail, setAddBackupEmail] = useState(null);
     const [backupEmailAction, setBackupEmailAction] = useState(null);
+    
 
 
     // Admin avatar
@@ -176,7 +178,7 @@ const Profile = () => {
 
     const HandleEditPrimaryEmail = () => { setEditPrimaryEmail(true); setIsClicked(true); setBackupEmailAction(null); }
 
-    const HandleCloseEditPrimaryEmail = () => { setEditPrimaryEmail(false); setIsClicked(false); }
+    const HandleCloseEditPrimaryEmail = () => { setEditPrimaryEmail(false); setIsClicked(false); newInput.editemail = null }
 
     const HandleSaveEditPrimaryEmail = () => {
         setVerify({
@@ -238,7 +240,7 @@ const Profile = () => {
 
     const HandleSetPrimaryBackupEmail = () => {
         setVerify({
-            message: 'Are you sure you want to set this email as primary?',
+            message: 'Are you sure you want to set this email as primary: ',
             action: async (password) => {
                 if (password) {
                     try {
@@ -251,6 +253,35 @@ const Profile = () => {
                             setCurrentAdmin(prevAdmin => ({ ...prevAdmin, email: newInput.backupemail, backupemail: newInput.email }));
                             localStorage.setItem("admin", JSON.stringify({ ...currentAdmin, email: newInput.backupemail, backupemail: newInput.email }));
                         }
+                    }
+                    catch (err) {
+                        setError("Incorrect password!");
+                        setSuccessfully(false);
+                    }
+                }
+                else {
+                    setError("Password is required!");
+                    setSuccessfully(false);
+                }
+            }
+        })
+    }
+
+    const HandleDeletePrimaryEmail = () => {
+        setVerify({
+            message: 'Are you sure you want to delete this primary email: ',
+            action: async (password) => {
+                if (password) {
+                    try {
+                        const result = await DeletePrimaryEmail(setSuccess, setError, currentAdmin, password);
+                        if (result.success) {
+                            setSuccessfully({ message: 'Primary email has been deleted!', type: 'success' })
+                            setTimeout(() => { setSuccessfully(false); setVerify(null); }, 2000);
+                            setVerifyPassword(''); setSuccess(false); setError(false); setBackupEmailAction(null);
+                            setAdmin(prevAdmin => ({ ...prevAdmin, email: newInput.backupemail, backupemail: null }));
+                            setCurrentAdmin(prevAdmin => ({ ...prevAdmin, email: newInput.backupemail, backupemail: null }));
+                            localStorage.setItem("admin", JSON.stringify({ ...currentAdmin, email: newInput.backupemail, backupemail: null }));
+                        } 
                     }
                     catch (err) {
                         setError("Incorrect password!");
@@ -354,6 +385,7 @@ const Profile = () => {
             HandleBackupEmailActionBox = { HandleBackupEmailActionBox }
             HandleDeleteBackupEmail = { HandleDeleteBackupEmail }
             HandleSetPrimaryBackupEmail = { HandleSetPrimaryBackupEmail }
+            HandleDeletePrimaryEmail = { HandleDeletePrimaryEmail }
         />
     )
 }

@@ -7,6 +7,7 @@ import {
     AddBackupEmail,
     DeleteBackupEmail,
     SetPrimaryBackupEmail,
+    DeletePrimaryEmail,
 } from '../controllers/AdminController.js';
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.put('/edit/profile/primary/email/:id', EditPrimaryEmail);
 router.put('/add/profile/backup/email/:id', AddBackupEmail);
 router.put('/delete/profile/backup/email/:id', DeleteBackupEmail);
 router.put('/setprimary/profile/backup/email/:id', SetPrimaryBackupEmail);
+router.put('/delete/profile/primary/email/:id', DeletePrimaryEmail);
 
 export default router;

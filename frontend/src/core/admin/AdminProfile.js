@@ -79,7 +79,8 @@ const AdminProfile = ({
     backupEmailAction,
     HandleBackupEmailActionBox,
     HandleDeleteBackupEmail,
-    HandleSetPrimaryBackupEmail
+    HandleSetPrimaryBackupEmail,
+    HandleDeletePrimaryEmail
 }) => {
     return (
         <div className = "AdminProfile">
@@ -250,7 +251,7 @@ const AdminProfile = ({
                         <div className = "content">
                             <div className = "Input"> {admin.email} </div>
                             <button className = {`Edit ${ isClicked ? "isClicked" : "" }`} onClick = { HandleEditPrimaryEmail }>Edit</button>
-                            <button className = "Delete">Delete</button>
+                            <button className = "Delete" onClick = { HandleDeletePrimaryEmail }>Delete</button>
                         </div>
                         <div className = "EditPrimaryEmail">
                             {editPrimaryEmail && (
