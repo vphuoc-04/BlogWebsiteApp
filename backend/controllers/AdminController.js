@@ -120,7 +120,7 @@ const EditPrimaryEmail = (req, res) => {
     const token  = req.cookies.admin_token;
     if (!token) { return res.status(401).json("Not verified!"); }
     jwt.verify(token, "admin_jwtkey", (err) => {
-        if(err) { return res.status(403).json("Invalid token!") }
+        if (err) { return res.status(403).json("Invalid token!") }
 
         const { email, password } = req.body;
         
@@ -129,21 +129,20 @@ const EditPrimaryEmail = (req, res) => {
         const query = "SELECT password FROM admin WHERE id = ?";
 
         database.query(query, [adminId], async (err, data) => {
-            if(err) { return res.status(500).json("Server error!"); }
+            if (err) { return res.status(500).json("Server error!"); }
 
-            if(data.length === 0) { return res.status(404).json("Admin not found!"); }
+            if (data.length === 0) { return res.status(404).json("Admin not found!"); }
 
             const checkPassword = data[0].password;
 
             const getHashPassword = await bcrypt.compare(password, checkPassword);
 
-            if(!getHashPassword) { return res.status(401).json("Incorrect password!"); }
+            if (!getHashPassword) { return res.status(401).json("Incorrect password!"); }
 
             const updateEmail = "UPDATE admin SET email = ? WHERE id = ?";
 
             database.query(updateEmail, [email, adminId], (err, data) => {
-                if(err) { return res.status(500).json("Failed to update email!"); }
-
+                if (err) { return res.status(500).json("Failed to update email!"); }
                 return res.json("Email has been updated!");
             });
         });
@@ -164,7 +163,7 @@ const AddBackupEmail = (req, res) => {
         const query = "UPDATE admin SET `backupemail` = ? WHERE `id` = ?";
 
         database.query(query, [backupemail, adminId], (err, data) => {
-            if(err) return res.status(500).json("Failed to add backup email!");
+            if (err) return res.status(500).json("Failed to add backup email!");
             return res.json("Email backup has been added!")
         })
     })
@@ -203,7 +202,7 @@ const SetPrimaryBackupEmail = (req, res) => {
     if (!token) { return res.status(401).json("Not verified!") }
 
     jwt.verify(token, "admin_jwtkey", (err) => {
-        if(err) { return res.status(403).json("Invalid token!"); }
+        if (err) { return res.status(403).json("Invalid token!"); }
 
         const { password } = req.body;
 
@@ -212,9 +211,9 @@ const SetPrimaryBackupEmail = (req, res) => {
         const query = "SELECT email, backupemail, password FROM admin WHERE `id` = ?";
 
         database.query(query, [adminId], async (err, data) => {
-            if(err) { return res.status(500).json("Server error!"); }
+            if (err) { return res.status(500).json("Server error!"); }
 
-            if(data.length === 0) { return res.status(404).json("Admin not found!"); }
+            if (data.length === 0) { return res.status(404).json("Admin not found!"); }
 
             const { email, backupemail, password: checkPassword } = data[0];
 
@@ -227,7 +226,7 @@ const SetPrimaryBackupEmail = (req, res) => {
             const updateQuery = "UPDATE admin SET email = ?, backupemail = ? WHERE id = ?";
 
             database.query(updateQuery, [backupemail, email, adminId], (err) => {
-                if(err) { return res.status(500).json("Failed to set primary email!"); }
+                if (err) { return res.status(500).json("Failed to set primary email!"); }
                 return res.json("Backup email has been set as primary!");
             });
         });
@@ -258,7 +257,7 @@ const DeletePrimaryEmail = (req, res) => {
 
             const getHashPassword = await bcrypt.compare(password, checkPassword);
 
-            if(!getHashPassword) { return res.status(401).json("Incorrect password!"); }
+            if (!getHashPassword) { return res.status(401).json("Incorrect password!"); }
 
             const { backupemail } = data[0];
 
@@ -267,8 +266,46 @@ const DeletePrimaryEmail = (req, res) => {
             const updateQuery = "UPDATE admin SET `email` = ?, `backupemail` = NULL WHERE `id` = ?";
 
             database.query(updateQuery, [backupemail, adminId], (err) => {
-                if(err) { return res.status(500).json("Failed to delete email!"); }
+                if (err) { return res.status(500).json("Failed to delete email!"); }
                 return res.json("Primary email has been deleted and backup email has been set as primary!");
+            });
+        });
+    });
+}
+
+const ChangePassword = (req, res) => {
+    const token  = req.cookies.admin_token;
+    if (!token) { return res.status(401).json("Not verified!") }
+
+    jwt.verify(token, "admin_jwtkey", async (err) => {
+        if (err) { return res.status(403).json("Invalid token!"); }
+
+        const adminId = req.params.id;
+
+        const { password, newpassword, renewpassword } = req.body;
+
+        const query = "SELECT password FROM admin WHERE `id` = ?";
+
+        database.query(query, [adminId], async (err, data) => {
+            if (err) { return res.status(500).json("Server error!"); }
+
+            if (data.length === 0) { return res.status(404).json("Admin not found!"); }
+
+            const { password: checkPassword } = data[0];
+
+            const getHashPassword = await bcrypt.compare(password, checkPassword);
+
+            if (!getHashPassword) { return res.status(401).json("Incorrect password!"); }
+
+            if (newpassword !== renewpassword) { return res.status(400).json("Re-entered new password does not match new password!"); }
+
+            const hashedNewPassword = await bcrypt.hash(newpassword, 10);
+
+            const updateQuery = "UPDATE admin SET `password` = ? WHERE `id` = ?";
+
+            database.query(updateQuery, [hashedNewPassword, adminId], (err) => {
+                if (err) { return res.status(500).json("Password change failed!"); }
+                return res.json("Password has been changed!");
             });
         });
     });
@@ -282,5 +319,6 @@ export {
     AddBackupEmail,
     DeleteBackupEmail,
     SetPrimaryBackupEmail,
-    DeletePrimaryEmail
+    DeletePrimaryEmail,
+    ChangePassword
 }

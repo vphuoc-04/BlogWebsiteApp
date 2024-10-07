@@ -86,7 +86,8 @@ const AdminProfile = ({
     passwordSetting,
     HandlePasswordSettingBox,
     HandleClosePassowrdSettingBox,
-    IsPasswordChange
+    IsPasswordChange,
+    HandleChangePassword
 }) => {
     return (
         <div className = "AdminProfile">
@@ -343,6 +344,9 @@ const AdminProfile = ({
                             type = "password"
                             placeholder = "Password"
                             onChange = { HandleInputChange }
+                            onFocus = {() => HandleFocus("password")}
+                            onBlur = { HandleBlur }
+                            className = { focusedInput === "password" ? "focused" : "" }
                         />
                         <p>New Password</p>
                         <input 
@@ -350,6 +354,9 @@ const AdminProfile = ({
                             type = "password"
                             placeholder = "New passowrd"  
                             onChange = { HandleInputChange }
+                            onFocus = {() => HandleFocus("newpassword")}
+                            onBlur = { HandleBlur }
+                            className = { focusedInput === "newpassword" ? "focused" : "" }
                         />
                         <p>Re-enter New Password</p>
                         <input 
@@ -357,11 +364,17 @@ const AdminProfile = ({
                             type = "password"
                             placeholder = "Re-enter new password"
                             onChange = { HandleInputChange }
+                            onFocus = {() => HandleFocus("renewpassword")}
+                            onBlur = { HandleBlur }
+                            className = { focusedInput === "renewpassword" ? "focused" : "" }
                         />
                     </div>
+                    { error && <h4 className = "Error"> { error } </h4> }
+                    { success && <h4 className = "Success"> { success } </h4> }
                     <button 
                         className = { IsPasswordChange() ? "Active-button-password-setting" : "" }
                         disabled = { !IsPasswordChange() }
+                        onClick = { HandleChangePassword }
                         >Save
                     </button>
                 </div>

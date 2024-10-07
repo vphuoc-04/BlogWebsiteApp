@@ -1146,6 +1146,11 @@ a {
     border: 1px solid rgb(0, 0, 0, 0.5);
     border-radius: 5px;
     width: 101%;
+    transition: all 0.3s;
+}
+
+.AdminProfile .PasswordSettingBox .PasswordSettingInput input.focused {
+    border: 1px solid rgb(67, 169, 162);
 }
 
 .AdminProfile .PasswordSettingBox button {

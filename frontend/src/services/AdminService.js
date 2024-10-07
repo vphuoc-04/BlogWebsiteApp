@@ -149,6 +149,25 @@ const DeletePrimaryEmail = async (setSuccess, setError, currentAdmin, password) 
     }
 }
 
+const ChangePassword = async (setError, setSuccess, AdminLogoutContext, currentAdmin, password, newpassword, renewpassword) => {
+    try {
+        const response = await axios.put(`/admin/change/profile/password/${currentAdmin?.id}`, {
+            password,
+            newpassword,
+            renewpassword
+        })
+        const message = response.data || "Psssword has been change";
+        setSuccess(message);
+        setError(null);
+        setTimeout(() => { AdminLogoutContext(); }, 3000);
+        return { success: true };
+    }
+    catch(err) {
+        setError(err.response?.data);
+        return { success: false };
+    }
+}
+
 export {
     UploadAdminAvatar,
     DeleteAdminAvatar,
@@ -157,5 +176,6 @@ export {
     AddBackupEmail,
     DeleteBackupEmail,
     SetPrimaryBackupEmail,
-    DeletePrimaryEmail
+    DeletePrimaryEmail,
+    ChangePassword
 }

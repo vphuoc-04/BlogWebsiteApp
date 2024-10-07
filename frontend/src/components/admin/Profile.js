@@ -11,14 +11,18 @@ import {
     AddBackupEmail,
     DeleteBackupEmail,
     SetPrimaryBackupEmail,
-    DeletePrimaryEmail
+    DeletePrimaryEmail,
+    ChangePassword
 } from '../../services/AdminService';
 
 import { IsValidEmail } from '../../services/EmailService';
 
 const Profile = () => {
-    const { currentAdmin, setCurrentAdmin } = useContext(AdminContext)
+    const { currentAdmin, setCurrentAdmin, AdminLogoutContext } = useContext(AdminContext)
     const [admin, setAdmin] = AdminData(currentAdmin);
+    const [newInput, setNewInput] = useState(admin);
+    const [keepData, setKeepData] = useState(admin);
+
     UseUpdateCurrentAdmin(setAdmin, currentAdmin);
 
     // Error
@@ -72,8 +76,6 @@ const Profile = () => {
 
     // Admin edit profile
     const [editProfile, setEditProfile] = useState(null);
-    const [newInput, setNewInput] = useState(admin);
-    const [keepData, setKeepData] = useState(admin);
     const [focusedInput, setFocusedInput] = useState("");
     const HandleFocus = (inputName) => { setFocusedInput(inputName); };
     const HandleBlur = () => { setFocusedInput(""); };
@@ -88,12 +90,12 @@ const Profile = () => {
     const [addBackupEmail, setAddBackupEmail] = useState(null);
     const [backupEmailAction, setBackupEmailAction] = useState(null);
 
-    //
+    // Admin password setting
     const [passwordSetting, setPasswordSetting] = useState(null);
-    
+    const { password, newpassword, renewpassword } = newInput;
 
 
-    // Admin avatar
+    // Admin avatar function
     const HandleAvatarActionSelect = () => { setAvatarAction(Show => !Show); }
 
     const HandleAvatarView = () => { setAvatarView(true); setAvatarAction(false); }
@@ -158,7 +160,7 @@ const Profile = () => {
     }
 
 
-    // Admin Edit profile
+    // Admin Edit profile function
     const HandleEditProfileBox = () => { setEditProfile(true); setKeepData(newInput); }
 
     const HandleCloseEditProfileBox = () => { 
@@ -182,7 +184,7 @@ const Profile = () => {
     }
 
 
-    // Admin email setting
+    // Admin email setting function
     const HandleEmailSettingBox = () => { setEmailSetting(true); setBackupEmailAction(null); }
 
     const HandleCloseEmailSettingBox = () => { setEmailSetting(false); setEditPrimaryEmail(false); setIsClicked (false); }
@@ -308,10 +310,14 @@ const Profile = () => {
     }
 
 
-    // Admin password setting
+    // Admin password setting function
     const HandlePasswordSettingBox = () => { setPasswordSetting(true); }
+
     const HandleClosePassowrdSettingBox = () => { setPasswordSetting(null); }
 
+    const HandleChangePassword = async () => {
+        await ChangePassword(setError, setSuccess, AdminLogoutContext, currentAdmin, password, newpassword, renewpassword);
+    }
 
 
     // Waring box
@@ -409,6 +415,7 @@ const Profile = () => {
             HandlePasswordSettingBox = { HandlePasswordSettingBox } 
             HandleClosePassowrdSettingBox = { HandleClosePassowrdSettingBox }
             IsPasswordChange = { IsPasswordChange }
+            HandleChangePassword = { HandleChangePassword }
         />
     )
 }
