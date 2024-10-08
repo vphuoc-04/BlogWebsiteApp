@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { ClientRegister } from '../../core/client/UserRegister'
+import { UserRegister } from '../../core/client/UserRegister'
 import { UserRegisterService } from '../../services/AuthService';
 import { IsValidEmail } from '../../services/EmailService';
 
@@ -30,7 +30,7 @@ const Register = () => {
     }
 
     return (
-        <ClientRegister 
+        <UserRegister 
             firstname = { firstname }
             lastname = { lastname }
             username = { username }
@@ -47,4 +47,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Register;

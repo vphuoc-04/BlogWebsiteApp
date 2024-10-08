@@ -37,12 +37,22 @@ const UserContext = createContext();
 const UserContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("user") || null));
 
+    const UserLoginContext = async (input) => {
+        try {
+            const response = await axios.post('/auth/user/login', input);
+            setCurrentUser(response.data);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
         localStorage.setItem("user", JSON.stringify(currentUser))
     }, [currentUser])
 
     return (
-        <UserContext.Provider value = {{ currentUser, setCurrentUser }}>
+        <UserContext.Provider value = {{ currentUser, setCurrentUser, UserLoginContext }}>
             { children }
         </UserContext.Provider>
     )

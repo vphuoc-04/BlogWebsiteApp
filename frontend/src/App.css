@@ -1186,13 +1186,13 @@ a {
 }
 
 
-/***** CLIENT *****/
+/***** USER *****/
 /*** REGISTER ***/
-.ClientRegister {
+.UserRegister {
     background-color: rgba(245, 245, 245);
 }
 
-.ClientRegister form {
+.UserRegister form {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1205,53 +1205,53 @@ a {
     box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.5);
 }
 
-.ClientRegister form h1 {
+.UserRegister form h1 {
     text-align: center;
     font-weight: lighter;
     color: rgb(0, 0, 0, 0.7);
 }
 
-.ClientRegister form input {
+.UserRegister form input {
     padding: 10px;
     outline: none;
     border: 1px solid rgb(0, 0, 0, 0.5);
     border-radius: 5px;
 }
 
-.ClientRegister form input.focused {
+.UserRegister form input.focused {
     border: 1px solid rgb(67, 169, 162);
 }
 
-.ClientRegister form input:-webkit-autofill {
+.UserRegister form input:-webkit-autofill {
     background-color: rgba(255, 255, 255) !important; 
     color: rgb(0, 0, 0) !important; 
     transition: background-color 5000s ease-in-out 0s; 
 }
 
-.ClientRegister form .UsernameInput input {
+.UserRegister form .UsernameInput input {
     width: 94.3%;
 }
 
-.ClientRegister form .FullNameInput {
+.UserRegister form .FullNameInput {
     display: flex;
     gap: 15px;
 }
 
-.ClientRegister form .EmailInput input{
+.UserRegister form .EmailInput input{
     width: 94.3%;
 }
 
-.ClientRegister form .PasswordInput input{
+.UserRegister form .PasswordInput input{
     width: 94.3%;
 }
 
-.ClientRegister form .Error {
+.UserRegister form .Error {
     color: rgb(255, 0, 0);
     position: absolute;
     top: 78.5%;
 }
 
-.ClientRegister form button {
+.UserRegister form button {
     margin-top: 30px;
     height: 50px;
     cursor: pointer;
@@ -1261,17 +1261,139 @@ a {
     transition: all 0.3s;
 }
 
-.ClientRegister form button:disabled {
+.UserRegister form button:disabled {
     cursor: not-allowed;
 }
 
-.ClientRegister form .Login {
+.UserRegister form .Login {
     color: rgb(67, 169, 162);
     margin-top: 13px;
     text-align: center;
 }
 
 .Active-client-register-button {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+}
+
+/*** LOGIN ***/
+.UserLogin {
+    background-color: rgba(245, 245, 245);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+}
+
+.UserLogin .Introduce {
+    position: absolute;
+    top: 45%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.UserLogin .Introduce h1 {
+    color: rgb(0, 0, 0, 0.7);
+}
+
+.UserLogin .Introduce img {
+    width: 100px;
+}
+
+.UserLogin form {
+    position: absolute;
+    top: 45%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    width: 350px;
+    height: 350px;
+    padding: 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.3);
+}
+
+.UserLogin form h1 {
+    text-align: center;
+    font-weight: lighter;
+    color: rgb(0, 0, 0, 0.7);
+    margin-top: -15px;
+}
+
+.UserLogin form input {
+    padding: 10px;
+    width: 94%;
+    align-items: center;
+    outline: none;
+    border: 0.5px solid rgb(0, 0, 0, 0.3);
+    border-radius: 5px;
+    transition: all 0.2s ;
+}
+
+.UserLogin form input.focused {
+    border: 1px solid rgb(67, 169, 162);
+} 
+
+.UserLogin form input:-webkit-autofill {
+    background-color: rgba(255, 255, 255) !important; 
+    color: rgb(0, 0, 0) !important; 
+    transition: background-color 5000s ease-in-out 0s; 
+}
+
+.UserLogin form .InputPassword .ShowOrHidePassword {
+    position: absolute;
+    top: 47%;
+    left: 87.5%;
+}
+
+.UserLogin form .InputPassword .ShowOrHidePassword i {
+    cursor: pointer;
+}
+
+.UserLogin form .Error {
+    color: rgb(255, 0, 0);
+    position: absolute;
+    top: 53%;
+}
+
+.UserLogin form button {
+    height: 45px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 20px;
+}
+
+.UserLogin form button:disabled {
+    cursor: not-allowed;
+}
+
+.UserLogin form .Register {
+    color: rgb(67, 169, 162);
+}
+
+.UserLogin form .ForgottenPassword {
+    color: rgb(67, 169, 162);
+    position: absolute;
+    top: 85%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.UserLogin form .ForgottenPassword:hover {
+    border-bottom: 1px solid rgb(67, 169, 162);
+}
+
+.Active-User-Login-Button {
     background-color: rgb(67, 169, 162);
     color: rgb(255, 255, 255);
 }

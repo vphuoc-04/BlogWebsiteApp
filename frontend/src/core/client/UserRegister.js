@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-const ClientRegister = ({
+const UserRegister = ({
     firstname,
     lastname,
     username,
@@ -15,7 +15,7 @@ const ClientRegister = ({
     HandleRegister
 }) => {
     return (
-        <div className = "ClientRegister">
+        <div className = "UserRegister">
             <form>
                 <h1>Register</h1>
                 <div className = "FullNameInput">
@@ -106,4 +106,4 @@ const ClientRegister = ({
     )
 }
 
-export { ClientRegister }
+export { UserRegister }

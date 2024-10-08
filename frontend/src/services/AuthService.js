@@ -47,7 +47,21 @@ const UserRegisterService = async (event, input, navigate, setError) => {
     }
 }
 
+const UserLoginService = async (event, input, navigate, UserLoginContext, setError) => {
+    event.preventDefault();
+    try {
+        await UserLoginContext(input);
+        const response = await axios.post('/auth/user/login', input);
+        navigate('/');
+        console.log(response);
+    } 
+    catch(err) {
+        setError(err.response.data);
+    }
+}
+
 export { 
     AdminLoginService,
-    UserRegisterService
+    UserRegisterService,
+    UserLoginService
 }

@@ -1,5 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { AdminAuthMiddleware } from '../middlewares/AuthMiddleware'
+import { 
+    AdminAuthMiddleware, 
+    UserAuthMiddleware 
+} from '../middlewares/AuthMiddleware'
 
 // Admin components
 import AdminLogin from '../components/admin/Login'
@@ -9,7 +12,8 @@ import AdminNavbar from '../components/admin/Navbar'
 import AdminProfile from '../components/admin/Profile'
 
 // Client components
-import ClientRegister from '../components/client/Register'
+import UserRegister from '../components/client/Register'
+import UserLogin from '../components/client/Login'
 
 
 // Admin layout
@@ -45,10 +49,11 @@ const Layout = createBrowserRouter([
     },
 
     // Client
-    { path: '/register', element: <ClientRegister /> },
+    { path: '/register', element: <UserAuthMiddleware userRoute = { true }> <UserRegister /> </UserAuthMiddleware> },
+    { path: '/login', element: <UserAuthMiddleware userRoute = { true }> <UserLogin /> </UserAuthMiddleware> },
     {
         path: '/',
-        element: <ClientLayout />,
+        element: <UserAuthMiddleware userRoute = { true }> <ClientLayout /> </UserAuthMiddleware>,
         children: [
             
         ]

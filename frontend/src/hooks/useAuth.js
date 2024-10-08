@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom'
 
+// Admin 
 const UseAdminPrivateRoute = (adminRoute, navigate, currentAdmin) => {
     const { pathname: currentPath } = useLocation();
     const [isChecking, setIsChecking] = useState(true); 
@@ -28,7 +29,32 @@ const UseUpdateCurrentAdmin = (setAdmin, currentAdmin) => {
     }, [currentAdmin]);
 }
 
+// User
+const UseUserPrivateRoute = (userRoute, navigate, currentUser) => {
+    const { pathname: currentPath } = useLocation();
+    const [isChecking, setIsChecking] = useState(true); 
+    useEffect(() => {
+        if (userRoute) {
+            if (currentUser !== null) {
+                if (currentPath === '/login' || currentPath === '/register') {
+                    navigate('/')
+                }
+            }
+        }
+        setIsChecking(false);
+    }, [userRoute, navigate, currentPath, currentUser])
+    return isChecking;
+}
+
+const UseUpdateCurrentUser = (setUser, currentUser) => {
+    useEffect(() => { 
+        setUser(currentUser);
+    }, [currentUser]);
+}
+
 export { 
     UseAdminPrivateRoute,
-    UseUpdateCurrentAdmin 
+    UseUpdateCurrentAdmin,
+    UseUserPrivateRoute,
+    UseUpdateCurrentUser 
 }
