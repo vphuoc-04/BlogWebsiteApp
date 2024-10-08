@@ -1,16 +1,17 @@
 import axios from 'axios'
 import { createContext, useEffect, useState } from 'react'
 
+// Admin
 const AdminContext = createContext();
 const AdminContextProvider = ({ children }) => {
     const [currentAdmin, setCurrentAdmin] = useState(JSON.parse(localStorage.getItem("admin") || null));
 
     const AdminLoginContext = async (input) => {
-        try{
+        try {
             const response = await axios.post('/auth/admin/login', input);
             setCurrentAdmin(response.data);
-        }
-        catch(err){
+        } 
+        catch(err) {
             console.log(err);
         }
     }
@@ -31,7 +32,25 @@ const AdminContextProvider = ({ children }) => {
     )
 }
 
+// User
+const UserContext = createContext();
+const UserContextProvider = ({ children }) => {
+    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("user") || null));
+
+    useEffect(() => {
+        localStorage.setItem("user", JSON.stringify(currentUser))
+    }, [currentUser])
+
+    return (
+        <UserContext.Provider value = {{ currentUser, setCurrentUser }}>
+            { children }
+        </UserContext.Provider>
+    )
+}
+
 export { 
     AdminContext, 
-    AdminContextProvider 
+    AdminContextProvider,
+    UserContext, 
+    UserContextProvider
 }

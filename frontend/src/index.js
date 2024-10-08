@@ -2,13 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { AdminContextProvider } from './context/AuthContext';
+import { AdminContextProvider, UserContextProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <AdminContextProvider>
-            <App />
+            <UserContextProvider>
+                <App />
+            </UserContextProvider>
         </AdminContextProvider>
     </React.StrictMode>
 );
