@@ -1,17 +1,32 @@
 import { Link } from "react-router-dom"
 
 const UserRegister = ({
+    // Input
     firstname,
     lastname,
     username,
     email,
     password,
     confirmpassword,
-    error,
+    HandleInput,
+
+    // Focused Input effect
     focusedInput,
     HandleFocus,
     HandleBlur,
-    HandleInput,
+
+    // Error
+    error,
+    errorVerifyEmail,
+    
+    // OTP
+    otp,
+    setOtp,
+    showOTPBox,
+    setShowOTPBox,
+    HandleOTPVerification,
+
+    // Register
     HandleRegister
 }) => {
     return (
@@ -102,6 +117,23 @@ const UserRegister = ({
                 >Register</button>
                 <Link className = "Login" to = '/login'>Already have an account?</Link>
             </form>
+            {showOTPBox && <div className = "box"></div>}
+            {showOTPBox && (
+                <div className = "OTPBox">
+                    <p>You need to enter the OTP code to confirm your email to proceed with account registration.</p>
+                    <input 
+                        type = "text" 
+                        placeholder = "Otp code" 
+                        value = { otp }
+                        onChange = {(e) => setOtp(e.target.value)}
+                    />
+                    { errorVerifyEmail && <p className = "Error">{ errorVerifyEmail }</p> }
+                    <div className = "Buttons">
+                        <button onClick = { HandleOTPVerification }>Confirm</button>
+                        <button onClick = {() => setShowOTPBox(false)}>Cancel</button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

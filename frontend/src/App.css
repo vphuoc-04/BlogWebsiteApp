@@ -1271,6 +1271,61 @@ a {
     text-align: center;
 }
 
+.UserRegister .OTPBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    z-index: 3;
+    height: 170px;
+    width: 400px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.UserRegister .OTPBox p {
+    text-align: center;
+}
+
+.UserRegister .OTPBox input {
+    padding: 10px;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    outline: none;
+    border-radius: 5px;
+    width: 95%;
+}
+
+.UserRegister .OTPBox .Error {
+    position: absolute;
+    color: rgb(255, 0, 0);
+    top: 100px;
+}
+
+.UserRegister .OTPBox .Buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 35px;
+}
+
+.UserRegister .OTPBox .Buttons button {
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.UserRegister .OTPBox .Buttons button:first-of-type {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+}
+
+.UserRegister .OTPBox .Buttons button:last-of-type {
+    background-color: rgb(136, 136, 136);
+    color: rgb(255, 255, 255);;
+}
+
 .Active-client-register-button {
     background-color: rgb(67, 169, 162);
     color: rgb(255, 255, 255);

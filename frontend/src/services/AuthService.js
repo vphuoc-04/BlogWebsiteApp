@@ -38,14 +38,21 @@ const UserRegisterService = async (event, input, navigate, setError) => {
         if (err.response && err.response.status === 400 && err.response.data === "Account already exists!") {
             setError("Account already exists!");
         } 
-        else if (input.password !== input.confirmpassword) {
-            setError("Passwords do not match!");
-        }
         else {
             setError(err.response?.data);
         }
     }
 }
+
+const SendOTPService = async (recipientEmail, otpCode) => {
+    try {
+        await axios.post('/user/send-otp', { email: recipientEmail, otp: otpCode });
+    } 
+    catch (err) {
+        console.error("Error sending OTP: ", err);
+        throw new Error("Failed to send OTP.");
+    }
+};
 
 const UserLoginService = async (event, input, navigate, UserLoginContext, setError) => {
     event.preventDefault();
@@ -63,5 +70,6 @@ const UserLoginService = async (event, input, navigate, UserLoginContext, setErr
 export { 
     AdminLoginService,
     UserRegisterService,
-    UserLoginService
+    UserLoginService,
+    SendOTPService
 }
