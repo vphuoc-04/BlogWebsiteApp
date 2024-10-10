@@ -58,8 +58,25 @@ const CheckEmailUsername = (req, res) => {
     });
 };
 
+const IdentifyUser = (req, res) => {
+    const { userNameOrEmail } = req.body;
+
+    if (!userNameOrEmail) { return res.status(400).json("Please provide a username or email."); }
+
+    const findUserQuery = "SELECT * FROM users WHERE username = ? OR email = ?";
+
+    database.query(findUserQuery, [req.body.userNameOrEmail, req.body.userNameOrEmail], (err, data) => {
+        if (err) { return res.status(500).json("Error fetching user data."); }
+        
+        if (data.length > 0) { return res.status(200).json(data); } 
+        
+        else { return res.status(404).json("User not found."); }
+    });
+}
+
 export { 
     Register,
     SendOTP,
-    CheckEmailUsername 
+    CheckEmailUsername,
+    IdentifyUser 
 };

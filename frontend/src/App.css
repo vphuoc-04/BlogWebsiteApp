@@ -1448,6 +1448,123 @@ a {
     border-bottom: 1px solid rgb(67, 169, 162);
 }
 
+.UserLogin .IdentifyBox {
+    z-index: 3;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 350px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+.UserLogin .IdentifyBox .CloseIdentifyBox {
+    margin-left: 565px;
+    margin-top: 10px;
+    z-index: 2;
+    font-size: xx-large;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.UserLogin .IdentifyBox .CloseIdentifyBox:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.UserLogin .IdentifyBox .IdentifyInput {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.UserLogin .IdentifyBox .IdentifyInput input {
+    outline: none;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    padding: 10px;
+    margin-left: 30px;
+    border-radius: 5px;
+    width: 75%;
+}
+
+.UserLogin .IdentifyBox .IdentifyInput i {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(230, 230, 230);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-left: -10px;
+}
+
+.UserLogin .IdentifyBox .IdentifyInput i:hover {
+    background-color: rgb(210, 210, 210);
+}
+
+.UserLogin .IdentifyBox .IdentifyInfo {
+    margin: 30px 0 0 30px;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    width: 90%;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.UserLogin .IdentifyBox .IdentifyInfo .Data {
+    padding-top: 10px;
+}
+
+.UserLogin .IdentifyBox .IdentifyInfo .Data table {
+    table-layout: fixed;
+    width: 100%; 
+}
+
+.UserLogin .IdentifyBox .IdentifyInfo .Data table tr td {
+    width: 150px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    text-align: center;
+}
+
+.UserLogin .IdentifyBox .IdentifyInfo .Data table tr td img{
+    width: 30px;
+    border-radius: 50%;
+}
+
+.UserLogin .IdentifyBox .IdentifyInfo .Data .Buttons {
+    display: flex;
+    margin: 70px 0 0 30px;
+    gap: 20px;
+}
+
+.UserLogin .IdentifyBox .IdentifyInfo .Data .Buttons button {
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.UserLogin .IdentifyBox .IdentifyInfo .Data .Buttons button:first-of-type {
+    background-color: rgb(67, 169, 162);
+    color: rgb(255, 255, 255);
+}
+
+.UserLogin .IdentifyBox .IdentifyInfo .Data .Buttons button:last-of-type {
+    background-color: rgb(136, 136, 136);
+    color: rgb(255, 255, 255);;
+}
+
 .Active-User-Login-Button {
     background-color: rgb(67, 169, 162);
     color: rgb(255, 255, 255);

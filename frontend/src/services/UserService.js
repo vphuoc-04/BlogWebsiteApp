@@ -40,4 +40,19 @@ const IsValidUserInput = async (input, setError) => {
     return true; 
 };
 
-export { IsValidUserInput };
+const UserIdentify = async (input , setError, setIdentify) => {
+    try {
+        const response = await axios.post('/user/identify', {
+            userNameOrEmail: input.userNameOrEmail,
+        })
+        setIdentify(response.data);
+    }
+    catch (err) {
+        setError(err.response.data);
+    }
+}
+
+export { 
+    IsValidUserInput,
+    UserIdentify
+};

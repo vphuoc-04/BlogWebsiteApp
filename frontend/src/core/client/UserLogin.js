@@ -2,16 +2,34 @@ import { Link } from "react-router-dom"
 import Logo from '../../assets/img/vphuoc.png'
 
 const UserLogin = ({
+    // Input
     userNameOrEmail,
     password,
+    HandleInput,
+
+    // Show password
     showPassword,
     setShowPassword,
+
+    // Focused input effect
     focusedInput,
     HandleFocus,
     HandleBlur,
+
+    // Error
     error,
-    HandleInput,
+
+    // Login
     HandleLogin,
+
+    // Identify
+    identify,
+    setIdentify,
+    identifyBox,
+    HandleIdentifyBox,
+    HandleCloseIdentifyBox,
+    HandleIdentify,
+    HandleNotMe
 }) => {
     return (
         <div className = "UserLogin">
@@ -59,8 +77,48 @@ const UserLogin = ({
                     >Login
                 </button>
                 <Link className = "Register" to = '/register' >Don't have an account?</Link>
-                <p className = "ForgottenPassword">Forgotten password?</p>
+                <p className = "ForgottenPassword" onClick = { HandleIdentifyBox }>Forgotten password?</p>
             </form>
+            {identifyBox && <div className = "box"></div>}
+            {identifyBox && (
+                <div className = "IdentifyBox">
+                    <div className = "CloseIdentifyBox" onClick = { HandleCloseIdentifyBox }>&times;</div>
+                    <div className = "IdentifyInput">
+                        <input 
+                            name = "userNameOrEmail"
+                            placeholder = "Username or email"
+                            onChange = { HandleInput }
+                        />
+                        <i class = "fa-solid fa-magnifying-glass" onClick = { HandleIdentify }></i>
+                    </div>
+                    <div className = "IdentifyInfo">
+                    {identify.map((identify) => (
+                        <div className = "Data">
+                             <table>
+                                <tr>
+                                    <th>Avatar</th>
+                                    <th>First name</th>
+                                    <th>Last name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                </tr>
+                                <tr>
+                                    <td><img src = { identify.avatar } alt = "" /></td>
+                                    <td className = "Firstname"> { identify.firstname } </td>
+                                    <td className = "Lastname"> { identify.lastname } </td>
+                                    <td className = "Username"> { identify.username } </td>
+                                    <td className = "Email"> { identify.email } </td>
+                                </tr> 
+                             </table>
+                             <div className = "Buttons">
+                                <button>This is me</button>
+                                <button onClick = { HandleNotMe }>Not me</button>
+                             </div>
+                        </div>
+                    ))}
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
