@@ -1,16 +1,20 @@
 import express from 'express'
 import { 
     Register, 
-    SendOTP,
+    SendOTPVerification,
     CheckEmailUsername,
-    IdentifyUser, 
+    IdentifyUser,
+    SendOTPResetPassword,
+    GetEmailByUsername, 
 } from '../controllers/UserControllers.js';
 
 const router = express.Router();
 
 router.post('/register', Register);
-router.post('/send-otp', SendOTP);
+router.post('/send-otp', SendOTPVerification);
 router.post('/check-email-username', CheckEmailUsername);
 router.post('/identify', IdentifyUser);
+router.get('/get/email', GetEmailByUsername);
+router.post('/reset/password', SendOTPResetPassword);
 
 export default router;

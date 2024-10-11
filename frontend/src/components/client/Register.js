@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { UserRegister } from '../../core/client/UserRegister'
-import { SendOTPService, UserRegisterService } from '../../services/AuthService';
+import { SendOTPVerificationService, UserRegisterService } from '../../services/AuthService';
 import { IsValidUserInput } from '../../services/UserService';
 
 const Register = () => {
@@ -46,7 +46,7 @@ const Register = () => {
         try {
             const otpCode = Math.floor(100000 + Math.random() * 900000); 
             setGeneratedOtp(otpCode);
-            await SendOTPService(email, otpCode);
+            await SendOTPVerificationService(email, otpCode);
             setShowOTPBox(true); 
             setError(null);
         }

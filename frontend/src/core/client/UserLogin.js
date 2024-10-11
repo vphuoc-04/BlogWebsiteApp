@@ -29,7 +29,16 @@ const UserLogin = ({
     HandleIdentifyBox,
     HandleCloseIdentifyBox,
     HandleIdentify,
-    HandleNotMe
+    HandleNotMe,
+
+    // Otp
+    otp,
+    setOtp,
+    showOTPBox,
+    setShowOTPBox,
+    HandleSendOTPResetPassword,
+    HandleOTPVerification,
+    errorVerifyEmail,
 }) => {
     return (
         <div className = "UserLogin">
@@ -79,6 +88,7 @@ const UserLogin = ({
                 <Link className = "Register" to = '/register' >Don't have an account?</Link>
                 <p className = "ForgottenPassword" onClick = { HandleIdentifyBox }>Forgotten password?</p>
             </form>
+            
             {identifyBox && <div className = "box"></div>}
             {identifyBox && (
                 <div className = "IdentifyBox">
@@ -111,11 +121,29 @@ const UserLogin = ({
                                 </tr> 
                              </table>
                              <div className = "Buttons">
-                                <button>This is me</button>
+                                <button onClick = { HandleSendOTPResetPassword }>This is me</button>
                                 <button onClick = { HandleNotMe }>Not me</button>
                              </div>
                         </div>
                     ))}
+                    </div>
+                </div>
+            )}
+
+            {showOTPBox && <div className = "box"></div>}
+            {showOTPBox && (
+                <div className = "OTPBox">
+                    <p>You need to enter the OTP code to confirm your email to proceed with password reset.</p>
+                    <input 
+                        type = "text" 
+                        placeholder = "Otp code" 
+                        value = { otp }
+                        onChange = {(e) => setOtp(e.target.value)}
+                    />
+                    { errorVerifyEmail && <p className = "Error">{ errorVerifyEmail }</p> }
+                    <div className = "Buttons">
+                        <button onClick = { HandleOTPVerification }>Confirm</button>
+                        <button onClick = { () => { setShowOTPBox(false); setIdentify([]);} }>Cancel</button>
                     </div>
                 </div>
             )}

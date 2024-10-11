@@ -1,6 +1,7 @@
 import { database } from '../database.js';
 import bcrypt from 'bcrypt';
 import { SendOTPEmail } from '../services/SendOTPEmail.js';
+import { SendOTPReset } from '../services/SendOTPReset.js';
 
 const SaltRounds = 10;
 const Register = async (req, res) => {
@@ -30,7 +31,7 @@ const Register = async (req, res) => {
 };
 
 
-const SendOTP= async (req, res) => {
+const SendOTPVerification = async (req, res) => {
     const { email, otp } = req.body;
     try {
         await SendOTPEmail(email, otp);
@@ -58,6 +59,20 @@ const CheckEmailUsername = (req, res) => {
     });
 };
 
+const GetEmailByUsername = (req, res) => {
+    const { username } = req.query;
+
+    const query = "SELECT email FROM users WHERE username = ?";
+
+    database.query(query, [username], (err, data) => {
+        if (err) { return res.status(500).json("Database error!"); }
+
+        if (data.length === 0) { return res.status(404).json("User not found!"); }
+
+        return res.status(200).json({ email: data[0].email });
+    });
+}
+
 const IdentifyUser = (req, res) => {
     const { userNameOrEmail } = req.body;
 
@@ -74,9 +89,23 @@ const IdentifyUser = (req, res) => {
     });
 }
 
+const SendOTPResetPassword = async (req, res) => {
+    const { email, otp } = req.body;
+    try {
+        await SendOTPReset(email, otp);
+        res.status(200).json("OTP sent successfully.");
+    } 
+    catch (error) {
+        console.error("Error sending OTP: ", error);
+        res.status(500).json("Error sending OTP.");
+    }
+};
+
 export { 
     Register,
-    SendOTP,
+    SendOTPVerification,
     CheckEmailUsername,
-    IdentifyUser 
+    IdentifyUser,
+    GetEmailByUsername,
+    SendOTPResetPassword,
 };

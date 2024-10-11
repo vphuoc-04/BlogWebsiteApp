@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { defaultAvatar } from '../data/AdminData';
 import moment from 'moment'
+import { IsValidEmail } from './EmailService';
 
 // Admin auth
 const AdminLoginService = async (event, input, AdminLoginContext, navigate, setError) => {
@@ -44,7 +45,7 @@ const UserRegisterService = async (event, input, navigate, setError) => {
     }
 }
 
-const SendOTPService = async (recipientEmail, otpCode) => {
+const SendOTPVerificationService = async (recipientEmail, otpCode) => {
     try {
         await axios.post('/user/send-otp', { email: recipientEmail, otp: otpCode });
     } 
@@ -67,9 +68,29 @@ const UserLoginService = async (event, input, navigate, UserLoginContext, setErr
     }
 }
 
+const SendOTPResetService = async (identify, otpCode) => {
+    try {
+        let emailToSend;
+        if (IsValidEmail(identify)) { emailToSend = identify; }
+        else {
+            const response = await axios.get(`/user/get/email?username=${identify}`);
+            emailToSend = response.data.email;
+        }
+        await axios.post('/user/reset/password', { 
+            email: emailToSend, 
+            otp: otpCode 
+        });
+    }
+    catch (err) {
+        console.error("Error sending OTP: ", err);
+        throw new Error("Failed to send OTP.");
+    }
+}
+
 export { 
     AdminLoginService,
     UserRegisterService,
     UserLoginService,
-    SendOTPService
+    SendOTPVerificationService,
+    SendOTPResetService
 }
