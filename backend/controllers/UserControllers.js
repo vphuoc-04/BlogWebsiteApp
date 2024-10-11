@@ -101,6 +101,28 @@ const SendOTPResetPassword = async (req, res) => {
     }
 };
 
+const ResetPassword = async (req, res) => {
+    const { usernameOrEmail, newPassword } = req.body;
+
+    try {
+        const hashedPassword = await bcrypt.hash(newPassword, SaltRounds);
+
+        const query = "UPDATE users SET password = ? WHERE username = ? OR email = ?";
+        
+        database.query(query, [hashedPassword, usernameOrEmail, usernameOrEmail], (err, data) => {
+            if (err) { return res.status(500).json("Database error!"); }
+
+            if (data.affectedRows === 0) { return res.status(404).json("User not found!"); }
+
+            return res.status(200).json("Password updated successfully!");
+        });
+    } 
+    catch (error) {
+        console.error('Error hashing password: ', error);
+        return res.status(500).json("Error processing password!");
+    }
+};
+
 export { 
     Register,
     SendOTPVerification,
@@ -108,4 +130,5 @@ export {
     IdentifyUser,
     GetEmailByUsername,
     SendOTPResetPassword,
+    ResetPassword
 };

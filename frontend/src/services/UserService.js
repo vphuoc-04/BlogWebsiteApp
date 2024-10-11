@@ -52,7 +52,22 @@ const UserIdentify = async (input , setError, setIdentify) => {
     }
 }
 
+const ResetPassword = async (input, setError, currentUser) => {
+    try {
+        await axios.put(`/user/update/new/password/${currentUser?.id}`, {
+            usernameOrEmail: input.userNameOrEmail, 
+            newPassword: input.newpassword 
+        });
+        return { success: true }
+    }
+    catch (err) {
+        setError(err.response.data);
+        return { success: false }
+    }
+}
+
 export { 
     IsValidUserInput,
-    UserIdentify
+    UserIdentify,
+    ResetPassword
 };

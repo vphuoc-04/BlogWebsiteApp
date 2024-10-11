@@ -3,7 +3,7 @@ import { UserContext } from '../../context/AuthContext';
 import { UserLogin } from '../../core/client/UserLogin';
 import { useNavigate } from 'react-router-dom';
 import { SendOTPResetService, UserLoginService } from '../../services/AuthService';
-import { UserIdentify } from '../../services/UserService';
+import { ResetPassword, UserIdentify } from '../../services/UserService';
 
 const Login = () => {
     const [input, setInput] = useState({
@@ -26,6 +26,9 @@ const Login = () => {
     const [otp, setOtp] = useState("");
     const [generatedOtp, setGeneratedOtp] = useState(null);
     const [errorVerifyEmail, setErrorVerifyEmail] = useState(null);
+
+    // New Password
+    const [newPasswordBox, setNewPasswordBox] = useState(null);
 
     // Focused input
     const [focusedInput, setFocusedInput] = useState("");
@@ -71,12 +74,19 @@ const Login = () => {
         event.preventDefault();
         if (otp === generatedOtp.toString()) { 
             setShowOTPBox(false);
+            setNewPasswordBox(true);
             setErrorVerifyEmail(null);
         } 
         else {
             setErrorVerifyEmail("Incorrect OTP. Please check your email and try again.");
         }
     };
+
+    // Reset password
+    const HandleResetPassword = async () => {
+        await ResetPassword(input, setError);
+        setTimeout(() => { setNewPasswordBox(false); setIndentifyBox(null); setIdentify([]) }, 2000);
+    }
     
     return (
         <UserLogin 
@@ -117,6 +127,13 @@ const Login = () => {
             HandleSendOTPResetPassword = { HandleSendOTPResetPassword }
             HandleOTPVerification = { HandleOTPVerification }
             errorVerifyEmail = { errorVerifyEmail }
+
+            // Password
+            newPasswordBox = { newPasswordBox }
+            setNewPasswordBox = { setNewPasswordBox }
+
+            // Reset password
+            HandleResetPassword = { HandleResetPassword }
         />
     )
 }

@@ -5,7 +5,8 @@ import {
     CheckEmailUsername,
     IdentifyUser,
     SendOTPResetPassword,
-    GetEmailByUsername, 
+    GetEmailByUsername,
+    ResetPassword, 
 } from '../controllers/UserControllers.js';
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.post('/check-email-username', CheckEmailUsername);
 router.post('/identify', IdentifyUser);
 router.get('/get/email', GetEmailByUsername);
 router.post('/reset/password', SendOTPResetPassword);
+router.put('/update/new/password/:id', ResetPassword);
 
 export default router;

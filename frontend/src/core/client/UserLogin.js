@@ -39,6 +39,13 @@ const UserLogin = ({
     HandleSendOTPResetPassword,
     HandleOTPVerification,
     errorVerifyEmail,
+
+    // Password
+    newPasswordBox,
+    setNewPasswordBox,
+
+    // Reset password
+    HandleResetPassword
 }) => {
     return (
         <div className = "UserLogin">
@@ -144,6 +151,34 @@ const UserLogin = ({
                     <div className = "Buttons">
                         <button onClick = { HandleOTPVerification }>Confirm</button>
                         <button onClick = { () => { setShowOTPBox(false); setIdentify([]);} }>Cancel</button>
+                    </div>
+                </div>
+            )}
+
+            {newPasswordBox && <div className = "box"></div>}
+            {newPasswordBox && (
+                <div className = "NewPasswordBox">
+                    <p>Enter your new password:</p>
+                    <div className = "InputPassword">
+                        <input 
+                            name = "newpassword"
+                            type = { showPassword ? "text" : "password" }
+                            placeholder = "Password"
+                            onChange = { HandleInput }
+                            onFocus = { () => HandleFocus("newpassword")} 
+                            onBlur = { HandleBlur } 
+                            className = { focusedInput === "newpassword" ? "focused" : "" }
+                        />
+                        <div className = "ShowOrHidePassword">
+                            <i 
+                                className = { showPassword === true ? "fa-regular fa-eye" : "fa-regular fa-eye-slash" } 
+                                onClick = {() => setShowPassword(!showPassword) }
+                            />
+                        </div>
+                    </div>
+                    <div className = "Buttons">
+                        <button onClick = { HandleResetPassword }>Confirm</button>
+                        <button onClick = { () => { setNewPasswordBox(false); }}>Cancel</button>
                     </div>
                 </div>
             )}
