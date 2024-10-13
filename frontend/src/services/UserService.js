@@ -66,8 +66,19 @@ const ResetPassword = async (input, setError, currentUser) => {
     }
 }
 
+const GetUser = async (setUser) => {
+    try {
+        const response = await axios.get('/user/data');
+        setUser(response.data);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 export { 
     IsValidUserInput,
     UserIdentify,
-    ResetPassword
+    ResetPassword,
+    GetUser
 };

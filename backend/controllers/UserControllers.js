@@ -4,6 +4,16 @@ import { SendOTPEmail } from '../services/SendOTPEmail.js';
 import { SendOTPReset } from '../services/SendOTPReset.js';
 
 const SaltRounds = 10;
+
+const GetUser = (req, res) => {
+    const q = "SELECT * FROM users";
+
+    database.query(q,  (err, data) => {
+        if (err) { return res.status(500).json("Error fetching user data."); }
+        return res.status(200).json(data);
+    })
+}
+
 const Register = async (req, res) => {
 
     const checkQuery = "SELECT * FROM users WHERE email = ? OR username = ?";
@@ -124,6 +134,7 @@ const ResetPassword = async (req, res) => {
 };
 
 export { 
+    GetUser,
     Register,
     SendOTPVerification,
     CheckEmailUsername,

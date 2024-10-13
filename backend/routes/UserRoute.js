@@ -1,5 +1,6 @@
 import express from 'express'
 import { 
+    GetUser, 
     Register, 
     SendOTPVerification,
     CheckEmailUsername,
@@ -11,6 +12,7 @@ import {
 
 const router = express.Router();
 
+router.get('/data', GetUser);
 router.post('/register', Register);
 router.post('/send-otp', SendOTPVerification);
 router.post('/check-email-username', CheckEmailUsername);
