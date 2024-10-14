@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Outlet } from 'react-router-dom'
 import { 
     AdminAuthMiddleware, 
     UserAuthMiddleware 
@@ -15,6 +15,11 @@ import AdminProfile from '../components/admin/Profile'
 import UserRegister from '../components/client/Register'
 import UserLogin from '../components/client/Login'
 
+// Page
+import Home from '../components/pages/Home'
+import Navbar from '../components/pages/Navbar'
+import Footer from '../components/pages/Footer'
+
 
 // Admin layout
 const AdminLayout = () => {
@@ -26,11 +31,13 @@ const AdminLayout = () => {
     )
 }
 
-// Client layout
+// Page layout
 const ClientLayout = () => {
     return (
         <>
-
+            <Navbar />
+            <Outlet />
+            <Footer />
         </>
     )
 }
@@ -55,7 +62,7 @@ const Layout = createBrowserRouter([
         path: '/',
         element: <UserAuthMiddleware userRoute = { true }> <ClientLayout /> </UserAuthMiddleware>,
         children: [
-            
+            { path: '/', element: <Home /> },
         ]
     }
 ])

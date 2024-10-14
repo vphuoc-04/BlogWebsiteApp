@@ -105,11 +105,11 @@ const EditProfile = (req, res) => {
 
         const adminId = req.params.id;
 
-        const { firstname, lastname, username, bio } = req.body;
+        const { firstname, lastname, username, work, bio } = req.body;
 
-        const query = "UPDATE admin SET `firstname` = ?, `lastname` = ?, `username` = ?, `bio` = ? WHERE `id` = ?";
+        const query = "UPDATE admin SET `firstname` = ?, `lastname` = ?, `username` = ?, `work` = ?, `bio` = ? WHERE `id` = ?";
 
-        database.query(query, [firstname, lastname, username, bio, adminId], (err) => {
+        database.query(query, [firstname, lastname, username, work, bio, adminId], (err) => {
             if (err) { return res.status(500).json("Failed to update profile!"); }
             return res.json("Profile has been updated!");
         });

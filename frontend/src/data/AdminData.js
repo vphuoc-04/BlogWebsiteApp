@@ -6,6 +6,7 @@ const AdminData = (currentAdmin) => {
         firstname: currentAdmin?.firstname,
         lastname: currentAdmin?.lastname,
         username: currentAdmin?.username,
+        work: currentAdmin?.work,
         bio: currentAdmin?.bio,
         email: currentAdmin?.email,
         backupemail: currentAdmin?.backupemail,

@@ -124,6 +124,8 @@ const AdminProfile = ({
                 <div className = "FullName">
                     <p> { admin.firstname } </p>
                     <p> { admin.lastname } </p>
+                    <p> - </p>
+                    <p> { admin.work } </p>
                 </div>
                 <div className = "Username">
                     <p> { admin.username } </p>
@@ -232,6 +234,16 @@ const AdminProfile = ({
                             onFocus = {() => HandleFocus("username")}
                             onBlur = { HandleBlur }
                             className = { focusedInput === "username" ? "focused" : "" }
+                        />
+                        <p>Work</p>
+                        <input 
+                            name = "work"
+                            placeholder = "Work"
+                            onChange = { HandleInputChange }
+                            value = { newInput.work }
+                            onFocus = {() => HandleFocus("work")}
+                            onBlur = { HandleBlur }
+                            className = { focusedInput === "work" ? "focused" : "" }
                         />
                         <p>Bio</p>
                         <textarea 

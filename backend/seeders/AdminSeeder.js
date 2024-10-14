@@ -8,6 +8,7 @@ const AdminSeeder = async () => {
         firstname: '',
         lastname: '',
         username: '',
+        work:'',
         bio: '',
         avatar: '',
         email: '',
@@ -15,7 +16,7 @@ const AdminSeeder = async () => {
         password: HashedPassword
     }
 
-    const query = "INSERT INTO admin(`firstname`, `lastname`, `username`, `bio`, `avatar`, `email`, `backupemail`, `password`)VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const query = "INSERT INTO admin(`firstname`, `lastname`, `username`, `work` `bio`, `avatar`, `email`, `backupemail`, `password`)VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     database.query(query, Object.values(AdminData), (err, data) => {
         if (err) { console.error('Failed to seed admin:', err); }
         else { console.log('Admin seeded successfully:', data); }

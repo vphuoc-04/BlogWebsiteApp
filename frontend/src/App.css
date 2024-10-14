@@ -754,7 +754,7 @@ a {
 
 /* EDIT PROFILE */
 .AdminProfile .BoxEditProfile {
-    height: 600px;
+    height: 680px;
     width: 700px;
     background-color: rgb(255, 255, 255);
     position: absolute;
@@ -810,7 +810,7 @@ a {
 
 .AdminProfile .BoxEditProfile .AdminInfoInput .Bio {
     height: 170px;
-    margin-top: 80px;
+    margin-top: 120px;
     width: 610px;
     outline: none;
     border-radius: 0px;
@@ -1733,4 +1733,87 @@ a {
 .Active-User-Login-Button {
     background-color: rgb(67, 169, 162);
     color: rgb(255, 255, 255);
+}
+
+
+/***** PAGE *****/
+/*** NAVBAR ***/
+.NavbarComponent {
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.5);
+    padding: 15px 0px 5px 105px;
+}
+
+.NavbarComponent img {
+    width: 50px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+.NavbarComponent .Routes {
+    display: flex;
+    gap: 50px;
+    font-size: large;
+    font-weight: lighter;
+    font-family: monospace;
+    font-family: "Manrope", sans-serif;
+    margin-left: 65%;
+    font-weight: 300;
+}
+
+/*** FOOTER ***/
+.FooterComponent {
+    border-top: 1px solid rgb(0, 0, 0, 0.5);
+    margin-top: 50%;
+    padding: 50px 0px 20px 0px;
+}
+
+.FooterComponent .Social {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: -20px;
+    font-size: 22px;
+    padding-bottom: 10px;
+}
+
+.FooterComponent .Social a {
+    color: rgb(0, 0, 0, 0.7);
+    transition: all 0.3s;
+}
+
+.FooterComponent .Social a:hover {
+    color: rgb(0, 0, 0);
+}
+
+.FooterComponent p {
+    text-align: center;
+    font-size: large;
+    color: rgb(0, 0, 0, 0.7)
+}
+
+/*** HOME ***/
+.HomePage {
+    
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+.HomePage .Name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -400%);
+    font-family: "Great Vibes", cursive;
+    font-weight: lighter;
+    color: rgb(67, 169, 162);
+    font-size: xxx-large;
+}
+
+.HomePage .Work {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -800%);
+    font-size: x-large;
+    color: rgb(0, 0, 0, 0.6);
 }

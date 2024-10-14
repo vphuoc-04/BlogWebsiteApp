@@ -45,7 +45,8 @@ const Profile = () => {
             admin.bio !== newInput.bio ||
             admin.email !== newInput.email ||
             admin.editemail !== newInput.editemail ||
-            admin.backupemail !== newInput.backupemail
+            admin.backupemail !== newInput.backupemail ||
+            admin.work !== newInput.work
         );
     };
 
@@ -56,7 +57,7 @@ const Profile = () => {
     const IsBackupEmailChange = () => { return newInput.backupemail && newInput.backupemail !== admin.backupemail }
 
     const IsPasswordChange = () => { 
-        return(
+        return (
             newInput.password !== "" && 
             newInput.newpassword !== "" && 
             newInput.renewpassword !== "" 
@@ -178,8 +179,8 @@ const Profile = () => {
 
     const HandleEditAdminProfile = async () => { 
         EditAdminProfile(newInput, currentAdmin); 
-        setAdmin(prevAdmin => ({ ...prevAdmin, firstname: newInput.firstname, lastname: newInput.lastname, username: newInput.username, bio: newInput.bio }))
-        setCurrentAdmin(prevAdmin => ({ ...prevAdmin, firstname: newInput.firstname, lastname: newInput.lastname, username: newInput.username, bio: newInput.bio }))
+        setAdmin(prevAdmin => ({ ...prevAdmin, firstname: newInput.firstname, lastname: newInput.lastname, username: newInput.username, work: newInput.work, bio: newInput.bio }))
+        setCurrentAdmin(prevAdmin => ({ ...prevAdmin, firstname: newInput.firstname, lastname: newInput.lastname, username: newInput.username, work: newInput.work, bio: newInput.bio }))
         setEditProfile(false);
     }
 

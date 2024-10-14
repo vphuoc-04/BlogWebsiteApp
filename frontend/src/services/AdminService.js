@@ -46,6 +46,7 @@ const EditAdminProfile = async (newInput, currentAdmin) => {
             firstname: newInput.firstname,
             lastname: newInput.lastname,
             username: newInput.username,
+            work: newInput.work,
             bio: newInput.bio
         });
         const message = response.data || "Profile has been updated";
