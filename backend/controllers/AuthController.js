@@ -52,8 +52,13 @@ const LoginUser = (req, res) => {
     })
 }
 
+const LogoutUser = (req, res) => {
+    res.clearCookie("user_token", { sameSite: "none", secure: "true" }).status(200).json("Account has been logged out!")
+}
+
 export { 
     LoginAdmin, 
     LogoutAdmin,
-    LoginUser 
+    LoginUser,
+    LogoutUser 
 }
