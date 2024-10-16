@@ -25,6 +25,7 @@ const NavbarComponent = ({
              </a>
              <div className = "Routes">
                 <NavLink className = "Home" style = {({ isActive }) => ActiveNavbar(isActive)} to = '/'>Home</NavLink>
+                <NavLink className = "About" style = {({ isActive }) => ActiveNavbar(isActive)} to = '/about'>About</NavLink>
              </div>
              {user ? (
                 <>

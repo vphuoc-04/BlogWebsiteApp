@@ -1957,3 +1957,45 @@ a {
     font-size: x-large;
     color: rgb(0, 0, 0, 0.6);
 }
+
+/*** ABOUT ***/
+.AboutPage { 
+    display: flex;
+    flex-direction: column;
+}
+
+.AboutPage .Avatar {
+    margin: 56px 0 0 675px;
+}
+
+.AboutPage .Avatar img {
+    width: 150px;
+    padding: 7.8px;
+    border: 5px solid rgb(67, 169, 162);
+    border-radius: 50%;
+}
+
+.AboutPage .VerifyIcon {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(67, 169, 162);
+    border-radius: 50%;
+    position: absolute;
+    top: 35%;
+    left: 54.9%;
+    transform: translate(-50%, -50%);
+    border: 3px solid rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+}
+
+.AboutPage .Bio{
+    display: flex;
+    font-size: 14px;
+    width: 1050px;
+    padding: 10px;
+    border-radius: 15px;
+    margin-left: 250px;
+}
