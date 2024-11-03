@@ -10,6 +10,7 @@ import Admin from '../components/admin/Admin'
 import Dashboard from '../components/admin/Dashboard'
 import AdminNavbar from '../components/admin/Navbar'
 import AdminProfile from '../components/admin/Profile'
+import AdminCreatePost from '../components/admin/CreatePost'
 
 // Client components
 import UserRegister from '../components/client/Register'
@@ -52,7 +53,8 @@ const Layout = createBrowserRouter([
         element: <AdminAuthMiddleware adminRoute = { true }> <AdminLayout /> </AdminAuthMiddleware>,
         children: [
             { path: 'dashboard', element: <Dashboard /> },
-            { path: 'profile', element: <AdminProfile /> }
+            { path: 'profile', element: <AdminProfile /> },
+            { path: 'create', element: <AdminCreatePost /> }
         ]
     },
 
