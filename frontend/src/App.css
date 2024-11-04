@@ -2126,10 +2126,32 @@ a {
     display: flex;
     justify-content: center;
     margin-top: 200px;
+    gap: 50px;
+}
+
+.HomePage .Posts .Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.HomePage .Posts .Container .Title {
+    font-size: large;
+    width: 300px;
+    word-wrap: break-word;
+    text-align: center;
 }
 
 .HomePage .Posts .Container img {
     width: 300px;
+    border-radius: 10px;
+    transition: all 0.3s;
+    border: 0.5px solid rgb(0, 0, 0, 0.3);
+}
+
+.HomePage .Posts .Container img:hover {
+    cursor: pointer;
+    transform: scale(1.03);
 }
 
 /*** ABOUT ***/
