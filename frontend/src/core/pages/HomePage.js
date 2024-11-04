@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const HomePage = ({
     // Admin
     admin,
@@ -16,7 +18,9 @@ const HomePage = ({
             <div className = "Posts">
                 {post.map((p) => (
                     <div className = "Container" key = { p.id }>
-                        <img src = { `../upload/posts/${p.thumbnail}` } />
+                        <Link className = "Thumbnail" to = {`/post/${p.id}`}>
+                            <img src = {`../upload/posts/${p.thumbnail}`} />
+                        </Link>
                         <p className = "Title">{ p.title }</p>
                     </div>
                 ))}

@@ -21,6 +21,7 @@ import Home from '../components/pages/Home'
 import Navbar from '../components/pages/Navbar'
 import Footer from '../components/pages/Footer'
 import About from '../components/pages/About'
+import Single from '../components/pages/Single'
 
 
 // Admin layout
@@ -66,7 +67,8 @@ const Layout = createBrowserRouter([
         element: <UserAuthMiddleware userRoute = { true }> <ClientLayout /> </UserAuthMiddleware>,
         children: [
             { path: '/', element: <Home /> },
-            { path: '/about', element: <About /> }
+            { path: '/about', element: <About /> }, 
+            { path: '/post/:id', element: <Single /> }
         ]
     }
 ])
