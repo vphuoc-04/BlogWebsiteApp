@@ -9,7 +9,6 @@ const CreatePost = (req, res) => {
         if (err) { return res.status(403).json("Invalid token!"); }
 
         const query = "INSERT INTO posts(`title`, `foreword`, `des`, `thumbnail`, `posted_at`, `posted_by`) VALUES (?)";
-
         const values = [
             req.body.title,
             req.body.foreword,
@@ -19,38 +18,80 @@ const CreatePost = (req, res) => {
             adminInfo.id
         ];
 
-        database.query(query, [values], (err) => {
+        database.query(query, [values], (err, data) => {
             if (err) { return res.status(500).json("Error creating post!"); }
-            return res.status(201).json("Post created successfully!");
-        })
-    })
-}
+
+            const postId = data.insertId;
+            if (!postId) { return res.status(500).json("Failed to create post, missing postId!"); }
+
+            return res.status(201).json({ postId: postId });
+        });
+    });
+};
+
+const UpdatePostThumbnail = (req, res) => {
+    const postId = req.params.id;
+    const { thumbnail } = req.body;
+
+    const query = "UPDATE posts SET thumbnail = ? WHERE id = ?";
+    const values = [thumbnail, postId];
+
+    database.query(query, values, (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json("Error updating post");
+        }
+
+        if (data.affectedRows === 0) {
+            return res.status(404).json("Post not found");
+        }
+
+        res.status(200).json({ message: "Post updated successfully" });
+    });
+};
 
 const GetPost = (req, res) => {
-    const query = "SELECT * FROM posts";
+    const query = `
+        SELECT p.*, JSON_ARRAYAGG(ip.image) AS images
+        FROM posts p
+        LEFT JOIN image_post ip ON p.id = ip.belong_post_id
+        GROUP BY p.id
+    `;
 
-    database.query(query,  (err, posts) => {
-        if (err) { return res.status(500).json("Error fetching posts!"); }
+    database.query(query, (err, posts) => {
+        if (err) {
+            return res.status(500).json("Error fetching posts!");
+        }
         return res.status(200).json(posts);
     });
-}
+};
 
 const GetPosts = (req, res) => {
-    const query = "SELECT p.id, p.title, p.foreword, p.des, p.thumbnail, p.posted_at, a.firstname, a.lastname, a.username, a.avatar FROM posts p JOIN admin a ON p.posted_by = a.id WHERE p.id = ?"
+    const query = `
+        SELECT p.id, p.title, p.foreword, p.des, p.thumbnail, p.posted_at, 
+               a.firstname, a.lastname, a.username, a.avatar,
+               JSON_ARRAYAGG(ip.image) AS images
+        FROM posts p 
+        JOIN admin a ON p.posted_by = a.id 
+        LEFT JOIN image_post ip ON p.id = ip.belong_post_id
+        WHERE p.id = ?
+        GROUP BY p.id
+    `;
 
     database.query(query, [req.params.id], (err, data) => {
         if (err) return res.status(500).json(err);
-    
+
         if (data.length === 0) {
             return res.status(404).json({ message: "Post not found" });
         }
-        
-        return res.status(200).json(data);
+
+        return res.status(200).json(data[0]); 
     });
 };
 
 export {
     CreatePost,
+    UpdatePostThumbnail,
     GetPost,
     GetPosts
-}
+};

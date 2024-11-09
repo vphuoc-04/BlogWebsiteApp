@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { AdminCreatePost } from '../../core/admin/AdminCreatePost'
-import { useLocation } from 'react-router-dom'
+import React, { useState, useRef } from 'react';
+import { AdminCreatePost } from '../../core/admin/AdminCreatePost';
+import { useLocation } from 'react-router-dom';
 import { CreatePostService } from '../../services/PostService';
 
 const CreatePost = () => {
@@ -18,23 +18,34 @@ const CreatePost = () => {
     const [file, setFile] = useState(null);
     const [filePreview, setFilePreview] = useState(null);
     const [timeoutId, setTimeoutId] = useState(null);
-
     const [showMenu, setShowMenu] = useState(false);
+    const [isChangingThumbnail, setIsChangingThumbnail] = useState(false);
 
-    const HandleFileChange = (event) => {
+    const HandleThumbnailUpload = (event) => {
+        if (filePreview && !isChangingThumbnail) { return; } 
+
         const selectedFile = event.target.files[0];
         if (selectedFile) {
-            setFile(selectedFile); 
-
+            setFile(selectedFile);
+    
             const reader = new FileReader();
             reader.onloadend = () => {
                 setFilePreview(reader.result);
+                setShowMenu(false);
+                setIsChangingThumbnail(false); 
             };
             reader.readAsDataURL(selectedFile);
         }
     };
 
-    const HandleDownloadImage = () => {
+    const HandleThumbnailChange = () => {
+        setFile(null); 
+        setFilePreview(null); 
+        setIsChangingThumbnail(true); 
+        document.getElementById("file").click(); 
+    };
+
+    const HandleDownloadThumbnail = () => {
         if (filePreview) {
             const link = document.createElement("a");
             link.href = filePreview;
@@ -74,11 +85,12 @@ const CreatePost = () => {
             setFile = { setFile }
             filePreview = { filePreview }
             showMenu = { showMenu }
-            setShowMenu = { setShowMenu }
-
+            isChangingThumbnail = { isChangingThumbnail }
+            
             // Handle
-            HandleFileChange = { HandleFileChange }
-            HandleDownloadImage = { HandleDownloadImage }
+            HandleThumbnailUpload = { HandleThumbnailUpload }
+            HandleThumbnailChange = { HandleThumbnailChange } 
+            HandleDownloadThumbnail = { HandleDownloadThumbnail }
             HandleHover = { HandleHover }
             HandleCreatePost = { HandleCreatePost }
         />

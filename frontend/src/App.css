@@ -506,7 +506,7 @@ a {
     width: 560px;
     outline: none;
     font-size: 15px;
-    height: 175px;
+    height: 300px;
     resize: none;
     margin-top: 10px;
 }
@@ -520,8 +520,9 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
-    position: relative;
+    position: absolute;
+    top: 60%;
+    left: 61%;
 }
 
 .AdminCreatePost .CreatePost .Thumbnail .file {
@@ -537,7 +538,11 @@ a {
     width: 180px;
     height: 100px;
     border-radius: 10px;
-    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .AdminCreatePost .CreatePost .Thumbnail .ThumbnailOptions {
@@ -588,9 +593,9 @@ a {
     background-color: #f0f0f0;
 }
 
-/* PEEVIEW */
+/* PREVIEW */
 .AdminCreatePost .Preview {
-    width: 400px;
+    width: 410px;
     height: 230px;
     border: 1px solid rgb(0, 0, 0, 0.5);
     border-radius: 10px;
@@ -607,6 +612,7 @@ a {
     font-size: 20px;
     width: 400px;
     word-wrap: break-word;
+    text-align: center;
 }
 
 /* BUTTON */

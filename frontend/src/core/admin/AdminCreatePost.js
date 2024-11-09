@@ -11,11 +11,12 @@ const AdminCreatePost = ({
     setDes,
     filePreview,
     showMenu,
-    setShowMenu,
+    isChangingThumbnail,
 
     // Handle
-    HandleFileChange,
-    HandleDownloadImage,
+    HandleThumbnailUpload,
+    HandleThumbnailChange, 
+    HandleDownloadThumbnail,
     HandleHover,
     HandleCreatePost,
 }) => {
@@ -55,28 +56,38 @@ const AdminCreatePost = ({
                         type = "file"
                         id = "file"
                         name = ""
-                        onChange = { HandleFileChange }
+                        onChange = { HandleThumbnailUpload }
+                        disabled = { !!filePreview && !isChangingThumbnail }
                     />
                     <label className = "file" htmlFor = "file">
                         {filePreview ? (
                             <div className = "ThumbnailPreview">
                                 <img src = {filePreview} alt="" />
                                 <div className = "ThumbnailOptions">
-                                    <span 
-                                        className = "verticalIcon" 
+                                    <span
+                                        className = "verticalIcon"
                                         onMouseEnter = {() => HandleHover(true)}
                                         onMouseLeave = {() => HandleHover(false)}
                                     >
                                         &#8942;
                                     </span>
                                     {showMenu && (
-                                        <div 
-                                            className = "menu"                                        
+                                        <div
+                                            className = "menu"
                                             onMouseEnter = {() => HandleHover(true)}
                                             onMouseLeave = {() => HandleHover(false)}
                                         >
-                                            <button onClick = {() => {document.getElementById('file').click(); setShowMenu(null)}}>Change Thumbnail</button>
-                                            <button onClick = { HandleDownloadImage }>Download Image</button>
+                                            <button
+                                                onClick = {() => {
+                                                    document.getElementById("file").click(); 
+                                                    HandleThumbnailChange();
+                                                }}
+                                            >
+                                                Change Thumbnail
+                                            </button>
+                                            <button onClick = { HandleDownloadThumbnail }>
+                                                Download Image
+                                            </button>
                                         </div>
                                     )}
                                 </div>
