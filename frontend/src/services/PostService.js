@@ -1,7 +1,7 @@
-import axios from "axios";
-import moment from "moment";
+import axios from 'axios';
+import moment from 'moment';
 
-const CreatePostService = async (event, title, foreword, des, file) => {
+const CreatePostService = async (event, title, foreword, des, file, images) => {
     event.preventDefault();
     try {
         const formData = new FormData();
@@ -30,15 +30,39 @@ const CreatePostService = async (event, title, foreword, des, file) => {
             thumbnail: thumbnailUrl
         });
 
+        // Duyệt qua mảng hình ảnh và gửi từng ảnh lên server
+        for (const image of images) {
+            const imageFormData = new FormData();
+            imageFormData.append("file", image);
+
+            const uploadResponse = await axios.post(`/image-post/${postId}`, imageFormData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
+
+            console.log(uploadResponse.data);
+
+            if (uploadResponse.status === 200) {
+                const uploadedImages = Array.isArray(uploadResponse.data) ? uploadResponse.data : [uploadResponse.data];
+
+                // Gửi các đường dẫn ảnh đã upload lên server để lưu vào cơ sở dữ liệu
+                for (const imagePath of uploadedImages) {
+                    await axios.post(`/post/images/${postId}`, { 
+                        image_path: imagePath, 
+                        uploaded_at: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
+                    });
+                }
+            } else {
+                console.log(`Failed to upload image for post ID: ${postId}`);
+            }
+        }
+
         return { success: true, message: "Post created successfully." };
-    } 
-    catch (err) {
+    } catch (err) {
         console.log(err);
 
         if (err.response) {
             console.error(err.response.data); 
-        } 
-        else {
+        } else {
             console.error(err.message); 
         }
 

@@ -13,6 +13,10 @@ const AdminCreatePost = ({
     showMenu,
     isChangingThumbnail,
 
+    // React-quill
+    modules,
+    reactQuillRef,
+
     // Handle
     HandleThumbnailUpload,
     HandleThumbnailChange, 
@@ -32,11 +36,11 @@ const AdminCreatePost = ({
                         onChange = {(e) => setTitle(e.target.value)}
                     />
                 </div>
-                <div className = "Title">
-                    <p>Intro des</p>
+                <div className = "Foreword">
+                    <p>Fore word</p>
                     <input 
                         type = "text"
-                        placeholder = "Title"
+                        placeholder = "Foreword"
                         value = { foreword }
                         onChange = {(e) => setForeword(e.target.value)}
                     />
@@ -48,6 +52,8 @@ const AdminCreatePost = ({
                         theme = "snow"
                         value = { des }
                         onChange = { setDes }
+                        modules = { modules }
+                        ref = { reactQuillRef }
                     />
                 </div>
                 <div className = "Thumbnail">

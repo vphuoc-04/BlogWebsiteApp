@@ -8,6 +8,11 @@ a {
     text-decoration: none;
 }
 
+/* REACT-QUILL */
+.ql-snow .ql-editor img {
+    max-width: 50%;
+}
+
 .overlay {
     position: fixed;
     top: 0;
@@ -484,6 +489,26 @@ a {
 }
 
 .AdminCreatePost .CreatePost .Title input {
+    padding: 10px;
+    width: 520px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+/* FOREWORD */
+.AdminCreatePost .CreatePost .Foreword {
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 5px;
+    width: 550px;
+}
+
+.AdminCreatePost .CreatePost .Foreword p {
+    margin: 5px 0px 0px 9px;
+}
+
+.AdminCreatePost .CreatePost .Foreword input {
     padding: 10px;
     width: 520px;
     border: none;
