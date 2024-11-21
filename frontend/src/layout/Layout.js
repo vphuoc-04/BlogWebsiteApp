@@ -68,7 +68,7 @@ const Layout = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/about', element: <About /> }, 
-            { path: '/post/:id', element: <Single /> }
+            { path: '/post/:slug', element: <Single /> }
         ]
     }
 ])

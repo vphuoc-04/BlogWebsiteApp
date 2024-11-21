@@ -1,5 +1,6 @@
 import { database } from '../database.js'
 import jwt from 'jsonwebtoken'
+import slugify from 'slugify';
 
 const CreatePost = (req, res) => {
     const token = req.cookies.admin_token;
@@ -8,9 +9,16 @@ const CreatePost = (req, res) => {
     jwt.verify(token, "admin_jwtkey", async (err, adminInfo) => {
         if (err) { return res.status(403).json("Invalid token!"); }
 
-        const query = "INSERT INTO posts(`title`, `foreword`, `des`, `thumbnail`, `posted_at`, `posted_by`) VALUES (?)";
+        const slug = slugify(req.body.title, {
+            lower: true,     
+            strict: true,    
+            replacement: "-", 
+        });
+
+        const query = "INSERT INTO posts(`title`, `slug`, `foreword`, `des`, `thumbnail`, `posted_at`, `posted_by`) VALUES (?)";
         const values = [
             req.body.title,
+            slug,
             req.body.foreword,
             req.body.des,
             req.body.thumbnail,
@@ -60,13 +68,11 @@ const ImageBelongPost = (req, res) => {
         const postId = req.params.id;
         if (!postId) { return res.status(400).json("Post ID is required"); }
 
-        const imagePaths = req.body.image_path.image_path; // Correctly accessing the image_path array
+        const imagePaths = req.body.image_path.image_path;
         const uploadedAt = req.body.uploaded_at;
 
-        // Ensure imagePaths is an array, even if it's a single value
         const imageArray = Array.isArray(imagePaths) ? imagePaths : [imagePaths];
 
-        // Prepare the query values
         const values = imageArray.map(imagePath => [
             postId, 
             imagePath, 
@@ -80,7 +86,6 @@ const ImageBelongPost = (req, res) => {
                 return res.status(500).json("Error saving image to database"); 
             }
 
-            // Construct the image URL correctly
             const imageUrl = `../frontend/public/upload/posts/${postId}/images/${imagePaths[0]}`;
 
             return res.status(200).json({ message: "Image added to post successfully", imageUrl });
@@ -97,15 +102,28 @@ const GetPost = (req, res) => {
 }
 
 const GetPosts = (req, res) => {
-    const query = "SELECT p.id, p.title, p.foreword, p.des, p.thumbnail, p.posted_at, a.firstname, a.lastname, a.username, a.avatar FROM posts p JOIN admin a ON p.posted_by = a.id WHERE p.id = ?"
-    database.query(query, [req.params.id], (err, data) => {
-        if (err) return res.status(500).json(err);
-    
-        if (data.length === 0) {
-            return res.status(404).json({ message: "Post not found" });
-        }
+    const slug = req.params.slug;
+    const postId = req.query.postId;
+
+    if (!slug || !postId) {
+        return res.status(400).json({ message: "Slug and postId are required" });
+    }
+
+    const query = `
+        SELECT p.id, p.slug, p.title, p.foreword, p.des, p.thumbnail, p.posted_at, 
+            a.firstname, a.lastname, a.username, a.avatar, GROUP_CONCAT(i.image_path) AS images 
+        FROM posts p 
+        JOIN admin a ON p.posted_by = a.id 
+        LEFT JOIN image_post i ON p.id = i.post_id
+        WHERE p.slug = ? AND p.id = ?
+        GROUP BY p.id`;
+
+    database.query(query, [slug, postId], (err, data) => {
+        if (err) {  return res.status(500).json({ message: "Error in database query", error: err });  }
         
-        return res.status(200).json(data);
+        if (data.length === 0) { return res.status(404).json({ message: "Post not found" }); }
+
+        return res.status(200).json(data[0]);
     });
 };
 

@@ -18,7 +18,7 @@ const HomePage = ({
             <div className = "Posts">
                 {post.map((p) => (
                     <div className = "Container" key = { p.id }>
-                        <Link className = "Thumbnail" to = {`/post/${p.id}`}>
+                        <Link className = "Thumbnail" to = {`/post/${p.slug}&id=${p.id}`}>
                             <img src = {`../upload/posts/${p.id}/thumbnail/${p.thumbnail}`} />
                         </Link>
                         <p className = "Title">{ p.title }</p>

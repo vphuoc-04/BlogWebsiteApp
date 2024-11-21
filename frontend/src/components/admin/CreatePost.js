@@ -99,7 +99,6 @@ const CreatePost = () => {
             }
         };
     }, []);
-    
 
     const modules = {
         toolbar: {
