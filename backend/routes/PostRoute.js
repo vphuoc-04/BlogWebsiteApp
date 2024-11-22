@@ -13,6 +13,6 @@ router.post('/', CreatePost);
 router.put('/thumbnail/:id', UpdatePostThumbnail);
 router.post('/images/:id', ImageBelongPost);
 router.get('/data', GetPost);
-router.get('/data/:slug', GetPosts);
+router.get('/data/:id', GetPosts);
 
 export default router;

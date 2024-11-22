@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SinglePostData = (slug, postId) => {
-    const [post, setPost] = useState([]);
+const SinglePostData = (postId) => {
+    const [post, setPost] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/post/data/${slug}`, {
-                    params: { postId: postId }
-                });
+                const response = await axios.get(`/post/data/${postId}`); 
                 setPost(response.data);
             } 
             catch (err) {
@@ -17,10 +15,10 @@ const SinglePostData = (slug, postId) => {
             }
         };
 
-        if (slug && postId) {
+        if (postId) {
             fetchData();
         }
-    }, [slug, postId]);
+    }, [postId]);
 
     return { post };
 };

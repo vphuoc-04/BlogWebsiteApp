@@ -102,26 +102,31 @@ const GetPost = (req, res) => {
 }
 
 const GetPosts = (req, res) => {
-    const slug = req.params.slug;
-    const postId = req.query.postId;
+    const postId = req.params.id;
 
-    if (!slug || !postId) {
-        return res.status(400).json({ message: "Slug and postId are required" });
+    if (!postId) {
+        return res.status(400).json({ message: "Post ID is required" });
     }
 
     const query = `
         SELECT p.id, p.slug, p.title, p.foreword, p.des, p.thumbnail, p.posted_at, 
-            a.firstname, a.lastname, a.username, a.avatar, GROUP_CONCAT(i.image_path) AS images 
+               a.firstname, a.lastname, a.username, a.avatar, 
+               GROUP_CONCAT(i.image_path) AS images 
         FROM posts p 
         JOIN admin a ON p.posted_by = a.id 
         LEFT JOIN image_post i ON p.id = i.post_id
-        WHERE p.slug = ? AND p.id = ?
-        GROUP BY p.id`;
+        WHERE p.id = ?
+        GROUP BY p.id;
+    `;
 
-    database.query(query, [slug, postId], (err, data) => {
-        if (err) {  return res.status(500).json({ message: "Error in database query", error: err });  }
-        
-        if (data.length === 0) { return res.status(404).json({ message: "Post not found" }); }
+    database.query(query, [postId], (err, data) => {
+        if (err) {
+            return res.status(500).json({ message: "Error in database query", error: err });
+        }
+
+        if (data.length === 0) {
+            return res.status(404).json({ message: "Post not found" });
+        }
 
         return res.status(200).json(data[0]);
     });
