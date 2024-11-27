@@ -36,7 +36,7 @@ export const ImageBelongPost = (req, res) => {
         const files = req.files;
 
         if (files && files.length > 0) {
-            const fileNames = files.map(file => file.filename);  
+            const fileNames = files.map(file => `/upload/posts/${req.params.id}/images/${file.filename}`); 
             return res.status(200).json({ image_path: fileNames });
         } 
         else {

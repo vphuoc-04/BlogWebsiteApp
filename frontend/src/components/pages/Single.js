@@ -1,14 +1,11 @@
 import React from 'react';
 import { SinglePage } from '../../core/pages/SinglePage';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { SinglePostData } from '../../data/SinglePostData';
 
 const Single = () => {
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const postId = queryParams.get("id");
-
-    const { post } = SinglePostData(postId);
+    const { id } = useParams();
+    const { post } = SinglePostData(id);
 
     const getText = (html) => {
         const doc = new DOMParser().parseFromString(html, "text/html");

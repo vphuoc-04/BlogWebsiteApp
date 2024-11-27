@@ -60,35 +60,39 @@ const UpdatePostThumbnail = (req, res) => {
 
 const ImageBelongPost = (req, res) => {
     const token = req.cookies.admin_token;
-    if (!token) { return res.status(401).json("Not verified!"); }
+    if (!token) {
+        return res.status(401).json("Not verified!");
+    }
 
     jwt.verify(token, "admin_jwtkey", async (err, adminInfo) => {
-        if (err) { return res.status(403).json("Invalid token!"); }
+        if (err) {
+            return res.status(403).json("Invalid token!");
+        }
 
         const postId = req.params.id;
-        if (!postId) { return res.status(400).json("Post ID is required"); }
+        if (!postId) {
+            return res.status(400).json("Post ID is required");
+        }
 
-        const imagePaths = req.body.image_path.image_path;
+        const imagePaths = req.body.image_path;
         const uploadedAt = req.body.uploaded_at;
 
         const imageArray = Array.isArray(imagePaths) ? imagePaths : [imagePaths];
 
-        const values = imageArray.map(imagePath => [
-            postId, 
-            imagePath, 
-            uploadedAt
+        const values = imageArray.map((imagePath) => [
+            postId,
+            imagePath,
+            uploadedAt,
         ]);
 
         const query = "INSERT INTO image_post (`post_id`, `image_path`, `uploaded_at`) VALUES ?";
         database.query(query, [values], (err, data) => {
-            if (err) { 
+            if (err) {
                 console.error("Database error:", err);
-                return res.status(500).json("Error saving image to database"); 
+                return res.status(500).json("Error saving image to database");
             }
 
-            const imageUrl = `../frontend/public/upload/posts/${postId}/images/${imagePaths[0]}`;
-
-            return res.status(200).json({ message: "Image added to post successfully", imageUrl });
+            return res.status(200).json({ message: "Images added to post successfully" });
         });
     });
 };

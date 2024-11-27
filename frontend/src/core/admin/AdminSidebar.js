@@ -24,6 +24,10 @@ const AdminSidebar = () => {
                 <i class = "fa-solid fa-pen-to-square"></i>
                 <p>Create</p>
             </NavLink>
+            <NavLink to = '/admin/post' style = {({ isActive }) => ActiveSidebarItems(isActive)}>
+                <i class = "fa-solid fa-book"></i>
+                <p>Post</p>
+            </NavLink>
             <NavLink to = '/admin/profile' style = {({ isActive }) => ActiveSidebarItems(isActive)}>
                 <i class = "fa-solid fa-user"></i>
                 <p>Profile</p>

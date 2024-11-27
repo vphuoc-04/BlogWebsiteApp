@@ -11,6 +11,7 @@ import Dashboard from '../components/admin/Dashboard'
 import AdminNavbar from '../components/admin/Navbar'
 import AdminProfile from '../components/admin/Profile'
 import AdminCreatePost from '../components/admin/CreatePost'
+import AdminListPost from '../components/admin/ListPost'
 
 // Client components
 import UserRegister from '../components/client/Register'
@@ -22,7 +23,6 @@ import Navbar from '../components/pages/Navbar'
 import Footer from '../components/pages/Footer'
 import About from '../components/pages/About'
 import Single from '../components/pages/Single'
-
 
 // Admin layout
 const AdminLayout = () => {
@@ -55,7 +55,8 @@ const Layout = createBrowserRouter([
         children: [
             { path: 'dashboard', element: <Dashboard /> },
             { path: 'profile', element: <AdminProfile /> },
-            { path: 'create', element: <AdminCreatePost /> }
+            { path: 'create', element: <AdminCreatePost /> },
+            { path: 'post', element: <AdminListPost /> }
         ]
     },
 
@@ -68,7 +69,7 @@ const Layout = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/about', element: <About /> }, 
-            { path: '/post/:slug', element: <Single /> }
+            { path: '/post/:id/:slug', element: <Single /> }
         ]
     }
 ])

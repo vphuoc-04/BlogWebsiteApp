@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SinglePostData = (postId) => {
+const SinglePostData = (id) => {
     const [post, setPost] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/post/data/${postId}`); 
+                const response = await axios.get(`/post/data/${id}`); 
                 setPost(response.data);
             } 
             catch (err) {
@@ -15,10 +15,10 @@ const SinglePostData = (postId) => {
             }
         };
 
-        if (postId) {
+        if (id) {
             fetchData();
         }
-    }, [postId]);
+    }, [id]);
 
     return { post };
 };
