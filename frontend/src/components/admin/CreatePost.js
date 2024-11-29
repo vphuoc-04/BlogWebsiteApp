@@ -3,6 +3,7 @@ import { AdminCreatePost } from '../../core/admin/AdminCreatePost';
 import { useLocation } from 'react-router-dom';
 import { CreatePostService } from '../../services/PostService';
 import ReactQuill from 'react-quill';
+import axios from 'axios';
 
 const CreatePost = () => {
     const state = useLocation().state;
@@ -74,27 +75,56 @@ const CreatePost = () => {
     const reactQuillRef = useRef(ReactQuill);
     const [images, setImages] = useState([]);
 
-    const HandleImageUpload = useCallback(() => {
+    const HandleImageUpload = useCallback((event) => {
+        if (event && event.preventDefault) {
+            event.preventDefault(); 
+        }
+
         const input = document.createElement("input");
         input.setAttribute("type", "file");
         input.setAttribute("accept", "image/*");
+        input.setAttribute("multiple", "multiple");
         input.click();
     
         input.onchange = async () => {
-            if (input.files && input.files[0]) {
-                try {
-                    const file = input.files[0];
-                    const fileURL = URL.createObjectURL(file); 
+            if (input.files) {
+                const formData = new FormData();
     
-                    const quill = reactQuillRef.current.getEditor();
-                    const range = quill.getSelection();
-                    if (range) {
-                        quill.insertEmbed(range.index, "image", fileURL);
+                Array.from(input.files).forEach(file => {
+                    formData.append("file", file);
+                });
+    
+                try {
+                    const uploadResponse = await axios.post('/temp-image-post', formData, {
+                        headers: { "Content-Type": "multipart/form-data" }
+                    });
+    
+                    if (uploadResponse.status === 200) {
+                        const imageUrls = uploadResponse.data.image_path;
+    
+                        if (Array.isArray(imageUrls) && imageUrls.length > 0) {
+                            setImages(prevImages => [...prevImages, ...imageUrls]);
+    
+                            const quill = reactQuillRef.current.getEditor();
+                            const range = quill.getSelection();
+    
+                            if (range) {
+                                imageUrls.forEach((url) => {
+                                    quill.insertEmbed(range.index, "image", url);
+                                    range.index += 1;  
+                                });
+                            }
+                        } 
+                        else {
+                            console.error("Server response is not an array of image URLs.");
+                        }
+                    } 
+                    else {
+                        console.error("Upload failed");
                     }
-                    setImages((prevImages) => [...prevImages, file]);
                 } 
                 catch (err) {
-                    console.error('Error uploading image:', err);
+                    console.error("Error during image upload:", err);
                 }
             }
         };
@@ -120,7 +150,7 @@ const CreatePost = () => {
 
     // Handle create post
     const HandleCreatePost = async (event) => { 
-        const result = await CreatePostService(event, title, foreword, des, file, images); 
+        const result = await CreatePostService(event, title, foreword, des, file, images, reactQuillRef); 
         if (!result.success) {
             setError(result.message);
         }

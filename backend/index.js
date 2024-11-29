@@ -11,7 +11,8 @@ import PostRoutes from './routes/PostRoute.js';
 // Upload routes
 import { AdminAvatar } from './uploads/AdminAvatar.js';
 import { PostThumbnail } from './uploads/PostThumbnail.js';
-import { ImageBelongPost } from './uploads/ImageBelongPost.js';
+import { ImageBelongPost, UploadMultiple } from './uploads/ImageBelongPost.js';
+import { TempImagePost } from './uploads/TempImagePost.js';
 
 const app = express();
 app.use(express.json());  
@@ -25,7 +26,8 @@ app.use('/api/post', PostRoutes);
 
 app.post('/api/admin-avatar', AdminAvatar);
 app.post('/api/post-thumbnail/:id', PostThumbnail);
-app.post('/api/image-post/:id', ImageBelongPost);
+app.post('/api/temp-image-post', TempImagePost);
+app.post('/api/image-post/:id', UploadMultiple, ImageBelongPost);
 
 app.listen(8800, () => {
     console.log("Connected!")

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 
-const CreatePostService = async (event, title, foreword, des, file, images) => {
+const CreatePostService = async (event, title, foreword, des, file, images, reactQuillRef) => {
     event.preventDefault();
     try {
         const formData = new FormData();
@@ -31,29 +31,41 @@ const CreatePostService = async (event, title, foreword, des, file, images) => {
         });
 
         for (const image of images) {
-            const imageFormData = new FormData();
-            imageFormData.append("file", image);
-
-            const uploadResponse = await axios.post(`/image-post/${postId}`, imageFormData, {
-                headers: { "Content-Type": "multipart/form-data" }
+            const uploadResponse = await axios.post(`/image-post/${postId}`, {
+                temp_image_path: image
             });
-
-            console.log(uploadResponse.data);
-
+        
             if (uploadResponse.status === 200) {
-                const uploadedImages = Array.isArray(uploadResponse.data) ? uploadResponse.data : [uploadResponse.data];
+                const uploadedImages = Array.isArray(uploadResponse.data.image_path)
+                    ? uploadResponse.data.image_path
+                    : [uploadResponse.data.image_path];
+        
+                let updatedDes = des;
 
+                images.forEach(image => {
+                    const imageName = image.split("/").pop(); 
+                    const tempImagePath = `/upload/temp/${imageName}`;
+                    const postImagePath = `/upload/posts/${postId}/images/${imageName}`;
+                    updatedDes = updatedDes.replace(tempImagePath, postImagePath); 
+                });
+    
+                await axios.put(`/post/update-des/${postId}`, {
+                    des: updatedDes
+                });
+        
                 for (const imagePath of uploadedImages) {
-                    await axios.post(`/post/images/${postId}`, { 
-                        image_path: imagePath, 
-                        uploaded_at: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
-                    });
+                    const quill = reactQuillRef.current.getEditor();
+                    quill.insertEmbed(quill.getSelection()?.index || 0, "image", imagePath);
                 }
-            } 
-            else {
+        
+                await axios.post(`/post/images/${postId}`, {
+                    image_path: uploadedImages.join(','),
+                    uploaded_at: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
+                });
+            } else {
                 console.log(`Failed to upload image for post ID: ${postId}`);
             }
-        }
+        }              
 
         return { success: true, message: "Post created successfully." };
     } 
@@ -61,9 +73,9 @@ const CreatePostService = async (event, title, foreword, des, file, images) => {
         console.log(err);
 
         if (err.response) {
-            console.error(err.response.data); 
+            console.error(err.response.data);
         } else {
-            console.error(err.message); 
+            console.error(err.message);
         }
 
         return { success: false, message: err.message };

@@ -97,6 +97,31 @@ const ImageBelongPost = (req, res) => {
     });
 };
 
+const UpdatePostDescription = (req, res) => {
+    const postId = req.params.id;
+    const { des } = req.body;
+
+    if (!des) {
+        return res.status(400).json({ message: "Description is required" });
+    }
+
+    const query = "UPDATE posts SET des = ? WHERE id = ?";
+    const values = [des, postId];
+
+    database.query(query, values, (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json("Error updating description");
+        }
+
+        if (data.affectedRows === 0) {
+            return res.status(404).json("Post not found");
+        }
+
+        res.status(200).json({ message: "Post description updated successfully" });
+    });
+};
+
 const GetPost = (req, res) => {
     const query = "SELECT * FROM posts";
     database.query(query,  (err, data) => {
@@ -140,6 +165,7 @@ export {
     CreatePost,
     UpdatePostThumbnail,
     ImageBelongPost,
+    UpdatePostDescription,
     GetPost,
     GetPosts
 };
