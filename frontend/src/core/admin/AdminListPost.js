@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom"
-
 const AdminListPost = ({
     // Post
     post
@@ -8,10 +6,15 @@ const AdminListPost = ({
         <div className = "AdminListPost">
             {post.map((p) => (
                 <div className = "Container" key = { p.id }>
-                    <Link className = "Thumbnail" to = {`/post/${p.id}/${p.slug}`}>
-                        <img src = {`../upload/posts/${p.id}/thumbnail/${p.thumbnail}`} />
-                    </Link>
-                    <p className = "Title">{ p.title }</p>
+                    <div className = "Content">
+                        <div className = "Thumbnail">
+                            <img src = {`../upload/posts/${p.id}/thumbnail/${p.thumbnail}`} />
+                        </div>
+                        <div className = "Text">
+                            <p className = "Title">{ p.title }</p>
+                            <p className = "Foreword">{ p.foreword }</p>
+                        </div>
+                    </div>
                 </div>
             ))}
         </div>

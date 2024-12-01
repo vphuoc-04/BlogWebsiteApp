@@ -1416,6 +1416,36 @@ a {
     color: rgb(255, 255, 255);
 }
 
+/*** LISTPOST ***/
+.AdminListPost {
+    margin-top: -20px;
+}
+
+.AdminListPost .Container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.AdminListPost .Container .Content {
+    display: flex;
+}
+
+.AdminListPost .Container .Thumbnail img {
+    width: 200px;
+    height: 120px;
+    border-radius: 10px;
+}
+
+.AdminListPost .Container .Content .Text {
+    display: flex;
+    flex-direction: column;
+    margin: -10px 0px 0px 20px;
+}
+
+.AdminListPost .Container .Content .Text .Title{
+    font-size: 20px;
+}
 
 /***** USER *****/
 /*** REGISTER ***/
