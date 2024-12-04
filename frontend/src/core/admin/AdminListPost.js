@@ -1,6 +1,9 @@
 const AdminListPost = ({
     // Post
-    post
+    post,
+
+    // Handle
+    HandleDeletePost
 }) => {
     return (
         <div className = "AdminListPost">
@@ -13,6 +16,11 @@ const AdminListPost = ({
                         <div className = "Text">
                             <p className = "Title">{ p.title }</p>
                             <p className = "Foreword">{ p.foreword }</p>
+                        </div>
+                    </div>
+                    <div className = "Actions">
+                        <div className = "DeletePost" onClick = {() => HandleDeletePost(p.id) }>
+                            <i class = "fa-solid fa-trash"></i>
                         </div>
                     </div>
                 </div>

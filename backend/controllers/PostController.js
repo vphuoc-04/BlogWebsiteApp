@@ -1,6 +1,14 @@
 import { database } from '../database.js'
 import jwt from 'jsonwebtoken'
 import slugify from 'slugify';
+import fs from 'fs';
+import path from 'path';
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const CreatePost = (req, res) => {
     const token = req.cookies.admin_token;
@@ -161,11 +169,37 @@ const GetPosts = (req, res) => {
     });
 };
 
+const DeletePost = (req, res) => {
+    const token = req.cookies.admin_token;
+    if (!token) return res.status(401).json("Not authenticated!");
+
+    jwt.verify(token, "admin_jwtkey", (err, adminInfo) => {
+        if (err) return res.status(403).json("Token is not valid!");
+    
+        const postId = req.params.id;
+        const query = "DELETE FROM posts WHERE `id` = ? AND `posted_by` = ?";
+    
+        database.query(query, [postId, adminInfo.id], (err, data) => {
+            if (err) return res.status(403).json("You can delete only your post!");
+
+            const folderPath = path.join(__dirname, '../../frontend/public/upload/posts', postId); 
+            
+            if (fs.existsSync(folderPath)) {
+                fs.rmdirSync(folderPath, { recursive: true });
+            }
+
+            return res.json("Post has been deleted!");
+        });
+    });
+};
+
+
 export {
     CreatePost,
     UpdatePostThumbnail,
     ImageBelongPost,
     UpdatePostDescription,
     GetPost,
-    GetPosts
+    GetPosts,
+    DeletePost
 };

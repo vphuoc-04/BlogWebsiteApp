@@ -104,12 +104,6 @@ const AdminCreatePost = ({
                     </label>
                 </div>
             </div>
-            <div className = "Preview">
-                <img src = { filePreview } />
-                {title && (
-                    <p> { title } </p>
-                )}
-            </div>
             <button className = "CreatePostButton" onClick = { HandleCreatePost }>
                 Create post
             </button>

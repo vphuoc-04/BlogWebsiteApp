@@ -82,4 +82,16 @@ const CreatePostService = async (event, title, foreword, des, file, images, reac
     }
 };
 
-export { CreatePostService };
+const DeletePostService = async (postId) => {
+    try {
+        await axios.delete(`/post/delete/${postId}`)
+    }
+    catch (err) {
+        console.log(err);
+    }
+} 
+
+export { 
+    CreatePostService,
+    DeletePostService
+};

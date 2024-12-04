@@ -330,7 +330,7 @@ a {
     border-radius: 10px;
     margin-top: 5px;
     margin-left: -20px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .AdminNavbar .AdminAvatarNavbar .BoxAccountAvatarNavbar {
@@ -342,6 +342,7 @@ a {
     left: 79%;
     top: 8.5%;
     border-radius: 10px;
+    z-index: 1;
 }
 
 .AdminNavbar .AdminAvatarNavbar .BoxAccountAvatarNavbar .Profile {
@@ -410,6 +411,7 @@ a {
 .AdminSidebar {
     border-right: 1px solid rgb(0, 0, 0, 0.2);
     width: 265px;
+    min-height: 120vh;
 }
 
 /*** ROUTES ***/
@@ -518,7 +520,7 @@ a {
 
 /* DESCRIPE */
 .AdminCreatePost .CreatePost .Descripe {
-    width: 550px;
+    width: 1050px;
 }
 
 .AdminCreatePost .CreatePost .Descripe p {
@@ -528,31 +530,31 @@ a {
 
 .AdminCreatePost .CreatePost .Descripe .Des {
     padding: 10px 0px;
-    width: 560px;
+    width: 1000px;
     outline: none;
     font-size: 15px;
-    height: 300px;
+    height: 550px;
     resize: none;
     margin-top: 10px;
 }
 
 /* THUMBNAIL */
 .AdminCreatePost .CreatePost .Thumbnail {
-    width: 180px;
-    height: 100px;
+    width: 285px;
+    height: 155px;
     border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 60%;
+    top: 16.2%;
     left: 61%;
 }
 
 .AdminCreatePost .CreatePost .Thumbnail .file {
-    width: 180px;
-    height: 100px;
+    width: 285px;
+    height: 155px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -560,8 +562,8 @@ a {
 }
 
 .AdminCreatePost .CreatePost .Thumbnail .file .ThumbnailPreview img {
-    width: 180px;
-    height: 100px;
+    width: 285px;
+    height: 155px;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.5);
     position: absolute;
@@ -618,33 +620,11 @@ a {
     background-color: #f0f0f0;
 }
 
-/* PREVIEW */
-.AdminCreatePost .Preview {
-    width: 410px;
-    height: 230px;
-    border: 1px solid rgb(0, 0, 0, 0.5);
-    border-radius: 10px;
-}
-
-.AdminCreatePost .Preview img {
-    width: 410px;
-    height: 230px;
-    border-radius: 10px;
-}
-
-.AdminCreatePost .Preview p {
-    margin-top: 5px;
-    font-size: 20px;
-    width: 400px;
-    word-wrap: break-word;
-    text-align: center;
-}
-
 /* BUTTON */
 .AdminCreatePost .CreatePostButton {
     position: absolute;
-    top: 85%;
-    left: 80.5%;
+    top: 30%;
+    left: 81.5%;
     padding: 20px;
     border-radius: 15px;
     outline: none;
@@ -1445,6 +1425,12 @@ a {
 
 .AdminListPost .Container .Content .Text .Title{
     font-size: 20px;
+}
+
+.AdminListPost .Container .Actions .DeletePost{
+    margin: -30px 0px 0px 230px;
+    color: rgb(255, 0, 0);
+    cursor: pointer;
 }
 
 /***** USER *****/

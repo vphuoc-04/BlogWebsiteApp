@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { AdminCreatePost } from '../../core/admin/AdminCreatePost';
 import { useLocation } from 'react-router-dom';
-import { CreatePostService } from '../../services/PostService';
-import ReactQuill from 'react-quill';
+import { CreatePostService, DeletePostService } from '../../services/PostService';
+import ReactQuill from 'react-quill'; 
 import axios from 'axios';
 
 const CreatePost = () => {
@@ -76,10 +76,10 @@ const CreatePost = () => {
     const [images, setImages] = useState([]);
 
     const HandleImageUpload = useCallback((event) => {
-        if (event && event.preventDefault) {
-            event.preventDefault(); 
+        if (event?.preventDefault) {
+            event.preventDefault();
         }
-
+    
         const input = document.createElement("input");
         input.setAttribute("type", "file");
         input.setAttribute("accept", "image/*");
@@ -90,20 +90,20 @@ const CreatePost = () => {
             if (input.files) {
                 const formData = new FormData();
     
-                Array.from(input.files).forEach(file => {
+                Array.from(input.files).forEach((file) => {
                     formData.append("file", file);
                 });
     
                 try {
                     const uploadResponse = await axios.post('/temp-image-post', formData, {
-                        headers: { "Content-Type": "multipart/form-data" }
+                        headers: { "Content-Type": "multipart/form-data" },
                     });
     
-                    if (uploadResponse.status === 200) {
+                    if (uploadResponse?.status === 200 && uploadResponse?.data) {
                         const imageUrls = uploadResponse.data.image_path;
     
                         if (Array.isArray(imageUrls) && imageUrls.length > 0) {
-                            setImages(prevImages => [...prevImages, ...imageUrls]);
+                            setImages((prevImages) => [...prevImages, ...imageUrls]);
     
                             const quill = reactQuillRef.current.getEditor();
                             const range = quill.getSelection();
@@ -111,21 +111,29 @@ const CreatePost = () => {
                             if (range) {
                                 imageUrls.forEach((url) => {
                                     quill.insertEmbed(range.index, "image", url);
-                                    range.index += 1;  
+                                    range.index += 1; 
                                 });
                             }
                         } 
                         else {
-                            console.error("Server response is not an array of image URLs.");
+                            console.error("Error: Server response does not contain valid image URLs.");
                         }
                     } 
                     else {
-                        console.error("Upload failed");
+                        console.error("Error: Upload failed or invalid response from server.");
                     }
                 } 
                 catch (err) {
-                    console.error("Error during image upload:", err);
+                    if (err.response) {
+                        console.error("Server error:", err.response.data?.message || err.response.statusText);
+                    } 
+                    else {
+                        console.error("Unexpected error during image upload:", err.message);
+                    }
                 }
+            } 
+            else {
+                console.warn("No files selected for upload.");
             }
         };
     }, []);
