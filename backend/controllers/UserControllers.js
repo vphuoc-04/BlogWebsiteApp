@@ -14,6 +14,22 @@ const GetUser = (req, res) => {
     })
 }
 
+const GetUserByUsername = (req, res) => {
+    const query = "SELECT * FROM users WHERE username = ?";
+
+    const { username } = req.params;
+
+    database.query(query, [username], (err, data) => {
+        if (err) {
+            return res.status(500).json("Error fetching user data.");
+        }
+        if (data.length === 0) {
+            return res.status(404).json("User not found.");
+        }
+        return res.status(200).json(data[0]);
+    });
+};
+
 const Register = async (req, res) => {
 
     const checkQuery = "SELECT * FROM users WHERE email = ? OR username = ?";
@@ -135,6 +151,7 @@ const ResetPassword = async (req, res) => {
 
 export { 
     GetUser,
+    GetUserByUsername,
     Register,
     SendOTPVerification,
     CheckEmailUsername,

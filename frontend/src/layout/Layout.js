@@ -16,6 +16,7 @@ import AdminListPost from '../components/admin/ListPost'
 // Client components
 import UserRegister from '../components/client/Register'
 import UserLogin from '../components/client/Login'
+import UserProfile from '../components/client/Profile'
 
 // Page
 import Home from '../components/pages/Home'
@@ -69,7 +70,8 @@ const Layout = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/about', element: <About /> }, 
-            { path: '/post/:id/:slug', element: <Single /> }
+            { path: '/post/:id/:slug', element: <Single /> },
+            { path: '/:username', element: <UserProfile /> }
         ]
     }
 ])

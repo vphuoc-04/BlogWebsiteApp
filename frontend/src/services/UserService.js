@@ -76,9 +76,20 @@ const GetUser = async (setUser) => {
     }
 }
 
+const GetUserByUsername = async (username, setUser) => {
+    try {
+        const response = await axios.get(`/user/data/${username}`)
+        setUser(response.data);
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
 export { 
     IsValidUserInput,
     UserIdentify,
     ResetPassword,
-    GetUser
+    GetUser,
+    GetUserByUsername
 };

@@ -44,7 +44,7 @@ const NavbarComponent = ({
                         {boxAccountAvatarNavbar && (
                             <div className = "BoxAccountAvatarNavbar">
                                 <div className = "Profile">
-                                    <Link className = "InfoProfile" to = '/profile' onClick = {() => { setBoxAccountAvatarNavbar(false) } }>
+                                    <Link className = "InfoProfile" to = {`/${user?.username}`} onClick = {() => { setBoxAccountAvatarNavbar(false) } }>
                                         { DisplayAvatar(user?.avatar) } 
                                         <div className = "FullName">
                                             <p>{ user?.firstname }</p>
