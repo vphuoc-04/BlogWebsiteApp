@@ -1946,6 +1946,147 @@ a {
     color: rgb(255, 255, 255);
 }
 
+/*** PROFILE ***/
+.UserProfile {
+    
+}
+
+.UserProfile .Container .AvatarImage{
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+}
+
+.UserProfile .Container .AvatarImage img {
+    width: 150px;
+    border-radius: 50%;
+}
+
+.UserProfile .Container .InfoUser h1{
+    margin-top: 235px;
+    text-align: center;
+}
+
+.UserProfile .Container .Avatar .AvatarDisplay .CameraIcon {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.UserProfile .Container .Avatar .AvatarDisplay:hover .CameraIcon {
+    display: block;
+}
+
+.UserProfile .Container .Avatar .AvatarActions {
+    width: 200px;
+    height: 40px;  
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.5);
+    z-index: 2;
+    position: absolute;
+    top: 42%;
+    left: 45%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.UserProfile .Container .Avatar .AvatarActions .button {
+    width: 200px;
+    cursor: pointer;
+}
+
+.UserProfile .Container .Avatar .AvatarActions .button:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+/* AVATAR */
+.UserProfile .Container .AvatarView {
+    height: 500px;
+    width: 450px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border-radius: 10px;
+}
+
+.UserProfile .Container .AvatarView .Avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.UserProfile .Container .AvatarView .Avatar img {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+}
+
+.UserProfile .Container .AvatarView .CloseViewAvatar {
+    margin-left: 415px;
+    margin-top: 10px;
+    z-index: 2;
+    font-size: xx-large;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.UserProfile .Container .AvatarView .CloseViewAvatar:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.UserProfile .Container .AvatarView .ActionViewAvatar {
+    position: absolute;
+    left: 6%;
+    top: 5%;
+}
+
+.UserProfile .Container .AvatarView .ActionViewAvatarBox {
+    width: 120px;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.5);
+    border-radius: 5px;
+    position: absolute;
+    left: 40px;
+    top: 25px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.UserProfile .Container .AvatarView .ActionViewAvatarBox:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.UserProfile .Container .AvatarView .ActionViewAvatarBox p {
+    padding-left: 10px;
+    margin-top: 10px;
+}
 
 /***** PAGE *****/
 /*** NAVBAR ***/

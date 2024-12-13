@@ -14,4 +14,6 @@ const DisplayAvatar = (avatar) => {
     }
 }
 
-export { DisplayAvatar }
+const defaultAvatar = 'https://imgur.com/AhaZ0qB.jpg';
+
+export { DisplayAvatar, defaultAvatar }
