@@ -1,6 +1,6 @@
 import Logo from '../../assets/img/vphuoc.png'
 import { Link } from 'react-router-dom'
-import { DisplayAvatar } from '../../services/AvatarService'
+import { DisplayAdminAvatar } from '../../data/AdminData'
 
 const AdminNavbar = ({
     admin,
@@ -22,7 +22,7 @@ const AdminNavbar = ({
                     onClick = { HandleClickAvatarNavbar }  
                     onMouseEnter = {() => HandleHoverNavbarComponents('avatar') }
                     onMouseLeave = { HandleLeaveNavbarComponents }>
-                    { DisplayAvatar(admin?.avatar) }
+                    { DisplayAdminAvatar(admin?.avatar) }
                 </div> 
                 {boxHoverNavbar === 'avatar' && (
                     <div className = "BoxHoverNavbar">
@@ -33,7 +33,7 @@ const AdminNavbar = ({
                     <div className = "BoxAccountAvatarNavbar">
                         <div className = "Profile">
                             <Link className = "InfoProfile" to = '/admin/profile' onClick = {() => { setBoxAccountAvatarNavbar(false) } }>
-                                { DisplayAvatar(admin?.avatar) } 
+                                { DisplayAdminAvatar(admin?.avatar) } 
                                 <div className = "FullName">
                                     <p>{ admin?.firstname }</p>
                                     <p>{ admin?.lastname }</p>

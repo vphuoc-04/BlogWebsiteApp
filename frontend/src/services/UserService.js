@@ -86,10 +86,39 @@ const GetUserByUsername = async (username, setUser) => {
     }
 }
 
+const UploadUserAvatar = async (file, currentUser, setCurrentUser) => {
+    try {
+        const imageData = new FormData();
+        imageData.append("file", file);
+        const avatarResponse = await axios.post("/user-avatar", imageData);
+        const avatarProfile = avatarResponse.data;
+
+        if (avatarProfile) {
+            const response = await axios.put(`/user/update/profile/avatar/${currentUser?.id}`, {
+                avatar: avatarProfile,
+            });
+            const message = response.data || "Avatar has been updated";
+            const updated = { ...setCurrentUser, avatar: avatarProfile };
+            localStorage.setItem("user", JSON.stringify(updated));
+            setCurrentUser(prevUser => ({ ...prevUser, avatar: avatarProfile }));
+            console.log(message);
+        }
+    } 
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const DeleteUserAvatar = async () => {
+
+}
+
 export { 
     IsValidUserInput,
     UserIdentify,
     ResetPassword,
     GetUser,
-    GetUserByUsername
+    GetUserByUsername,
+    UploadUserAvatar,
+    DeleteUserAvatar
 };

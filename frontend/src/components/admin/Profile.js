@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { AdminContext } from '../../context/AuthContext';
 import { AdminProfile } from '../../core/admin/AdminProfile';
-import { AdminData, defaultAvatar } from '../../data/AdminData';
+import { AdminData } from '../../data/AdminData';
 import { UseUpdateCurrentAdmin } from '../../hooks/useAuth';
 import { 
     UploadAdminAvatar,
@@ -14,6 +14,8 @@ import {
     DeletePrimaryEmail,
     ChangePassword
 } from '../../services/AdminService';
+
+import { defaultAvatar } from '../../services/AvatarService';
 
 import { IsValidEmail } from '../../services/EmailService';
 

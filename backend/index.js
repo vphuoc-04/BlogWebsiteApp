@@ -13,6 +13,7 @@ import { AdminAvatar } from './uploads/AdminAvatar.js';
 import { PostThumbnail } from './uploads/PostThumbnail.js';
 import { ImageBelongPost, UploadMultiple } from './uploads/ImageBelongPost.js';
 import { TempImagePost } from './uploads/TempImagePost.js';
+import { UserAvatar } from './uploads/UserAvatar.js';
 
 const app = express();
 app.use(express.json());  
@@ -25,6 +26,7 @@ app.use('/api/user', UserRoutes);
 app.use('/api/post', PostRoutes);
 
 app.post('/api/admin-avatar', AdminAvatar);
+app.post('/api/user-avatar', UserAvatar);
 app.post('/api/post-thumbnail/:id', PostThumbnail);
 app.post('/api/temp-image-post', TempImagePost);
 app.post('/api/image-post/:id', UploadMultiple, ImageBelongPost);

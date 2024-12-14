@@ -1,5 +1,5 @@
 import axios from "axios";
-import { defaultAvatar } from "../data/AdminData";
+import { defaultAvatar } from '../services/AvatarService'
 
 const UploadAdminAvatar = async (file, currentAdmin, setCurrentAdmin) => {
     try {

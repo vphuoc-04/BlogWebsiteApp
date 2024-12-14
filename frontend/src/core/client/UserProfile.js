@@ -1,5 +1,7 @@
 import { FaCamera } from "react-icons/fa"
-import { defaultAvatar, DisplayAvatar } from "../../services/AvatarService"
+import { defaultAvatar } from "../../services/AvatarService"
+import CropAvatar from 'react-avatar-edit' 
+import { DisplayUserAvatar } from "../../data/UserData"
 
 const UserProfile = ({
     // User
@@ -11,6 +13,13 @@ const UserProfile = ({
     avatarView,
     HandleAvatarView,
     HandleCloseAvatarView,
+    boxEditAvatar,
+    HandleSetAvatar,
+    HandleCloseAvatarSettingBox,
+    editAvatar,
+    avatarFile,
+    OnCrop,
+    HandleUploadUserAvatar,
     avatarViewAction,
     HandleAvatarViewAction,
 }) => {
@@ -21,7 +30,7 @@ const UserProfile = ({
                     <div className = "Avatar">
                         <label className = "AvatarDisplay" onClick = { HandleAvatarActionSelect }>
                             <div className = "AvatarImage">
-                                { DisplayAvatar(user.avatar) }
+                                { DisplayUserAvatar(user.avatar) }
                             </div>
                             <div className = "CameraIcon">
                                 <FaCamera />
@@ -32,6 +41,15 @@ const UserProfile = ({
                                 <div className = "button" onClick = { HandleAvatarView }>
                                     <i className = "fa-regular fa-user"></i>&nbsp;View avatar picture
                                 </div>
+                                <div className = "button" onClick = {() => document.getElementById('file').click()}>
+                                    <i className = "fa-regular fa-image"></i>&nbsp;Select avatar picture
+                                </div>
+                                <input 
+                                    type = "file"
+                                    id = "file"
+                                    style = {{ display: 'none' }} 
+                                    onChange = { HandleSetAvatar }
+                                />
                             </div>
                         )}
                     </div>
@@ -56,8 +74,37 @@ const UserProfile = ({
                                 </div>
                             )}
                             <div className = "Avatar">
-                                { DisplayAvatar(user.avatar) }
+                                { DisplayUserAvatar(user.avatar) }
                             </div>
+                        </div>
+                    )}
+
+                    {boxEditAvatar && <div className = "overlay"></div>}
+                    {boxEditAvatar && (
+                        <div className = "BoxEditAvatar">
+                            <div className = "CloseBoxEditAvatar" onClick = { HandleCloseAvatarSettingBox }>&times;</div>
+                            {editAvatar && (
+                                <div className = "EditAvatar">
+                                    <div className = "CropWrapper">
+                                        <div className = "AvatarOnCrop">
+                                            <CropAvatar 
+                                                width = {500}
+                                                height = {500}
+                                                onCrop = { OnCrop }
+                                                src = { avatarFile }
+                                                border = {50} 
+                                                borderRadius = {100} 
+                                                color = {[255, 255, 255, 0.6]} 
+                                                scale = {1.2} 
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className = "Buttons">
+                                        <span onClick = { HandleCloseAvatarSettingBox }>Cancel</span>
+                                        <button onClick = { HandleUploadUserAvatar }>Save</button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
 

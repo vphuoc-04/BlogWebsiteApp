@@ -2,6 +2,15 @@ import { database } from '../database.js';
 import bcrypt from 'bcrypt';
 import { SendOTPEmail } from '../services/SendOTPEmail.js';
 import { SendOTPReset } from '../services/SendOTPReset.js';
+import jwt from 'jsonwebtoken';
+import fs from 'fs';
+import path from 'path';
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const SaltRounds = 10;
 
@@ -149,6 +158,48 @@ const ResetPassword = async (req, res) => {
     }
 };
 
+const UploadAvatar = (req, res) => {
+    const token = req.cookies.user_token;
+    if (!token) { return res.status(401).json("Not verified!"); }
+
+    jwt.verify(token, "user_jwtkey", async (err) => {
+        if (err) { return res.status(403).json("Invalid token!"); }
+
+        const userId = req.params.id;
+        const newAvatar = req.body.avatar; 
+
+        const getCurrentAvatarQuery = "SELECT avatar FROM users WHERE id = ?";
+        database.query(getCurrentAvatarQuery, [userId], (err, results) => {
+            if (err) { return res.status(500).json("Error fetching current avatar!"); }
+
+            const currentAvatar = results[0]?.avatar;
+
+            const updateAvatarQuery = "UPDATE users SET `avatar` = ? WHERE `id` = ?";
+
+            database.query(updateAvatarQuery, [newAvatar, userId], async (err) => {
+                if (err) { return res.status(500).json("Error updating avatar!"); }
+
+                if (currentAvatar && currentAvatar !== newAvatar) {
+                    const avatarPath = path.join(__dirname, "../../frontend/public/upload/clients/img", currentAvatar);
+
+                    if (fs.existsSync(avatarPath)) {
+                        try {
+                            await fs.promises.unlink(avatarPath);
+                        } 
+                        catch (unlinkError) {
+                            console.error("Error deleting old avatar file:", unlinkError.message);
+                        }
+                    } 
+                    else {
+                        console.log("Old avatar file not found for deletion at path:", avatarPath);
+                    }
+                }
+                res.status(200).json("Avatar updated successfully!");
+            });
+        });
+    });
+};
+
 export { 
     GetUser,
     GetUserByUsername,
@@ -158,5 +209,6 @@ export {
     IdentifyUser,
     GetEmailByUsername,
     SendOTPResetPassword,
-    ResetPassword
+    ResetPassword,
+    UploadAvatar
 };

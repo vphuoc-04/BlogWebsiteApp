@@ -1,4 +1,4 @@
-import { DisplayAvatar } from "../../services/AvatarService"
+import { DisplayAdminAvatar } from "../../data/AdminData"
 
 
 const AboutPage = ({
@@ -8,7 +8,7 @@ const AboutPage = ({
     return (
         <div className = "AboutPage">
             <div className = "Avatar">
-                { DisplayAvatar(admin.avatar) }
+                { DisplayAdminAvatar(admin.avatar) }
             </div>
             <div className = "VerifyIcon">
                 <i class = "fa-solid fa-check"></i>

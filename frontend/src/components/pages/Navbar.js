@@ -2,11 +2,12 @@ import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/AuthContext';
 import { NavbarComponent } from '../../core/pages/NavbarComponent'
+import { UserData } from '../../data/UserData';
 import { UseUpdateCurrentUser } from '../../hooks/useAuth';
 
 const Navbar = () => {
     const { currentUser, UserLogoutContext } = useContext(UserContext);
-    const [user, setUser] = useState([]);
+    const [user, setUser] = UserData(currentUser);
   
     UseUpdateCurrentUser(setUser, currentUser);
 

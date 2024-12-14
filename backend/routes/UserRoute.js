@@ -8,7 +8,8 @@ import {
     IdentifyUser,
     SendOTPResetPassword,
     GetEmailByUsername,
-    ResetPassword, 
+    ResetPassword,
+    UploadAvatar, 
 } from '../controllers/UserControllers.js';
 
 const router = express.Router();
@@ -22,5 +23,6 @@ router.post('/identify', IdentifyUser);
 router.get('/get/email', GetEmailByUsername);
 router.post('/reset/password', SendOTPResetPassword);
 router.put('/update/new/password/:id', ResetPassword);
+router.put('/update/profile/avatar/:id', UploadAvatar);
 
 export default router;

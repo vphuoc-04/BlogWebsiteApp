@@ -1,6 +1,6 @@
 import { NavLink, Link } from 'react-router-dom'
 import Logo from '../../assets/img/vphuoc.png'
-import { DisplayAvatar } from '../../services/AvatarService'
+import { DisplayUserAvatar } from '../../data/UserData'
 
 const NavbarComponent = ({
     user,
@@ -34,7 +34,7 @@ const NavbarComponent = ({
                             onClick = { HandleClickAvatarNavbar }  
                             onMouseEnter = {() => HandleHoverNavbarComponents('avatar') }
                             onMouseLeave = { HandleLeaveNavbarComponents }>
-                            { DisplayAvatar(user?.avatar) }
+                            { DisplayUserAvatar(user?.avatar) }
                         </div> 
                         {boxHoverNavbar === 'avatar' && (
                             <div className = "BoxHoverNavbar">
@@ -45,7 +45,7 @@ const NavbarComponent = ({
                             <div className = "BoxAccountAvatarNavbar">
                                 <div className = "Profile">
                                     <Link className = "InfoProfile" to = {`/${user?.username}`} onClick = {() => { setBoxAccountAvatarNavbar(false) } }>
-                                        { DisplayAvatar(user?.avatar) } 
+                                        { DisplayUserAvatar(user?.avatar) } 
                                         <div className = "FullName">
                                             <p>{ user?.firstname }</p>
                                             <p>{ user?.lastname }</p>
