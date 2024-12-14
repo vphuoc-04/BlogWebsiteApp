@@ -200,6 +200,51 @@ const UploadAvatar = (req, res) => {
     });
 };
 
+const DeleteAvatar = async (req, res) => {
+    const token = req.cookies.user_token;
+    if (!token) { return res.status(401).json("Not verified!"); }
+
+    jwt.verify(token, "user_jwtkey", async (err) => {
+        if (err) { return res.status(403).json("Invalid token!"); }
+
+        const userId = req.params.id;
+
+        const userQuery = "SELECT avatar FROM users WHERE id = ?";
+        database.query(userQuery, [userId], async (err, results) => {
+            if (err) { return res.status(500).json("Error fetching user data!"); }
+
+            if (results.length === 0) { return res.status(404).json("User not found!"); }
+
+            const currentAvatar = results[0].avatar; 
+
+            const newAvatar = "https://imgur.com/AhaZ0qB.jpg"; 
+
+            const q = "UPDATE users SET `avatar` = ? WHERE `id` = ?";
+
+            database.query(q, [newAvatar, userId], async (err) => {
+                if (err) { return res.status(500).json("Avatar delete failed!"); }
+
+                if (currentAvatar !== newAvatar) {
+                    const avatarPath = path.join(__dirname, "../../frontend/public/upload/clients/img", currentAvatar);
+
+                    if (fs.existsSync(avatarPath)) {
+                        try {
+                            await fs.promises.unlink(avatarPath);
+                        } 
+                        catch (unlinkError) {
+                            console.error("Error deleting avatar file:", unlinkError.message);
+                        }
+                    } 
+                    else {
+                        console.log("Avatar file not found for deletion at path:", avatarPath);
+                    }
+                }
+                return res.json("Avatar has been deleted!");
+            });
+        });
+    });
+};
+
 export { 
     GetUser,
     GetUserByUsername,
@@ -210,5 +255,6 @@ export {
     GetEmailByUsername,
     SendOTPResetPassword,
     ResetPassword,
-    UploadAvatar
+    UploadAvatar,
+    DeleteAvatar
 };

@@ -9,7 +9,8 @@ import {
     SendOTPResetPassword,
     GetEmailByUsername,
     ResetPassword,
-    UploadAvatar, 
+    UploadAvatar,
+    DeleteAvatar, 
 } from '../controllers/UserControllers.js';
 
 const router = express.Router();
@@ -24,5 +25,6 @@ router.get('/get/email', GetEmailByUsername);
 router.post('/reset/password', SendOTPResetPassword);
 router.put('/update/new/password/:id', ResetPassword);
 router.put('/update/profile/avatar/:id', UploadAvatar);
+router.put('/delete/profile/avatar/:id', DeleteAvatar);
 
 export default router;

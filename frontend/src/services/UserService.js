@@ -1,5 +1,6 @@
 import { IsValidEmail } from "./EmailService";
 import axios from "axios";
+import { defaultAvatar } from "./AvatarService";
 
 const IsValidUserInput = async (input, setError) => {
     if (input.username === "vphuoc.04") {
@@ -109,8 +110,20 @@ const UploadUserAvatar = async (file, currentUser, setCurrentUser) => {
     }
 }
 
-const DeleteUserAvatar = async () => {
-
+const DeleteUserAvatar = async (currentUser, setCurrentUser) => {
+    try {
+        const response = await axios.put(`/user/delete/profile/avatar/${currentUser?.id}`, {
+            avatar: defaultAvatar
+        });
+        const message = response.data || "Avatar has been deleted";
+        const updated = { ...setCurrentUser, avatar: defaultAvatar };
+        localStorage.setItem("user", JSON.stringify(updated));
+        setCurrentUser(prevUser => ({ ...prevUser, avatar: defaultAvatar }));
+        console.log(message);
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
 
 export { 

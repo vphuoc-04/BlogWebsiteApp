@@ -7,6 +7,11 @@ const UserProfile = ({
     // User
     user,
 
+    // Waring box
+    warning,
+    HandleWarningConfirm,
+    HandleWarningCancel,
+
     // Avatar user
     avatarAction,
     HandleAvatarActionSelect,
@@ -22,6 +27,7 @@ const UserProfile = ({
     HandleUploadUserAvatar,
     avatarViewAction,
     HandleAvatarViewAction,
+    HandleDeleteUserAvatar
 }) => {
     return (
         <div className = "UserProfile">
@@ -69,7 +75,7 @@ const UserProfile = ({
                                 ></i>
                             </div>
                             {avatarViewAction && (
-                                <div className = "ActionViewAvatarBox">
+                                <div className = "ActionViewAvatarBox" onClick = { HandleDeleteUserAvatar }>
                                     <p><i class = "fa-regular fa-trash-can"></i>&nbsp;Delete</p>
                                 </div>
                             )}
@@ -105,6 +111,15 @@ const UserProfile = ({
                                     </div>
                                 </div>
                             )}
+                        </div>
+                    )}
+
+                    {warning && <div className = "box"></div>}
+                    {warning && (
+                        <div className = "WarningBox">
+                            <p> { warning.message } </p>
+                            <button onClick = { HandleWarningConfirm }>Yes</button>
+                            <button onClick = { HandleWarningCancel }>Cancel</button>
                         </div>
                     )}
 

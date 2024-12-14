@@ -4,10 +4,12 @@ import { UserProfile } from '../../core/client/UserProfile'
 import { UserContext } from '../../context/AuthContext';
 import { UserData } from '../../data/UserData';
 import { 
+    DeleteUserAvatar,
     GetUserByUsername, 
     UploadUserAvatar 
 } from '../../services/UserService';
 import { UseUpdateCurrentUser } from '../../hooks/useAuth';
+import { defaultAvatar } from '../../services/AvatarService';
 
 const Profile = () => {
     const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -83,10 +85,34 @@ const Profile = () => {
     }
     const HandleAvatarViewAction = () => { setAvatarViewAction(Show => !Show); }
 
+    const HandleDeleteUserAvatar = () => {
+        setWarning({
+            message: 'Are you sure you want to delete your avatar?',
+            action: async () => {
+                await DeleteUserAvatar(currentUser, setCurrentUser);
+                setUser(prevUser => ({ ...prevUser,  avatar: defaultAvatar }))
+                setCurrentUser(prevUser => ({ ...prevUser,  avatar: defaultAvatar }));
+                localStorage.setItem("user", JSON.stringify({ ...currentUser, avatar: defaultAvatar }));
+                setAvatarView(null);
+                setWarning(null);
+                setAvatarViewAction(null);
+            }
+        })
+    }
+
+    // Waring box
+    const HandleWarningConfirm = async () => { if(warning?.action) { await warning.action(); } };
+    const HandleWarningCancel = () => { setWarning(null); };
+
     return (
         <UserProfile 
             // User
             user = { user }
+
+            // Waring box
+            warning = { warning }
+            HandleWarningConfirm = { HandleWarningConfirm }
+            HandleWarningCancel = { HandleWarningCancel }
 
             // Avatar user
             avatarAction = { avatarAction }
@@ -103,6 +129,7 @@ const Profile = () => {
             HandleUploadUserAvatar = { HandleUploadUserAvatar }
             avatarViewAction = { avatarViewAction }
             HandleAvatarViewAction = { HandleAvatarViewAction }
+            HandleDeleteUserAvatar = { HandleDeleteUserAvatar }
         />
     )
 }
