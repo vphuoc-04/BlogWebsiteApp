@@ -695,6 +695,14 @@ a {
     font-size: 13px;
 }
 
+.AdminProfile .Avatar .AvatarActions.default-avatar {
+    height: 20px;
+}
+
+.AdminProfile .Avatar .AvatarActions.custom-avatar {
+    height: 40px;
+}
+
 .AdminProfile .Avatar .AvatarActions .button {
     width: 200px;
     cursor: pointer;
@@ -2003,6 +2011,14 @@ a {
     gap: 10px;
     border-radius: 10px;
     font-size: 13px;
+}
+
+.UserProfile .Container .Avatar .AvatarActions.default-avatar {
+    height: 20px;
+}
+
+.UserProfile .Container .Avatar .AvatarActions.custom-avatar {
+    height: 40px;
 }
 
 .UserProfile .Container .Avatar .AvatarActions .button {

@@ -101,10 +101,12 @@ const AdminProfile = ({
                     </div>
                 </label>
                 {avatarAction && (
-                    <div className = "AvatarActions">
-                        <div className = "button" onClick = { HandleAvatarView }>
-                            <i className = "fa-regular fa-user"></i>&nbsp;View avatar picture
-                        </div>
+                    <div className = {`AvatarActions ${admin.avatar == defaultAvatar ? 'default-avatar' : 'custom-avatar'}`}>
+                        {admin.avatar !== defaultAvatar && (
+                            <div className = "button" onClick = { HandleAvatarView }>
+                                <i className = "fa-regular fa-user"></i>&nbsp;View avatar picture
+                            </div>
+                        )}
                         <div className = "button" onClick = {() => document.getElementById('file').click()}>
                             <i className = "fa-regular fa-image"></i>&nbsp;Select avatar picture
                         </div>

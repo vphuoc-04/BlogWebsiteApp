@@ -43,10 +43,12 @@ const UserProfile = ({
                             </div>
                         </label>
                         {avatarAction && (
-                            <div className = "AvatarActions">
-                                <div className = "button" onClick = { HandleAvatarView }>
-                                    <i className = "fa-regular fa-user"></i>&nbsp;View avatar picture
-                                </div>
+                            <div className = {`AvatarActions ${user.avatar == defaultAvatar ? 'default-avatar' : 'custom-avatar'}`}>
+                                {user.avatar !== defaultAvatar && (
+                                    <div className = "button" onClick = { HandleAvatarView }>
+                                        <i className = "fa-regular fa-user"></i>&nbsp;View avatar picture
+                                    </div>
+                                )}
                                 <div className = "button" onClick = {() => document.getElementById('file').click()}>
                                     <i className = "fa-regular fa-image"></i>&nbsp;Select avatar picture
                                 </div>
